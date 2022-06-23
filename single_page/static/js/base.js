@@ -95,11 +95,10 @@ const csrftoken = getCookie('csrftoken');
 // enterkey
 function enterkey(){
     if(window.event.keyCode == 13){
-        let form = document.getElementById("searchblock")
-        form.submit();
+        let form = document.getElementById("searchblock");
+        form.searchblock_button.click();
     }
 }
-
 
 // block ajax
 document.getElementById("searchblock").addEventListener("submit", function(e){

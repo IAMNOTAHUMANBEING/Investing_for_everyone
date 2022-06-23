@@ -20,12 +20,14 @@
 //plot();
 
 //init
-let searchblock = document.getElementById("searchblock");
-let searchblock_input = document.getElementById("searchblock_input");
-let stock_name = document.querySelector(".stock_search_input").value;
+window.addEventListener("load", function () {
+  let form = document.getElementById("searchblock");
+  let input = document.getElementById("searchblock_input");
+  let stock_name = document.querySelector(".stock_search_input").value;
 
-searchblock_input.value = stock_name;
-searchblock.submit;
+  input.value = stock_name;
+  form.searchblock_button.click(); // submit(); 하면 에러남
+});
 
 // chart ajax
 function plot()
