@@ -4,7 +4,7 @@ from single_page.models import Stock, Person, Event, Report, Opinion, Word
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
     list_display = ('name', 'code')
-    prepopulated_fields = {'slug': ('name',)}
+    #prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
@@ -21,12 +21,14 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'date', 'created_at', 'modified_at', 'author')
     list_filter = ('modified_at',)
     search_fields = ('title', 'content')
+    filter_horizontal = ('stock_tag', 'word_tag', 'person_tag')
 
 @admin.register(Opinion)
 class OpinionAdmin(admin.ModelAdmin):
     list_display = ('short', 'date', 'name')
     list_filter = ('modified_at',)
     search_fields = ('short', 'name', 'content')
+    filter_horizontal = ('stock_tag', 'word_tag')
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):

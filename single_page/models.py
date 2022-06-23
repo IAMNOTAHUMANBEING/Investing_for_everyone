@@ -4,9 +4,9 @@ from django.urls import reverse
 
 class Stock(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
+    # slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
     code = models.CharField(max_length=10, unique=True)
-    content = models.TextField(blank=True)
+    content = models.TextField(blank=True, null=True)
 
     # chart
 
@@ -14,7 +14,7 @@ class Stock(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('single_page:stock', kwargs={"slug": self.slug})
+        return reverse('single_page:stock', kwargs={"pk": self.pk})
 
 class Person(models.Model):
     name = models.CharField(max_length=30, unique=True)

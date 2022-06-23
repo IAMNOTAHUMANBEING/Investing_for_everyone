@@ -310,6 +310,10 @@ CandlestickChart.prototype.draw = function()
         this.context.fillText( "H: "+this.candlesticks[this.hoveredCandlestickIndex].high , this.mousePosition.x+30 , yPos+55 );
         this.context.fillText( "L: "+this.candlesticks[this.hoveredCandlestickIndex].low , this.mousePosition.x+30 , yPos+75 );
     }
+
+//    if ( this.mouseOnClick ){
+//
+//    }
 }
 
 

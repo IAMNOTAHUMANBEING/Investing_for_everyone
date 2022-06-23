@@ -2,21 +2,11 @@
     {% csrf_token %}
     <input type="text" name="searchblock_input" class="search" id="searchblock_input" />
     <input type="submit" onkeyup="enterkey();" name="searchblock_button" value="검색" class="search" id="searchblock_button" />
+    <!-- 날짜 선택 기능 추가해야함 -->
 </form>
-
-<!--<form method="POST" onkeyup="enterkey();" action="http://localhost:8000/page/search/block/" id="searchblock" class="container">-->
-<!--    {% csrf_token %}-->
-<!--    <input type="text" name="searchblock_input" class="search" id="searchblock_input" />-->
-<!--    <input type="submit" name="searchblock_button" value="검색" class="search" id="searchblock_button" />-->
-<!--</form>-->
-
-
-<!-- 날짜 선택 기능 추가해야함 -->
 
 <div class="underbar"></div>
 
-<section style="flex:1;" id="block_container" class="container">
-
-</section>
+<section style="flex:1;" id="block_container" class="container"></section>
 
 <!-- 맨 오른쪽 세로로 추가메뉴 만들어야함 -->
