@@ -4,7 +4,8 @@ from single_page.models import Stock, Person, Event, Report, Opinion, Word
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
     list_display = ('name', 'code')
-    #prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name', 'code')
+
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
