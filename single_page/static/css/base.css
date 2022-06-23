@@ -20,8 +20,23 @@
     min-width: 15vw;
 }
 
-.stock_search_input{
+#searchstock{
     width: 300px;
+}
+
+.searchstock_autocomplete{
+    position: relative;
+    width: 300px;
+    top: 10px;
+    z-index: 10;
+}
+
+.searchstock_list{
+    display: flex;
+    flex-direction:column;
+    justify-content : space-around;
+    list-style: none;
+    margin-right: 30%;
 }
 
 .stock_menu{
@@ -119,6 +134,7 @@ body {
 .block_tag_container{
     display: flex;
     flex: 1 1 0%;
+    flex-wrap: wrap;
 }
 
 .tag{
@@ -131,6 +147,7 @@ body {
 
 .tag a{
     text-decoration: none;
+    color: black;
 }
 
 .block_content{

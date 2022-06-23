@@ -11,5 +11,5 @@ urlpatterns = [
     re_path(r'^word/(?P<slug>[-\w]+)/$', views.WordDV.as_view(), name='word'),
     path('search/block/', views.SearchBlock, name='searchblock'),
     # path('chartdata/', views.ChartData, name='chartdata')
-    # path('search/page/', views.SearchPage, name='searchpage'),
+    path('search/stock/', views.SearchStock, name='searchstock'),
 ]

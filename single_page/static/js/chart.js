@@ -221,6 +221,7 @@ CandlestickChart.prototype.dragup = function (e)
 
 CandlestickChart.prototype.draw = function()
 {
+    // canvas 크기 계산
     this.canvas.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width) -10;
     this.canvas.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height) -10;
     this.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width )-10;
@@ -229,6 +230,7 @@ CandlestickChart.prototype.draw = function()
     this.yPixelRange = this.height-this.marginTop-this.marginBottom;
     this.xPixelRange = this.width-this.marginLeft-this.marginRight;
 
+    // canvas 크기 바뀌면 폰트 크기 재설정 해야함
     this.context.font = '16px sans-serif';
 
     // 배경 초기화

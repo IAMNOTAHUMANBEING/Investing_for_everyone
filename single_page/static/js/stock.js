@@ -23,11 +23,38 @@
 window.addEventListener("load", function () {
   let form = document.getElementById("searchblock");
   let input = document.getElementById("searchblock_input");
-  let stock_name = document.querySelector(".stock_search_input").value;
+  let stock_name = document.getElementById("searchstock").value;
 
   input.value = stock_name;
   form.searchblock_button.click(); // submit(); 하면 에러남
 });
+
+// search stock ajax
+const searchstock = document.getElementById("searchstock");
+
+searchstock.addEventListener('keyup', (e) =>{
+    const searchword = e.target.value;
+
+    if(searchword.trim().length > 0){
+        console.log(searchword);
+
+        fetch('http://localhost:8000/chart/search/stock/', {
+            method: 'POST',
+            credentials: "same-origin",
+            headers: {"X-CSRFToken": csrftoken,
+                      "X-Requested-With": "XMLHttpRequest"},
+            body: JSON.stringify({ "searchword": searchword }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+});
+
 
 // chart ajax
 function plot()

@@ -28,11 +28,17 @@ class WordDV(DetailView):
     template_name = "single_page/word.html"
 
 
-# def SearchPage(request):
+def SearchStock(request):
+    if request.method == 'POST':
+        searchword = json.loads(request.body).get('searchword')
+        stock_list = Stock.objects.filter(name__starts_with=searchword)
+        data = stock_list.values()
+
+
 
 def SearchBlock(request):
     if request.method == 'POST':
-        searchword = json.loads(request.body).get('search', '')
+        searchword = json.loads(request.body).get('searchword', '')
 
         if searchword:
             event_list = Event.objects.filter(

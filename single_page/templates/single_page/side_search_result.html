@@ -2,7 +2,7 @@
 <div class="block">
     {% if block.checktype == "E" %}
     <div class="block_header" style="flex:1;">
-    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
     <div class="block_header_title">{{ block.title }}</div>
     </div>
     <br>
@@ -25,14 +25,14 @@
 
     {% if block.checktype == "O" %}
     <div class="block_header" style="flex:1;">
-    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
     <div class="block_header_title">{{ block.short }}</div>
     {% endif %}
     </div>
 
     {% if block.checktype == "R" %}
     <div class="block_header" style="flex:1;">
-    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
     <div class="block_header_title">{{ block.title }}</div>
     {% endif %}
     </div>

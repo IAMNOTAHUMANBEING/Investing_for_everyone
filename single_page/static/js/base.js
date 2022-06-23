@@ -6,14 +6,29 @@
 //  document.documentElement.style.setProperty('--vh', `${vh}px`)
 //})
 
-
-
-//////////////resize/////////////////
 // Query the element
 const resizer = document.getElementById('resizer');
 const leftSide = document.getElementById('left');
 const rightSide = document.getElementById('right');
 
+//////////////left///////////////////
+// 창 크기가 바뀔 때마다 다시 그려지도록
+let timer;
+
+window.addEventListener('resize', function(){
+	 if(timer) {
+        clearTimeout(timer);
+    }
+	timer = setTimeout(function(){
+	    candlestickChart.draw();
+	}, 10);
+}); // 스크롤 있는 크기로 작아지면 실행 안되는 문제
+
+//const draw = setInterval(() => {
+//    candlestickChart.draw();
+//}, 10);
+
+//////////////resize/////////////////
 // The current position of mouse
 let x = 0;
 let y = 0;
@@ -72,7 +87,6 @@ const mouseUpHandler = function () {
 resizer.addEventListener('mousedown', mouseDownHandler);
 
 
-
 /////////////side//////////////////////////
 // setting
 function getCookie(name) {
@@ -104,14 +118,14 @@ function enterkey(){
 document.getElementById("searchblock").addEventListener("submit", function(e){
     e.preventDefault();
 
-    search = document.getElementById("searchblock_input").value;
+    searchword = document.getElementById("searchblock_input").value;
 
     fetch('http://localhost:8000/chart/search/block/', {
       method: 'POST',
       credentials: "same-origin",
       headers: {"X-CSRFToken": csrftoken,
                 "X-Requested-With": "XMLHttpRequest"},
-      body: JSON.stringify({ "search": search }),
+      body: JSON.stringify({ "searchword": searchword }),
     })
     .then(response => response.json())
     .then(data => {
@@ -121,4 +135,3 @@ document.getElementById("searchblock").addEventListener("submit", function(e){
         console.log(error);
     });
 });
-
