@@ -1,0 +1,41 @@
+{% for block in list %}
+<div class="block">
+    {% if block.checktype == "E" %}
+    <div class="block_header" style="flex:1;">
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_title">{{ block.title }}</div>
+    </div>
+    <br>
+    <div class="block_tag_container">
+        {% for stock_tag in block.stock_tag.all %}
+        <span class="tag"><a href="{{ stock_tag.get_absolute_url }}">#{{ stock_tag }}</a></span>&nbsp;
+        {% endfor %}
+        {% for word_tag in block.word_tag.all %}
+        <span class="tag"><a href="{{ word_tag.get_absolute_url }}">#{{word_tag}}</a></span>&nbsp;
+        {% endfor %}
+        {% for person_tag in block.person_tag.all %}
+        <span class="tag"><a href="{{ person_tag.get_absolute_url }}">#{{person_tag}}</a></span>&nbsp;
+        {% endfor %}
+    </div>
+    <!-- 내용 어떤 식으로 노출 시킬지 고민 필요 -->
+    <!--    <div class="block_content">-->
+    <!--    {{ block.content}}-->
+    <!--    </div>-->
+    {% endif %}
+
+    {% if block.checktype == "O" %}
+    <div class="block_header" style="flex:1;">
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_title">{{ block.short }}</div>
+    {% endif %}
+    </div>
+
+    {% if block.checktype == "R" %}
+    <div class="block_header" style="flex:1;">
+    <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>
+    <div class="block_header_title">{{ block.title }}</div>
+    {% endif %}
+    </div>
+</div>
+<br>
+{% endfor %}

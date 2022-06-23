@@ -1,0 +1,29 @@
+{% extends "single_page/base.html" %}
+{% load static %}
+
+{% block extra-style %}{% endblock %}
+
+{% block title %}{{ object }} - {% endblock %}
+
+{% block content %}
+<input value ="{{ object.name }}" class="stock_search_input"> <!-- 추가해야함 ({{ object.code }})-->
+<br>
+
+<div class="stock_menu">
+   <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
+   <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+</div>
+<br>
+
+<div id='chart_wrapper' style="flex:1">
+    <canvas id="chart"></canvas>
+</div>
+
+
+{% endblock %}
+
+{% block extra-script %}
+<script src="{% static 'js/stock.js' %}"></script>
+<script src="{% static 'js/chart.js' %}"></script>
+{% endblock %}
+

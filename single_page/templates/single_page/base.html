@@ -1,0 +1,42 @@
+<!doctype html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra-style %}{% endblock %}
+    <title>{% block title %}{% endblock %}모두를 위한 투자</title>
+</head>
+
+<body>
+
+<div id="flexbox">
+    <!-- navbar -->
+    {% include "single_page/nav.html" %}
+    <div class="underbar"></div>
+
+    <!-- main -->
+    <div id="main">
+        <!-- page -->
+        <section id="left" class="container">
+            {% block content %}{% endblock %}
+        </section>
+
+        <!-- The resizer -->
+        <div id="resizer"></div>
+
+        <!-- sidebar -->
+        <aside id="right">
+            {% include "single_page/side.html" %}
+        </aside>
+    </div>
+</div>
+
+<script src="{% static 'js/base.js' %}"></script>
+{% block extra-script %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% extends "single_page/base.html" %}
+
+{% block title %}{{ object }} - {% endblock %}
+
+{% block content %}
+<h2>{{ object.name }}</h2>
+<br>
+<p>{{ object.content }}</p>
+{% endblock %}

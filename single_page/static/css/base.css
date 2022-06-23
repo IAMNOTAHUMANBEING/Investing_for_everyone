@@ -1,0 +1,139 @@
+@import "reset.css";
+@import "nav.css";
+
+#flexbox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#main{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0%;
+}
+
+#left{
+    display:flex;
+    flex-direction: column;
+    width: 80vw;
+    min-width: 15vw;
+}
+
+.stock_search_input{
+    width: 300px;
+}
+
+.stock_menu{
+    display: flex;
+}
+
+.stock_menu_btn{
+    padding: 10px;
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid rgb(192, 192, 192);
+}
+
+#chart{
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(192, 192, 192);
+}
+
+#resizer {
+    background-color: rgb(192, 192, 192);
+    width: 3px;
+}
+
+#resizer:hover{
+    cursor:w-resize;
+}
+
+#right{
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    min-width: 15vw;
+}
+
+#left, #right, #resizer{
+    height: 100%;
+    box-sizing: border-box; /* 오페라(Opera) */
+    -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
+    -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
+}
+
+h2{
+    margin-top: 0px;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	height: 100vh;
+	background-color: rgb(192, 192, 192);
+}
+
+.underbar {
+    height: 3px;
+    width: 100%;
+    background-color: rgb(192, 192, 192);
+}
+
+.container {
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(192, 192, 192);
+	background-color: white;
+	padding: 20px;
+}
+
+.block{
+    display: flex;
+    flex-direction: column;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(192, 192, 192);
+	padding: 10px;
+}
+
+.block_header{
+    display: flex;
+    flex-direction: row;
+}
+.block_header div{
+    padding: 0 5px;
+}
+
+.block_header_date {
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    background-color: #e6e6e6;
+}
+
+.block_tag_container{
+    display: flex;
+    flex: 1 1 0%;
+}
+
+.tag{
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(192, 192, 192);
+	padding: 3px;
+}
+
+.tag a{
+    text-decoration: none;
+}
+
+.block_content{
+    border-radius: 5px;
+    border: 1px solid rgb(192, 192, 192);
+}
