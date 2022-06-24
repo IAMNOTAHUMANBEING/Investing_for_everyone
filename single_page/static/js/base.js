@@ -117,6 +117,8 @@ document.getElementById("searchblock").addEventListener("submit", (e) =>{
     e.preventDefault();
 
     searchword = document.getElementById("searchblock_input").value;
+    searchdate_start = document.getElementById("searchblock_date_start").value;
+    searchdate_end = document.getElementById("searchblock_date_end").value;
 
     if(searchword.trim().length > 0){
         fetch('http://localhost:8000/chart/search/block/', {
@@ -124,7 +126,10 @@ document.getElementById("searchblock").addEventListener("submit", (e) =>{
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
                     "X-Requested-With": "XMLHttpRequest"},
-          body: JSON.stringify({ "searchword": searchword }),
+          body: JSON.stringify({ "searchword": searchword,
+                                 "searchdate_start": searchdate_start,
+                                 "searchdate_end": searchdate_end,
+           }),
         })
         .then(response => response.json())
         .then(data => {

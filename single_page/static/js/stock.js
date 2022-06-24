@@ -1,11 +1,20 @@
 //init
 window.addEventListener("load", function () {
-  let form = document.getElementById("searchblock");
-  let input = document.getElementById("searchblock_input");
+  let searchblock_form = document.getElementById("searchblock");
+  let searchblock_input = document.getElementById("searchblock_input");
   let stock_name = document.getElementById("searchstock").value;
 
-  input.value = stock_name;
-  form.searchblock_button.click(); // submit(); 하면 에러남
+  let today =  new Date();
+  let searchblock_date_end = today.toISOString().substring(0, 10);
+  today.setFullYear(today.getFullYear() - 1);
+  console.log(today);
+  let searchblock_date_start = today.toISOString().substring(0, 10);
+
+  document.getElementById('searchblock_date_start').value = searchblock_date_start;
+  document.getElementById('searchblock_date_end').value = searchblock_date_end;
+
+  searchblock_input.value = stock_name;
+  searchblock_form.searchblock_button.click(); // submit(); 하면 에러남
 });
 
 

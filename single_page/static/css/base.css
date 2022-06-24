@@ -118,8 +118,8 @@ body {
     -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
 }
 
-h2{
-    margin-top: 0px;
+#searchblock{
+
 }
 
 #searchblock_input {
@@ -131,7 +131,22 @@ h2{
 #searchblock_button{
     padding: 5px;
     border: 3px solid rgb(192, 192, 192);
-    border-radius: 5px
+    border-radius: 5px;
+    cursor: pointer;
+    width: 74.71px;
+}
+
+#searchblock_button:hover{
+    background-color: rgb(192, 192, 192);
+}
+
+.searchblock_date{
+    padding-top: 15px;
+}
+
+#searchblock_date_start, #searchblock_date_end{
+    border: 3px solid rgb(192, 192, 192);
+    border-radius: 5px;
 }
 
 .underbar {

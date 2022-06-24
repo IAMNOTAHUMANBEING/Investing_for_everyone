@@ -2,7 +2,11 @@
     {% csrf_token %}
     <input type="text" name="searchblock_input" class="search" id="searchblock_input" />
     <input type="submit" onkeyup="enterkey();" name="searchblock_button" value="검색" class="search" id="searchblock_button" />
-    <!-- 날짜 선택 기능 추가해야함 -->
+
+    <div class="searchblock_date">
+        <input type="date" id="searchblock_date_start">
+        <input type="date" id="searchblock_date_end">
+    </div>
 </form>
 
 <div class="underbar"></div>
