@@ -6,13 +6,11 @@
 {% block title %}{{ object }} - {% endblock %}
 
 {% block content %}
+<div class = "searchstock_autocomplete">
 <input type="text" value ="{{ object.name }}" id="searchstock"> <!-- 추가해야함 ({{ object.code }})-->
-<!--<div class = "searchstock_autocomplete">-->
-<!--    <ul class="searchstock_list">-->
-<!--        <li>검색결과</li>-->
-<!--        <li>검색결과2</li>-->
-<!--    </ul>-->
-<!--</div>-->
+    <ul class="searchstock_list">
+    </ul>
+</div>
 <br>
 
 <div class="stock_menu">

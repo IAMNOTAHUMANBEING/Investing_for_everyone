@@ -2,6 +2,7 @@ from django.urls import re_path, path
 from single_page import views
 
 app_name = 'single_page'
+
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     # path('', views.) 홈페이지 만들어야함
@@ -10,6 +11,6 @@ urlpatterns = [
     re_path(r'^person/(?P<slug>[-\w]+)/$', views.PersonDV.as_view(), name='person'),
     re_path(r'^word/(?P<slug>[-\w]+)/$', views.WordDV.as_view(), name='word'),
     path('search/block/', views.SearchBlock, name='searchblock'),
-    # path('chartdata/', views.ChartData, name='chartdata')
     path('search/stock/', views.SearchStock, name='searchstock'),
+    # path('chartdata/', views.ChartData, name='chartdata')
 ]

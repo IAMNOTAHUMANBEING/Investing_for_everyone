@@ -1,24 +1,3 @@
-//function plot(){
-//    code = document.querySelector("h2").substr()
-//
-//    fetch('http://localhost:8000/chart/chartdata/', {
-//      method: 'POST',
-//      credentials: "same-origin",
-//      headers: {"X-CSRFToken": csrftoken,
-//                "X-Requested-With": "XMLHttpRequest"},
-//      body: JSON.stringify({ "code": code }),
-//    })
-//    .then(response => response.json())
-//    .then(data => {
-//
-//    })
-//    .catch(error => {
-//        console.log(error);
-//    });
-//});
-//
-//plot();
-
 //init
 window.addEventListener("load", function () {
   let form = document.getElementById("searchblock");
@@ -29,32 +8,35 @@ window.addEventListener("load", function () {
   form.searchblock_button.click(); // submit(); 하면 에러남
 });
 
-// search stock ajax
-const searchstock = document.getElementById("searchstock");
 
-searchstock.addEventListener('keyup', (e) =>{
-    const searchword = e.target.value;
+// search stock
+// autocomplete ajax
+document.getElementById("searchstock").addEventListener("keyup", (e) =>{
+
+    searchword = e.target.value;
+    console.log(searchword);
 
     if(searchword.trim().length > 0){
-        console.log(searchword);
-
         fetch('http://localhost:8000/chart/search/stock/', {
-            method: 'POST',
-            credentials: "same-origin",
-            headers: {"X-CSRFToken": csrftoken,
-                      "X-Requested-With": "XMLHttpRequest"},
-            body: JSON.stringify({ "searchword": searchword }),
+          method: 'POST',
+          credentials: "same-origin",
+          headers: {"X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest"},
+          body: JSON.stringify({ "searchword": searchword }),
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            document.querySelector(".searchstock_list").innerHTML = data;
         })
         .catch(error => {
             console.log(error);
         });
     }
+    // 입력값 없을 때 사라지게
+    else{
+        document.querySelector(".searchstock_list").innerHTML = "";
+    }
 });
-
 
 // chart ajax
 function plot()
@@ -80,5 +62,27 @@ function plot()
     xmlhttp.send();
 }
 plot();
+
+//function plot(){
+//    code = document.querySelector("h2").substr()
+//
+//    fetch('http://localhost:8000/chart/chartdata/', {
+//      method: 'POST',
+//      credentials: "same-origin",
+//      headers: {"X-CSRFToken": csrftoken,
+//                "X-Requested-With": "XMLHttpRequest"},
+//      body: JSON.stringify({ "code": code }),
+//    })
+//    .then(response => response.json())
+//    .then(data => {
+//
+//    })
+//    .catch(error => {
+//        console.log(error);
+//    });
+//});
+//
+//plot();
+
 
 // info ajax

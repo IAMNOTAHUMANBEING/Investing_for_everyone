@@ -1,0 +1,3 @@
+{% for stock in stock_list %}
+<li onclick="location.href='{{ stock.get_absolute_url }}'">{{ stock.name }}</li>
+{% endfor %}

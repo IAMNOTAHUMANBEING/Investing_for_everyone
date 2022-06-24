@@ -30,41 +30,52 @@ class WordDV(DetailView):
 
 def SearchStock(request):
     if request.method == 'POST':
-        searchword = json.loads(request.body).get('searchword')
-        stock_list = Stock.objects.filter(name__starts_with=searchword)
-        data = stock_list.values()
 
+        searchword = json.loads(request.body).get('searchword')
+
+        search_result = Stock.objects.filter(name__istartswith=searchword)
+
+        if search_result:
+            context = {
+                'stock_list': search_result
+            }
+            data = render_to_string('single_page/stock_search_result.html', context)
+            print(data)
+            return JsonResponse(data, safe=False)
+
+        else:
+            data = ""
+            return JsonResponse(data, safe=False)
+
+    else:
+        return render(request, 'home.html', {})
 
 
 def SearchBlock(request):
     if request.method == 'POST':
-        searchword = json.loads(request.body).get('searchword', '')
 
-        if searchword:
-            event_list = Event.objects.filter(
-                Q(title__icontains=searchword) | Q(stock_tag__name__icontains=searchword) |
-                Q(word_tag__name__icontains=searchword) | Q(
-                    person_tag__name__icontains=searchword)).distinct()
-            opinion_list = Opinion.objects.filter(
-                Q(short__icontains=searchword) | Q(stock_tag__name__icontains=searchword) |
-                Q(word_tag__name__icontains=searchword) | Q(
-                    name__name__icontains=searchword)).distinct()
-            report_list = Report.objects.filter(Q(title__icontains=searchword) | Q(author__name__icontains=searchword) |
-                                                Q(institution__icontains=searchword)).distinct()
+        searchword = json.loads(request.body).get('searchword')
 
-            data = list(event_list) + list(opinion_list) + list(report_list)
-            data = sorted(data, key=lambda x: x.date, reverse=True)
+        event_list = Event.objects.filter(
+            Q(title__icontains=searchword) | Q(stock_tag__name__icontains=searchword) |
+            Q(word_tag__name__icontains=searchword) | Q(
+                person_tag__name__icontains=searchword)).distinct()
+        opinion_list = Opinion.objects.filter(
+            Q(short__icontains=searchword) | Q(stock_tag__name__icontains=searchword) |
+            Q(word_tag__name__icontains=searchword) | Q(
+                name__name__icontains=searchword)).distinct()
+        report_list = Report.objects.filter(Q(title__icontains=searchword) | Q(author__name__icontains=searchword) |
+                                            Q(institution__icontains=searchword)).distinct()
+        search_result = list(event_list) + list(opinion_list) + list(report_list)
+        search_result = sorted(search_result, key=lambda x: x.date, reverse=True)
 
-            if data:
-                context = {
-                    'list': data
-                }
+        # 검색결과 유무에 따라 구분
+        if search_result:
+            context = {
+                'block_list': search_result
+            }
+            data = render_to_string('single_page/side_search_result.html', context)
 
-                data = render_to_string('single_page/side_search_result.html', context)
-
-                return JsonResponse(data, safe=False)
-
-            data = "검색결과가 없습니다."
             return JsonResponse(data, safe=False)
 
         else:
@@ -74,7 +85,5 @@ def SearchBlock(request):
     else:
         return render(request, 'home.html', {})
 
-
 # def ChartData(request):
 #     if request.method == 'POST':
-

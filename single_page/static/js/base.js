@@ -113,23 +113,28 @@ function enterkey(){
 }
 
 // block ajax
-document.getElementById("searchblock").addEventListener("submit", function(e){
+document.getElementById("searchblock").addEventListener("submit", (e) =>{
     e.preventDefault();
 
     searchword = document.getElementById("searchblock_input").value;
 
-    fetch('http://localhost:8000/chart/search/block/', {
-      method: 'POST',
-      credentials: "same-origin",
-      headers: {"X-CSRFToken": csrftoken,
-                "X-Requested-With": "XMLHttpRequest"},
-      body: JSON.stringify({ "searchword": searchword }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("block_container").innerHTML = data;
-    })
-    .catch(error => {
-        console.log(error);
-    });
+    if(searchword.trim().length > 0){
+        fetch('http://localhost:8000/chart/search/block/', {
+          method: 'POST',
+          credentials: "same-origin",
+          headers: {"X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest"},
+          body: JSON.stringify({ "searchword": searchword }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("block_container").innerHTML = data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+    else{
+        document.getElementById("block_container").innerHTML = "검색결과가 없습니다.";
+    }
 });

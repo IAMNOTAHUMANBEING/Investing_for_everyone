@@ -1,6 +1,8 @@
 @import "reset.css";
 @import "nav.css";
 
+* { box-sizing: border-box; }
+
 html,body{
 	height: 100%;
 }
@@ -31,23 +33,42 @@ body {
     min-width: 20vw;
 }
 
-#searchstock{
-    width: 300px;
+.searchstock_autocomplete{
+    width:300px;
+    position: relative;
+    display: inline-block;
 }
 
-.searchstock_autocomplete{
-    position: relative;
-    width: 300px;
-    top: 10px;
-    z-index: 10;
+#searchstock{
+    width: 100%;
+    padding: 10px;
+    border: 3px solid rgb(192, 192, 192);
+    border-radius: 5px;
 }
 
 .searchstock_list{
-    display: flex;
-    flex-direction:column;
-    justify-content : space-around;
+    width: 100%;
+    max-height: 300px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+
+    background-color: white;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
     list-style: none;
-    margin-right: 30%;
+
+    overflow: auto;
+}
+
+.searchstock_list li{
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
 }
 
 .stock_menu{
