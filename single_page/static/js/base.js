@@ -1,4 +1,4 @@
-//////////////////////////////////////
+///////////////mobile//////////
 //let vh = window.innerHeight * 0.01
 //document.documentElement.style.setProperty('--vh', `${vh}px`)
 //window.addEventListener('resize', () => {
@@ -11,8 +11,10 @@ const resizer = document.getElementById('resizer');
 const leftSide = document.getElementById('left');
 const rightSide = document.getElementById('right');
 
+
+
 //////////////left///////////////////
-// 창 크기가 바뀔 때마다 다시 그려지도록
+// 창 크기가 바뀔 때마다 차트 다시 그려지도록
 let timer;
 
 window.addEventListener('resize', function(){
@@ -20,13 +22,9 @@ window.addEventListener('resize', function(){
         clearTimeout(timer);
     }
 	timer = setTimeout(function(){
-	    candlestickChart.draw();
+	    candlestickChart.draw()
 	}, 10);
-}); // 스크롤 있는 크기로 작아지면 실행 안되는 문제
-
-//const draw = setInterval(() => {
-//    candlestickChart.draw();
-//}, 10);
+}); // 스크롤 있는 크기로 작아지면 실행 안되는 문제, 마우스 움직일때마다 그리면 해결되는데 비효율적
 
 //////////////resize/////////////////
 // The current position of mouse

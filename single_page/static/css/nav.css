@@ -1,5 +1,9 @@
-h1 {
-    margin: 0.3em;
+#header {
+    height:50px;
+	background-color: #f4f4f4;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
 }
 
 ul {
@@ -9,7 +13,7 @@ ul {
 }
 
 .logo {
-	font-size: 2em;
+	font-size: 16px;
 	display: flex;
 }
 
@@ -22,7 +26,7 @@ ul {
 }
 
 li {
-  font-size: 1.3em;
+  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,11 +44,4 @@ li {
 
 .main-nav a:hover {
 	color: #718daa;
-}
-
-#header {
-	background-color: #f4f4f4;
-	display: flex;
-	flex-direction: row;
-	justify-content: start;
 }
