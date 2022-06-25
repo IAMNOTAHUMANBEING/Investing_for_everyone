@@ -29,18 +29,23 @@ class WordDV(DetailView):
     template_name = "single_page/word.html"
 
 
-def SearchStock(request):
+def SearchPage(request):
     if request.method == 'POST':
 
         searchword = json.loads(request.body).get('searchword')
 
-        search_result = Stock.objects.filter(name__istartswith=searchword)
+        stock_list = Stock.objects.filter(name__istartswith=searchword)
+        word_list = Word.objects.filter(name__istartswith=searchword)
+        person_list = Person.objects.filter(name__istartswith=searchword)
+
+        search_result = list(stock_list) + list(word_list) + list(person_list)
+        search_result = sorted(search_result, key=lambda x: x.name)
 
         if search_result:
             context = {
-                'stock_list': search_result
+                'page_list': search_result
             }
-            data = render_to_string('single_page/stock_search_result.html', context)
+            data = render_to_string('single_page/page_search_result.html', context)
 
             return JsonResponse(data, safe=False)
 
@@ -58,7 +63,6 @@ def SearchBlock(request):
         searchword = json.loads(request.body).get('searchword')
         searchdate_start = datetime.strptime(json.loads(request.body).get('searchdate_start'), "%Y-%m-%d").date()
         searchdate_end = datetime.strptime(json.loads(request.body).get('searchdate_end'), "%Y-%m-%d").date() + timedelta(days=1)
-        print(searchdate_end)
 
         event_list = Event.objects.filter(
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(title__icontains=searchword) | Q(

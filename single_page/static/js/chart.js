@@ -13,8 +13,8 @@ function Candlestick(timestamp, open, high, low, close, volume, change)
 function CandlestickChart( canvasElementID )
 {
     this.canvas = document.getElementById( canvasElementID );
-    this.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width )-10;
-	this.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height )-10;
+    this.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width );
+	this.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height )-10;
     this.context = this.canvas.getContext( "2d" );
 
     this.mouseMoveHandler = this.mouseMove.bind(this);
@@ -222,10 +222,10 @@ CandlestickChart.prototype.dragup = function (e)
 CandlestickChart.prototype.draw = function()
 {
     // canvas 크기 계산
-    this.canvas.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width) -10;
-    this.canvas.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height) -10;
-    this.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width )-10;
-	this.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height )-10;
+    this.canvas.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width);
+    this.canvas.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height)-10;
+    this.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width );
+	this.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height )-10;
 
     this.yPixelRange = this.height-this.marginTop-this.marginBottom;
     this.xPixelRange = this.width-this.marginLeft-this.marginRight;

@@ -24,7 +24,8 @@ class Person(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
+    def get_absolute_url(self):
+        return reverse('single_page:person', kwargs={"slug": self.slug})
 
 class Word(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -34,7 +35,8 @@ class Word(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
+    def get_absolute_url(self):
+        return reverse('single_page:word', kwargs={"slug": self.slug})
 
 class Event(models.Model):
     title = models.CharField(max_length=50)

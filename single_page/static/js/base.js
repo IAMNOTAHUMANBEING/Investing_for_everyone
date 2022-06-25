@@ -13,7 +13,57 @@ const rightSide = document.getElementById('right');
 
 
 
-//////////////left///////////////////
+////////////left///////////////////
+//init
+window.addEventListener("load", function () {
+  let searchblock_form = document.getElementById("searchblock");
+  let searchblock_input = document.getElementById("searchblock_input");
+  let stock_name = document.getElementById("searchpage").value;
+
+  let today =  new Date();
+  let searchblock_date_end = today.toISOString().substring(0, 10);
+  today.setFullYear(today.getFullYear() - 1);
+  let searchblock_date_start = today.toISOString().substring(0, 10);
+
+  document.getElementById('searchblock_date_start').value = searchblock_date_start;
+  document.getElementById('searchblock_date_end').value = searchblock_date_end;
+
+  searchblock_input.value = stock_name;
+  searchblock_form.searchblock_button.click(); // submit(); 하면 에러남
+});
+
+
+
+// search page
+// autocomplete ajax, 성능 문제시 디바운스 구현 필요
+document.getElementById("searchpage").addEventListener("keyup", (e) =>{
+
+    searchword = e.target.value;
+
+    if(searchword.trim().length > 0){
+        fetch('http://localhost:8000/chart/search/page/', {
+          method: 'POST',
+          credentials: "same-origin",
+          headers: {"X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest"},
+          body: JSON.stringify({ "searchword": searchword }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector(".searchpage_list").innerHTML = data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+    // 입력값 없을 때 사라지게
+    else{
+        document.querySelector(".searchpage_list").innerHTML = "";
+    }
+});
+
+
+
 // 창 크기가 바뀔 때마다 차트 다시 그려지도록
 let timer;
 
@@ -22,9 +72,12 @@ window.addEventListener('resize', function(){
         clearTimeout(timer);
     }
 	timer = setTimeout(function(){
-	    candlestickChart.draw()
-	}, 10);
+        candlestickChart.draw();
+        console.log("123");
+	}, 100);
 }); // 스크롤 있는 크기로 작아지면 실행 안되는 문제, 마우스 움직일때마다 그리면 해결되는데 비효율적
+
+
 
 //////////////resize/////////////////
 // The current position of mouse

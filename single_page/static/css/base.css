@@ -33,20 +33,20 @@ body {
     min-width: 20vw;
 }
 
-.searchstock_autocomplete{
+.searchpage_autocomplete{
     width:300px;
     position: relative;
     display: inline-block;
 }
 
-#searchstock{
+#searchpage{
     width: 100%;
     padding: 10px;
     border: 3px solid rgb(192, 192, 192);
     border-radius: 5px;
 }
 
-.searchstock_list{
+.searchpage_list{
     width: 100%;
     max-height: 300px;
     position: absolute;
@@ -64,11 +64,18 @@ body {
     overflow: auto;
 }
 
-.searchstock_list li{
+.searchpage_list li{
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
+}
+
+.page_content {
+    border: 2px solid #d4d4d4;
+    border-radius: 5px;
+    flex:1;
+    padding: 30px;
 }
 
 .stock_menu{
@@ -81,11 +88,6 @@ body {
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	border: 1px solid rgb(192, 192, 192);
-}
-
-#chart_wrapper{
-    display:flex;
-    flex:1 1 0;
 }
 
 #chart{
@@ -130,7 +132,7 @@ body {
 
 #searchblock_button{
     padding: 5px;
-    border: 3px solid rgb(192, 192, 192);
+    border: 1px solid rgb(192, 192, 192);
     border-radius: 5px;
     cursor: pointer;
     width: 74.71px;
@@ -145,7 +147,7 @@ body {
 }
 
 #searchblock_date_start, #searchblock_date_end{
-    border: 3px solid rgb(192, 192, 192);
+    border: 2px solid rgb(192, 192, 192);
     border-radius: 5px;
 }
 
@@ -176,12 +178,13 @@ body {
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	border: 1px solid rgb(192, 192, 192);
+	border: 2px solid rgb(192, 192, 192);
 	padding: 10px;
 }
 
 .block_header{
     display: flex;
+    flex:1;
     flex-direction: row;
 }
 .block_header div{

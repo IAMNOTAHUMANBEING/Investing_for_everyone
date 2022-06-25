@@ -1,9 +1,17 @@
 {% extends "single_page/base.html" %}
 
+{% load static %}
+
 {% block title %}{{ object }} - {% endblock %}
 
 {% block content %}
-<h2>{{ object.name }}</h2>
+<div class ="searchpage_autocomplete">
+    <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
+    <ul class="searchpage_list">
+    </ul>
+</div>
 <br>
-<p>{{ object.content }}</p>
+<div class="page_content">{{ object.content }}</div>
 {% endblock %}
+
+{% block extra-script %}{% endblock %}
