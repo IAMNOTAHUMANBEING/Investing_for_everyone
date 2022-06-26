@@ -173,6 +173,7 @@ body {
 }
 
 .block{
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     -webkit-border-radius: 5px;

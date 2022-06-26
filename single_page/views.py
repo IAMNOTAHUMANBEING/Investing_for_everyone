@@ -62,22 +62,23 @@ def SearchBlock(request):
 
         searchword = json.loads(request.body).get('searchword')
         searchdate_start = datetime.strptime(json.loads(request.body).get('searchdate_start'), "%Y-%m-%d").date()
-        searchdate_end = datetime.strptime(json.loads(request.body).get('searchdate_end'), "%Y-%m-%d").date() + timedelta(days=1)
+        searchdate_end = datetime.strptime(json.loads(request.body).get('searchdate_end'),
+                                           "%Y-%m-%d").date() + timedelta(days=1)
 
         event_list = Event.objects.filter(
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(title__icontains=searchword) | Q(
                 stock_tag__name__icontains=searchword) |
-            Q(word_tag__name__icontains=searchword) | Q(
-                person_tag__name__icontains=searchword))).distinct()
+                                                                 Q(word_tag__name__icontains=searchword) | Q(
+                        person_tag__name__icontains=searchword))).distinct()
         opinion_list = Opinion.objects.filter(
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(short__icontains=searchword) | Q(
                 stock_tag__name__icontains=searchword) |
-            Q(word_tag__name__icontains=searchword) | Q(
-                name__name__icontains=searchword))).distinct()
+                                                                 Q(word_tag__name__icontains=searchword) | Q(
+                        name__name__icontains=searchword))).distinct()
         report_list = Report.objects.filter(
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(title__icontains=searchword) | Q(
                 author__name__icontains=searchword) |
-            Q(institution__icontains=searchword))).distinct()
+                                                                 Q(institution__icontains=searchword))).distinct()
         search_result = list(event_list) + list(opinion_list) + list(report_list)
         search_result = sorted(search_result, key=lambda x: x.date, reverse=True)
 
@@ -97,5 +98,15 @@ def SearchBlock(request):
     else:
         return render(request, 'single_page/home.html', {})
 
-# def ChartData(request):
-#     if request.method == 'POST':
+
+def ChartData(request):
+    if request.method == 'POST':
+
+        stock_name = json.loads(request.body).get('stock_name')
+
+        with open('C:\\Users\\1004\\Google Drive\\computer_science\\github\\Invest_for_everyone\\single_page\\static\\price\\' + stock_name + '.json') as stock_price:
+            data = json.load(stock_price)
+
+            return JsonResponse(data, safe=False)
+
+
