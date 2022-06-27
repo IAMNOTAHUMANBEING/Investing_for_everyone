@@ -116,12 +116,10 @@ CandlestickChart.prototype.mouseMove = function( e )
     {
         // 마우스의 위치(전체 창 기준 위치값)를 날짜와 주가로 바꾸기
         this.hoveredPrice = this.yToPrices( this.mousePosition.y );
-        this.hoveredDate = this.xToDates( this.mousePosition.x );  // pixel -> index
-        
-        // let candlestickDelta = this.candlesticks[1].date-this.candlesticks[0].date;
-        // this.hoveredCandlestickIndex = Math.floor((this.hoveredDate-this.candlesticks[0].date)/candlestickDelta);
-        // this.hoveredDate = Math.floor(this.hoveredDate/candlestickDelta)*candlestickDelta;
-        // this.mousePosition.x = this.xToPixelCoords( this.hoveredDate );
+        this.hoveredDate = this.xToDates( this.mousePosition.x );  // pixel -> index;
+
+        // 캔들 내에서 이동 시 날짜 변화 없게
+        this.mousePosition.x = this.marginLeft + Math.floor(( this.hoveredDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
         this.draw();
     }
     else this.draw();
@@ -361,7 +359,11 @@ CandlestickChart.prototype.drawGrid = function()
     {   
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].date.substr(5, 2) === "01" && this.candlesticks[x].date.substr(8, 2) === "01")
+             if (x === this.startindex)
+             {
+                //pass
+             }
+             else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(0, 4);
@@ -374,14 +376,18 @@ CandlestickChart.prototype.drawGrid = function()
     {
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].date.substr(5, 2) === "01" && this.candlesticks[x].date.substr(8, 2) === "01")
+            if (x === this.startindex)
+             {
+                //pass
+             }
+             else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(0, 4);
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
-            else if (this.candlesticks[x].date.substr(8, 2) === "01")
+            else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
@@ -393,7 +399,11 @@ CandlestickChart.prototype.drawGrid = function()
     else if (this.candlesticksInCanvas > 7 * 5){
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].date.substr(8, 2) === "01")
+            if (x === this.startindex)
+             {
+                //pass
+             }
+             else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
@@ -412,7 +422,11 @@ CandlestickChart.prototype.drawGrid = function()
     else{
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].date.substr(8, 2) == "01")
+            if (x === this.startindex)
+             {
+                //pass
+             }
+             else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = monthNames[date.getMonth()];
