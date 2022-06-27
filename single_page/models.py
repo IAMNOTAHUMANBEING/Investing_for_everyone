@@ -2,11 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from markdownx.utils import markdown
+from markdownx.models import MarkdownxField
+
 class Stock(models.Model):
     name = models.CharField(max_length=30, unique=True)
     # slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
     code = models.CharField(max_length=10, unique=True)
-    content = models.TextField(blank=True, null=True)
+    content = MarkdownxField(blank=True, null=True)
 
     # chart
 
@@ -16,10 +19,13 @@ class Stock(models.Model):
     def get_absolute_url(self):
         return reverse('single_page:stock', kwargs={"pk": self.pk})
 
+    def get_content_markdown(self):
+        return markdown(self.content)
+
 class Person(models.Model):
     name = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
-    content = models.TextField(blank=True)
+    content = MarkdownxField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -27,10 +33,13 @@ class Person(models.Model):
     def get_absolute_url(self):
         return reverse('single_page:person', kwargs={"slug": self.slug})
 
+    def get_content_markdown(self):
+        return markdown(self.content)
+
 class Word(models.Model):
     name = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
-    content = models.TextField()
+    content = MarkdownxField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -38,10 +47,13 @@ class Word(models.Model):
     def get_absolute_url(self):
         return reverse('single_page:word', kwargs={"slug": self.slug})
 
+    def get_content_markdown(self):
+        return markdown(self.content)
+
 class Event(models.Model):
     title = models.CharField(max_length=50)
     date = models.DateField()
-    content = models.TextField()
+    content = MarkdownxField(blank=True, null=True)
 
     stock_tag = models.ManyToManyField(Stock, blank=True)
     word_tag = models.ManyToManyField(Word, blank=True)
@@ -60,6 +72,9 @@ class Event(models.Model):
     def checktype(self):
         return "E"
 
+    def get_content_markdown(self):
+        return markdown(self.content)
+
     # def get_previous(self):
     #     return self.get_previous_by_date()
     #
@@ -73,7 +88,7 @@ class Opinion(models.Model):
     short = models.CharField(max_length=50)
     name = models.ForeignKey(Person, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
-    content = models.TextField()
+    content = MarkdownxField(blank=True, null=True)
 
     stock_tag = models.ManyToManyField(Stock, blank=True)
     word_tag = models.ManyToManyField(Word, blank=True)
@@ -88,8 +103,12 @@ class Opinion(models.Model):
     def checktype(self):
         return "O"
 
+    def get_content_markdown(self):
+        return markdown(self.content)
+
     class Meta:
         ordering = ('-date',)
+
 
 class Report(models.Model):
     title = models.CharField(max_length=30)

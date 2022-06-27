@@ -1,4 +1,4 @@
-from django.urls import re_path, path
+from django.urls import re_path, path, include
 from single_page import views
 
 app_name = 'single_page'
@@ -13,5 +13,5 @@ urlpatterns = [
     re_path(r'^word/(?P<slug>[-\w]+)/$', views.WordDV.as_view(), name='word'),
     path('search/block/', views.SearchBlock, name='searchblock'),
     path('search/page/', views.SearchPage, name='searchpage'),
-    path('chartdata/', views.ChartData, name='chartdata')
+    path('chartdata/', views.ChartData, name='chartdata'),
 ]

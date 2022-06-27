@@ -1,6 +1,6 @@
-function Candlestick(timestamp, open, high, low, close, volume, change)
+function Candlestick(date, open, high, low, close, volume, change)
 {
-    this.timestamp = timestamp; // "YYYY-mm-dd str으로 변경"
+    this.date = date; // "YYYY-mm-dd str으로 변경"
     this.open = parseFloat(open);
     this.close = parseFloat(close);
     this.high = parseFloat(high);
@@ -92,7 +92,7 @@ CandlestickChart.prototype.addCandlestick = function( candlestick )
 // 시작 시 캔들 개수와 인덱스
 CandlestickChart.prototype.setCanvas = function ()
 {
-    this.candlesticksInCanvas = this.candlesticks.length;
+    this.candlesticksInCanvas = 356;
     this.endindex = this.candlesticks.length - 1;
     this.startindex = this.endindex - this.candlesticksInCanvas;
 }
@@ -118,8 +118,8 @@ CandlestickChart.prototype.mouseMove = function( e )
         this.hoveredPrice = this.yToPrices( this.mousePosition.y );
         this.hoveredDate = this.xToDates( this.mousePosition.x );  // pixel -> index
         
-        // let candlestickDelta = this.candlesticks[1].timestamp-this.candlesticks[0].timestamp;
-        // this.hoveredCandlestickIndex = Math.floor((this.hoveredDate-this.candlesticks[0].timestamp)/candlestickDelta);
+        // let candlestickDelta = this.candlesticks[1].date-this.candlesticks[0].date;
+        // this.hoveredCandlestickIndex = Math.floor((this.hoveredDate-this.candlesticks[0].date)/candlestickDelta);
         // this.hoveredDate = Math.floor(this.hoveredDate/candlestickDelta)*candlestickDelta;
         // this.mousePosition.x = this.xToPixelCoords( this.hoveredDate );
         this.draw();
@@ -296,7 +296,7 @@ CandlestickChart.prototype.draw = function()
         this.context.setLineDash( [5,5] );
         this.drawLine(this.mousePosition.x, 0, this.mousePosition.x, this.height, this.timeLineColor );
         this.context.setLineDash( [] );
-        str = this.candlesticks[this.hoveredDate].timestamp;
+        str = this.candlesticks[this.hoveredDate].date;
         textWidth = this.context.measureText( str ).width;
         this.fillRect(this.mousePosition.x - textWidth / 2 - 5, this.height - 20, textWidth + 10, 20, this.timeLineColor );
         this.context.fillStyle = this.timeLineTextColor;
@@ -361,10 +361,10 @@ CandlestickChart.prototype.drawGrid = function()
     {   
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].timestamp.substr(5, 2) === "01" && this.candlesticks[x].timestamp.substr(8, 2) === "01")
+            if (this.candlesticks[x].date.substr(5, 2) === "01" && this.candlesticks[x].date.substr(8, 2) === "01")
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = this.candlesticks[x].timestamp.substr(0, 4);
+                let dateStr = this.candlesticks[x].date.substr(0, 4);
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
@@ -374,17 +374,17 @@ CandlestickChart.prototype.drawGrid = function()
     {
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].timestamp.substr(5, 2) === "01" && this.candlesticks[x].timestamp.substr(8, 2) === "01")
+            if (this.candlesticks[x].date.substr(5, 2) === "01" && this.candlesticks[x].date.substr(8, 2) === "01")
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = this.candlesticks[x].timestamp.substr(0, 4);
+                let dateStr = this.candlesticks[x].date.substr(0, 4);
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
-            else if (this.candlesticks[x].timestamp.substr(8, 2) === "01")
+            else if (this.candlesticks[x].date.substr(8, 2) === "01")
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = monthNames[Number(this.candlesticks[x].timestamp.substr(5, 2)) - 1];
+                let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
@@ -393,17 +393,17 @@ CandlestickChart.prototype.drawGrid = function()
     else if (this.candlesticksInCanvas > 7 * 5){
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].timestamp.substr(8, 2) === "01")
+            if (this.candlesticks[x].date.substr(8, 2) === "01")
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = monthNames[Number(this.candlesticks[x].timestamp.substr(5, 2)) - 1];
+                let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
-            else if ([6, 12, 18, 24].includes(Number(this.candlesticks[x].timestamp.substr(8, 2))))
+            else if ([6, 12, 18, 24].includes(Number(this.candlesticks[x].date.substr(8, 2))))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = this.candlesticks[x].timestamp.substr(8, 2);
+                let dateStr = this.candlesticks[x].date.substr(8, 2);
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
@@ -412,17 +412,17 @@ CandlestickChart.prototype.drawGrid = function()
     else{
         for (let x = this.startindex; x <= this.endindex; x += 1)
         {
-            if (this.candlesticks[x].timestamp.substr(8, 2) == "01")
+            if (this.candlesticks[x].date.substr(8, 2) == "01")
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
                 let dateStr = monthNames[date.getMonth()];
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
-            else if(Number(this.candlesticks[x].timestamp.substr(8, 2)) % 2 == 0)
+            else if(Number(this.candlesticks[x].date.substr(8, 2)) % 2 == 0)
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = this.candlesticks[x].timestamp.substr(8, 2);
+                let dateStr = this.candlesticks[x].date.substr(8, 2);
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }
@@ -461,8 +461,8 @@ CandlestickChart.prototype.calculateYRange = function()
 //// 날짜 범위 이용해서 x축  날짜길이 구하기
 //CandlestickChart.prototype.calculateXRange = function()
 //{
-//    this.xStart = this.candlesticks[this.startindex].timestamp; // - this.candlesticksInCanvas + this.dragDistance
-//    this.xEnd = this.candlesticks[this.endindex].timestamp;    //  this.dragDistance
+//    this.xStart = this.candlesticks[this.startindex].date; // - this.candlesticksInCanvas + this.dragDistance
+//    this.xEnd = this.candlesticks[this.endindex].date;    //  this.dragDistance
 //    this.xRange = this.xEnd - this.xStart;
 //}
 

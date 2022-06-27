@@ -11,7 +11,7 @@
     </ul>
 </div>
 <br>
-<div class="page_content">{{ object.content }}</div>
+<div class="page_content">{{ object.get_content_markdown | safe }}</div>
 {% endblock %}
 
 {% block extra-script %}{% endblock %}

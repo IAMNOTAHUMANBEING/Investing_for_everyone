@@ -5,5 +5,5 @@
 {% block content %}
 <h2>{{ object.name }}</h2>
 <br>
-<p>{{ object.content }}</p>
+<p>{{ object.get_content_markdown | safe }}</p>
 {% endblock %}
