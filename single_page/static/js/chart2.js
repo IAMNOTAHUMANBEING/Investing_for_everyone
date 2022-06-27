@@ -13,8 +13,8 @@ function Candlestick(date, open, high, low, close, volume, change)
 function CandlestickChart( canvasElementID )
 {
     this.canvas = document.getElementById( canvasElementID );
-    this.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width ) - 10;
-	this.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height )- 10;
+    this.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width ) - 10;
+	this.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height )- 10;
     this.context = this.canvas.getContext( "2d" );
 
     this.mouseMoveHandler = this.mouseMove.bind(this);
@@ -223,10 +223,10 @@ CandlestickChart.prototype.dragup = function (e)
 CandlestickChart.prototype.draw = function()
 {
     // canvas 크기 계산
-    this.canvas.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width ) - 10;
-    this.canvas.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height ) - 10;
-    this.width = parseInt( window.getComputedStyle(document.getElementById('chart')).width ) - 10;
-	this.height = parseInt( window.getComputedStyle(document.getElementById('chart')).height ) - 10;
+    this.canvas.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width ) - 10;
+    this.canvas.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height ) - 10;
+    this.width = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).width ) - 10;
+	this.height = parseInt( window.getComputedStyle(document.getElementById('chart_wrapper')).height ) - 10;
 
     this.yPixelRange = this.height-this.marginTop-this.marginBottom;
     this.xPixelRange = this.width-this.marginLeft-this.marginRight;
@@ -429,7 +429,7 @@ CandlestickChart.prototype.drawGrid = function()
              else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
                 this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
-                let dateStr = monthNames[date.getMonth()];
+                let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
                 this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
             }

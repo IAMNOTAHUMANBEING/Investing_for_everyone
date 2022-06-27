@@ -7,20 +7,22 @@
 
 {% block content %}
 <div style="display:flex; flex:1 1 0; flex-direction:column;">
-<div class = "searchpage_autocomplete">
-    <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
-    <ul class="searchpage_list">
-    </ul>
-</div>
-<br>
+    <div class = "searchpage_autocomplete">
+        <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
+        <ul class="searchpage_list">
+        </ul>
+    </div>
+    <br>
 
-<div class="stock_menu">
-   <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
-   <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
-</div>
-<br>
+    <div class="stock_menu">
+       <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
+       <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+    </div>
+    <br>
 
-<canvas id="chart" style="flex:1 1 0;"></canvas>
+    <div id="chart_wrapper">
+        <canvas id="chart"></canvas>
+    </div>
 </div>
 {% endblock %}
 
