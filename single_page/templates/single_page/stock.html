@@ -20,14 +20,18 @@
     </div>
     <br>
 
-    <div id="chart_wrapper">
-        <canvas id="chart"></canvas>
+    <div class="stock_chart_wrapper">
+        <canvas id="stock_chart"></canvas>
+    </div>
+
+    <div class="stock_info page_content">
+        {{ object.get_content_markdown | safe }}
     </div>
 </div>
 {% endblock %}
 
 {% block extra-script %}
 <script src="{% static 'js/stock.js' %}"></script>
-<script src="{% static 'js/chart2.js' %}"></script>
+<script src="{% static 'js/chart.js' %}"></script>
 {% endblock %}
 

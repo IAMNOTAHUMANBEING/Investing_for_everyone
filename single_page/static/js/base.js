@@ -15,7 +15,7 @@ const rightSide = document.getElementById('right');
 
 ////////////left///////////////////
 //init
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   let searchblock_form = document.getElementById("searchblock");
   let searchblock_input = document.getElementById("searchblock_input");
   let stock_name = document.getElementById("searchpage").value;
@@ -36,7 +36,7 @@ window.addEventListener("load", function () {
 
 // search page
 // autocomplete ajax, 성능 문제시 디바운스 구현 필요
-document.getElementById("searchpage").addEventListener("keyup", (e) =>{
+document.getElementById("searchpage").addEventListener("keyup", (e) => {
 
     searchword = e.target.value;
 
@@ -67,13 +67,12 @@ document.getElementById("searchpage").addEventListener("keyup", (e) =>{
 // 창 크기가 바뀔 때마다 차트 다시 그려지도록
 let timer;
 
-window.addEventListener('resize', function(){
+window.addEventListener('resize', (e) => {
 	 if(timer) {
         clearTimeout(timer);
     }
-	timer = setTimeout(function(){
+	timer = setTimeout( () => {
         candlestickChart.draw();
-        console.log("123");
 	}, 100);
 }); // 스크롤 있는 크기로 작아지면 실행 안되는 문제, 마우스 움직일때마다 그리면 해결되는데 비효율적
 
@@ -140,7 +139,7 @@ resizer.addEventListener('mousedown', mouseDownHandler);
 
 /////////////side//////////////////////////
 // setting
-function getCookie(name) {
+function getCookie (name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -158,7 +157,7 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 // enterkey
-function enterkey(){
+function enterkey () {
     if(window.event.keyCode == 13){
         let form = document.getElementById("searchblock");
         form.searchblock_button.click();
@@ -166,7 +165,7 @@ function enterkey(){
 }
 
 // block ajax
-document.getElementById("searchblock").addEventListener("submit", (e) =>{
+document.getElementById("searchblock").addEventListener("submit", (e) => {
     e.preventDefault();
 
     searchword = document.getElementById("searchblock_input").value;

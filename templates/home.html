@@ -20,22 +20,10 @@
 
     <!-- main -->
     <div id="main">
-        <!-- page -->
-        <section id="left" class="container">
-            {% block content %}{% endblock %}
-        </section>
 
-        <!-- The resizer -->
-        <div id="resizer"></div>
-
-        <!-- sidebar -->
-        <aside id="right" >
-            {% include "single_page/side.html" %}
-        </aside>
     </div>
 </div>
 
-<script src="{% static 'js/base.js' %}"></script>
 {% block extra-script %}{% endblock %}
 
 </body>

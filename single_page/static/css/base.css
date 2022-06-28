@@ -5,6 +5,7 @@
 
 html,body{
 	height: 100%;
+	overflow: hidden;
 }
 
 body {
@@ -71,13 +72,6 @@ body {
     border-bottom: 1px solid #d4d4d4;
 }
 
-.page_content {
-    border: 2px solid #d4d4d4;
-    border-radius: 5px;
-    flex:1;
-    padding: 30px;
-}
-
 .stock_menu{
     display: flex;
 }
@@ -90,15 +84,27 @@ body {
 	border: 1px solid rgb(192, 192, 192);
 }
 
-#chart_wrapper{
+.stock_chart_wrapper {
     flex:1 1 0;
+    min-height: 0;
 }
 
-#chart{
+#stock_chart {
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	border: 1px solid rgb(192, 192, 192);
+	border: 2px solid rgb(192, 192, 192);
+}
+
+.stock_info{
+    display:none;
+}
+
+.page_content {
+    border: 2px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    flex:1;
+    padding: 30px;
 }
 
 #resizer {
@@ -167,6 +173,7 @@ body {
     flex:1 1;
     overflow: auto;
 }
+
 .container {
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;

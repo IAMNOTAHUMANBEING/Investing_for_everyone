@@ -11,7 +11,7 @@ from single_page.models import Stock, Person, Word, Event, Opinion, Report
 
 
 class HomeView(TemplateView):
-    template_name = "single_page/home.html"
+    template_name = "home.html"
 
 
 class StockDV(DetailView):
@@ -54,7 +54,7 @@ def SearchPage(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'single_page/home.html', {})
+        return render(request, 'home.html', {})
 
 
 def SearchBlock(request):
@@ -96,7 +96,7 @@ def SearchBlock(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'single_page/home.html', {})
+        return render(request, 'home.html', {})
 
 
 def ChartData(request):
