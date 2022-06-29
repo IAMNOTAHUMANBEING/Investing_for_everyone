@@ -41,7 +41,7 @@ document.getElementById("searchpage").addEventListener("keyup", (e) => {
     searchword = e.target.value;
 
     if(searchword.trim().length > 0){
-        fetch('http://localhost:8000/chart/search/page/', {
+        fetch('http://localhost:8000/wiki/search/page/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
@@ -173,7 +173,7 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
     searchdate_end = document.getElementById("searchblock_date_end").value;
 
     if(searchword.trim().length > 0){
-        fetch('http://localhost:8000/chart/search/block/', {
+        fetch('http://localhost:8000/wiki/search/block/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,

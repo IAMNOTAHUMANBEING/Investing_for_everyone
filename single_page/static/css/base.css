@@ -215,7 +215,7 @@ body {
     flex-wrap: wrap;
 }
 
-.tag{
+.block_tag{
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -223,7 +223,7 @@ body {
 	padding: 3px;
 }
 
-.tag a{
+.block_tag a{
     text-decoration: none;
     color: black;
 }

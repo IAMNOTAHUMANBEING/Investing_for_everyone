@@ -7,11 +7,8 @@ from markdownx.models import MarkdownxField
 
 class Stock(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    # slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
     code = models.CharField(max_length=10, unique=True)
     content = MarkdownxField(blank=True, null=True)
-
-    # chart
 
     def __str__(self):
         return self.name

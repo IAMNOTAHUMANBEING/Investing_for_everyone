@@ -472,14 +472,6 @@ CandlestickChart.prototype.calculateYRange = function()
     this.yRange = this.yEnd - this.yStart;
 }
 
-//
-//// 날짜 범위 이용해서 x축  날짜길이 구하기
-//CandlestickChart.prototype.calculateXRange = function()
-//{
-//    this.xStart = this.candlesticks[this.startindex].date; // - this.candlesticksInCanvas + this.dragDistance
-//    this.xEnd = this.candlesticks[this.endindex].date;    //  this.dragDistance
-//    this.xRange = this.xEnd - this.xStart;
-//}
 
 
 // 전체기준 y 값 차트 기준 y로 바꾸기
@@ -541,18 +533,6 @@ CandlestickChart.prototype.drawRect = function( x , y , width , height , color )
 	this.context.rect( x , y , width , height );
 	this.context.stroke();
 }
-
-
-
-//CandlestickChart.prototype.formatDate = function( date )
-//{
-//    let day = date.getDate();
-//    if ( day < 10 ) day = "0"+day;
-//    let month = date.getMonth()+1;
-//    if ( month < 10 ) month = "0"+month;
-//
-//    return date.getFullYear() + "/ " + month + "/ " + day;
-//}
 
 
 

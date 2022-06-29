@@ -33,7 +33,7 @@ let chart = document.querySelector(".stock_chart_wrapper");
 function plot(){
     stock_name = document.getElementById("searchpage").value;
 
-    fetch('http://localhost:8000/chart/chartdata/', {
+    fetch('http://localhost:8000/wiki/chartdata/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,

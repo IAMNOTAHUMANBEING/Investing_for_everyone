@@ -1,6 +1,5 @@
 from django.contrib import admin
 from single_page.models import Stock, Person, Event, Report, Opinion, Word
-from markdownx.admin import MarkdownxModelAdmin
 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):

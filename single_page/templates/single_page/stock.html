@@ -6,28 +6,27 @@
 {% block title %}{{ object }} - {% endblock %}
 
 {% block content %}
-<div style="display:flex; flex:1 1 0; flex-direction:column;">
-    <div class = "searchpage_autocomplete">
-        <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
-        <ul class="searchpage_list">
-        </ul>
-    </div>
-    <br>
 
-    <div class="stock_menu">
-       <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
-       <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
-    </div>
-    <br>
-
-    <div class="stock_chart_wrapper">
-        <canvas id="stock_chart"></canvas>
-    </div>
-
-    <div class="stock_info page_content">
-        {{ object.get_content_markdown | safe }}
-    </div>
+<div class = "searchpage_autocomplete">
+    <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
+    <ul class="searchpage_list">
+    </ul>
 </div>
+<br>
+
+<div class="stock_menu">
+    <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
+    <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+</div>
+<br>
+
+<div class="stock_chart_wrapper">
+    <canvas id="stock_chart"></canvas>
+</div>
+<div class="stock_info page_content">
+    {{ object.get_content_markdown | safe }}
+</div>
+
 {% endblock %}
 
 {% block extra-script %}
