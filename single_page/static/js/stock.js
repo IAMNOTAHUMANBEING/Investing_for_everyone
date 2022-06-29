@@ -58,7 +58,7 @@ function plot(){
 plot();
 
 
-//info ajax
+// info ajax
 info_btn.addEventListener("click", (e) => {
     chart.style.display = "none"
     info.style.display = "block"

@@ -27,9 +27,9 @@ function CandlestickChart( canvasElementID )
     this.mouseWheelHandler = this.mouseWheel.bind(this);
     this.canvas.addEventListener('wheel', this.mouseWheelHandler);
 
-    // 드래그 하면 캔버스에 표시되는 날짜 범위 이동
-    this.dragdownHandler = this.dragdown.bind(this);
-    this.canvas.addEventListener('mousedown', this.dragdownHandler);
+    // 캔버스 내에서 마우스 클릭 시
+    this.mouseDown = this.mouseDown.bind(this);
+    this.canvas.addEventListener('mousedown', this.mouseDown);
 
     this.canvas.style.backgroundColor = "#ffffff";
     this.context.font = '20px sans-serif';
@@ -42,9 +42,9 @@ function CandlestickChart( canvasElementID )
     this.mouseHoverBackgroundColor = "#ffffff";
     this.mouseHoverTextColor = "#000000";
     this.increaseColor = "#c4302b";
-    this.decreaseColor = "#042bd6";
-    this.increaseHoverColor = "#00ff00";
-    this.decreaseHoverColor = "#ff0000";
+    this.decreaseColor = "#1e3bbd";
+    this.increaseHoverColor = "#ff0700";
+    this.decreaseHoverColor = "#0533ff";
 
     this.context.lineWidth = 1;
     this.candleWidth = 5;
@@ -58,12 +58,7 @@ function CandlestickChart( canvasElementID )
     this.yStart = 0;
     this.yEnd = 0;
     this.yRange = 0;
-    this.yPixelRange = this.height-this.marginTop-this.marginBottom; 
-
-    // x Start, End type: timetstamp -> index로 바꿔야함
-    this.xStart = 0;
-    this.xEnd = 0;
-    this.xRange = 0;
+    this.yPixelRange = this.height-this.marginTop-this.marginBottom;
     this.xPixelRange = this.width-this.marginLeft-this.marginRight;
 
     this.xGridCells = 16;
@@ -78,6 +73,7 @@ function CandlestickChart( canvasElementID )
     this.candlesticksInCanvas = 0;
     this.candlesticks = [];
     this.x = 0;
+    this.y = 0;
     this.dragDistance = 0;
 }
 
@@ -161,20 +157,36 @@ CandlestickChart.prototype.mouseWheel = function (e)
 
 
 
-CandlestickChart.prototype.dragdown = function (e) 
+CandlestickChart.prototype.mouseDown = function (e)
 {
-    this.x = e.clientX;
+    if((event.button == 2) || (event.which == 3)){
+        //마우스 오른쪽 클릭한 경우
+//        this.x = e.clientX;
 
-    this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
-    this.dragmoveHandler = this.dragmove.bind(this);
-    window.addEventListener('mousemove', this.dragmoveHandler);
-    this.dragupHandler = this.dragup.bind(this);
-    window.addEventListener('mouseup', this.dragupHandler);
+        this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        this.mouseLightMoveHandler = this.mouseLightMove.bind(this);
+        this.canvas.addEventListener('mousemove', this.mouseLightMoveHandler);
+        this.mouseLightUpHandler = this.mouseLightUp.bind(this);
+        this.canvas.addEventListener('mouseup', this.mouseLightUpHandler);
+    }
+    else{
+        // 마우스 왼쪽 클릭한 경우
+        this.x = e.clientX;
+
+        this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
+        this.mouseLeftMoveHandler = this.mouseLeftMove.bind(this);
+        window.addEventListener('mousemove', this.mouseLeftMoveHandler);
+        this.mouseLeftUpHandler = this.mouseLeftUp.bind(this);
+        window.addEventListener('mouseup', this.mouseLeftUpHandler);
+    }
 }
 
 
 // 부드러운 수정 필요
-CandlestickChart.prototype.dragmove = function (e) 
+CandlestickChart.prototype.mouseLeftMove = function (e)
 {
     let dx = this.x - e.clientX;
 
@@ -210,11 +222,48 @@ CandlestickChart.prototype.dragmove = function (e)
 
 
 
-CandlestickChart.prototype.dragup = function (e) 
+CandlestickChart.prototype.mouseLeftUp = function (e)
 {
     this.dragDistance = 0;
-    window.removeEventListener('mousemove', this.dragmoveHandler);
-    window.removeEventListener('mouseup', this.dragupHandler);
+    window.removeEventListener('mousemove', this.mouseLeftMoveHandler);
+    window.removeEventListener('mouseup', this.mouseLeftUpHandler);
+    this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
+}
+
+
+CandlestickChart.prototype.mouseLightMove = function (e)
+{
+//    let hx = this.xToDates( e.clientX + this.candleWidth/2);
+//    let hhx = this.marginLeft + Math.floor(( hx - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
+//
+//    this.context.setLineDash( [5,5] );
+//    this.drawLine(hhx, hhx, this.height, this.timeLineColor );
+//    this.context.setLineDash( [] );
+//    str = this.candlesticks[hx].date;
+//    textWidth = this.context.measureText( str ).width;
+//    this.fillRect(hhx - textWidth / 2 - 5, this.height - 20, textWidth + 10, 20, this.timeLineColor );
+//    this.context.fillStyle = this.timeLineTextColor;
+//    this.context.fillText( str , hhx-textWidth/2 , this.height-5 );
+
+
+//    let headlen = 10; // 화살표 꺽쇠 길이
+//
+//    this.context.beginPath();
+//    this.context.moveTo(this.x + headlen * Math.cos(Math.PI / 6) , this.y + headlen * Math.sin(Math.PI / 6));
+//    this.context.lineTo(this.x, this.y);
+//    this.context.lineTo(this.x + headlen * Math.cos(Math.PI / 6) , this.y - headlen * Math.sin(Math.PI / 6));
+//    this.context.moveTo(this.x, this.y);
+//    this.context.lineTo(e.clientX, this.y);
+//    this.context.lineTo(e.clientX - headlen * Math.cos(Math.PI / 6) , this.y + headlen * Math.sin(Math.PI / 6));
+//    this.context.moveTo(e.clientX, this.y);
+//    this.context.lineTo(e.clientX - headlen * Math.cos(Math.PI / 6) , this.y - headlen * Math.sin(Math.PI / 6));
+//    this.context.stroke();
+}
+
+CandlestickChart.prototype.mouseLightUp = function (e)
+{
+    this.canvas.removeEventListener('mousemove', this.mouseLightMoveHandler);
+    this.canvas.removeEventListener('mouseup', this.mouseLightUpHandler);
     this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
 }
 
@@ -259,8 +308,8 @@ CandlestickChart.prototype.draw = function()
 
         if ( i === this.hoveredDate )
         {
-            if ( color === this.increasenColor ) color = this.increaseHoverColor;
-            else if ( color === this.decreaseColor ) color = this.decreaseColor;
+            if ( color === this.increaseColor ) color = this.increaseHoverColor;
+            else if ( color === this.decreaseColor ) color = this.decreaseHoverColor;
         }
 
         if ( this.candlesticks[i].high === 0 && this.candlesticks[i].low === 0 )
@@ -281,7 +330,7 @@ CandlestickChart.prototype.draw = function()
     // 호버 되었을 때 해당 날짜 정보
     if ( this.mouseOverlay )
     {
-        // 가격을 표시하는 가로선
+        // 마우스 위치 가격을 표시하는 박스와 선
         this.context.setLineDash( [5,5] );
         this.drawLine(0, this.mousePosition.y, this.width, this.mousePosition.y, this.priceLineColor );
         this.context.setLineDash( [] );
@@ -291,7 +340,7 @@ CandlestickChart.prototype.draw = function()
         this.context.fillStyle = this.priceLineTextColor;
         this.context.fillText( str , this.width-textWidth-5 , this.mousePosition.y+5 );
 
-        // 날짜를 표시하는 세로선
+        // 마우스 위치 날짜를 표시하는 박스와 선
         this.context.setLineDash( [5,5] );
         this.drawLine(this.mousePosition.x, 0, this.mousePosition.x, this.height, this.timeLineColor );
         this.context.setLineDash( [] );
@@ -316,10 +365,10 @@ CandlestickChart.prototype.draw = function()
 
         // 내용 수정 필요, DB와 연동해서 값 가져오게 수정
         this.context.fillStyle = this.mouseHoverTextColor;
-        this.context.fillText( "O: "+this.candlesticks[this.hoveredDate].open , this.mousePosition.x+30 , yPos+15 );
-        this.context.fillText( "C: "+this.candlesticks[this.hoveredDate].close , this.mousePosition.x+30 , yPos+35 );
-        this.context.fillText( "H: "+this.candlesticks[this.hoveredDate].high , this.mousePosition.x+30 , yPos+55 );
-        this.context.fillText( "L: "+this.candlesticks[this.hoveredDate].low , this.mousePosition.x+30 , yPos+75 );
+        this.context.fillText( "시가: "+this.candlesticks[this.hoveredDate].open , this.mousePosition.x+30 , yPos+25 );
+        this.context.fillText( "종가: "+this.candlesticks[this.hoveredDate].close , this.mousePosition.x+30 , yPos+45 );
+        this.context.fillText( "고가: "+this.candlesticks[this.hoveredDate].high , this.mousePosition.x+30 , yPos+65 );
+        this.context.fillText( "저가: "+this.candlesticks[this.hoveredDate].low , this.mousePosition.x+30 , yPos+85 );
     }
 
 //    if ( this.mouseOnClick ){
@@ -507,7 +556,6 @@ CandlestickChart.prototype.xToDates = function( x )
 CandlestickChart.prototype.drawLine = function( xStart , yStart , xEnd , yEnd , color )
 {
 	this.context.beginPath();
-    // to get a crisp 1 pixel wide line, we need to add 0.5 to the coords
 	this.context.moveTo( xStart+0.5 , yStart+0.5 );
 	this.context.lineTo( xEnd+0.5 , yEnd+0.5 );
 	this.context.strokeStyle = color;
