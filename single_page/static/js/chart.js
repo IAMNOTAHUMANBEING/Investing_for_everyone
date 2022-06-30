@@ -268,7 +268,6 @@ CandlestickChart.prototype.mouseLightUp = function (e)
 {
     let searchblock_form = document.getElementById("searchblock");
     let searchblock_input = document.getElementById("searchblock_input");
-    let stock_name = document.getElementById("searchpage").value;
 
     let hoveredDate = this.candlesticks[this.hoveredDate].date;
     let dragDate = this.candlesticks[this.lightDragDate].date;
@@ -284,7 +283,6 @@ CandlestickChart.prototype.mouseLightUp = function (e)
         document.getElementById('searchblock_date_end').value = dragDate;
     }
 
-    searchblock_input.value = stock_name;
     searchblock_form.searchblock_button.click(); // submit(); 하면 에러남
 
     this.canvas.removeEventListener('mousemove', this.mouseLightMoveHandler);

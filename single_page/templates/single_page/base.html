@@ -17,22 +17,7 @@
     <!-- navbar -->
     {% include "single_page/nav.html" %}
     <div class="underbar"></div>
-
-    <!-- main -->
-    <div id="main">
-        <!-- page -->
-        <section id="left" class="container">
-            {% block content %}{% endblock %}
-        </section>
-
-        <!-- The resizer -->
-        <div id="resizer"></div>
-
-        <!-- sidebar -->
-        <aside id="right" >
-            {% include "single_page/side.html" %}
-        </aside>
-    </div>
+    {% block content %}{% endblock %}
 </div>
 
 <script src="{% static 'js/base.js' %}"></script>

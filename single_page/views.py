@@ -11,7 +11,7 @@ from single_page.models import Stock, Person, Word, Event, Opinion, Report
 
 
 class HomeView(TemplateView):
-    template_name = "home.html"
+    template_name = "single_page/home.html"
 
 
 class StockDV(DetailView):
@@ -20,6 +20,7 @@ class StockDV(DetailView):
 
 class StockHomeView(ListView):
     model = Stock
+    template_name = "single_page/stock_home.html"
 
 
 class PersonDV(DetailView):
@@ -31,6 +32,9 @@ class WordDV(DetailView):
     model = Word
     template_name = "single_page/word.html"
 
+
+class AboutView(TemplateView):
+    template_name = "single_page/about.html"
 
 def SearchPage(request):
     if request.method == 'POST':
@@ -46,9 +50,9 @@ def SearchPage(request):
 
         if search_result:
             context = {
-                'page_list': search_result
+                'wiki_list': search_result
             }
-            data = render_to_string('single_page/page_search_result.html', context)
+            data = render_to_string('single_page/wiki_search_result.html', context)
 
             return JsonResponse(data, safe=False)
 
@@ -57,7 +61,7 @@ def SearchPage(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'home.html', {})
+        return render(request, 'single_page/home.html', {})
 
 
 def SearchBlock(request):
@@ -99,7 +103,7 @@ def SearchBlock(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'home.html', {})
+        return render(request, 'single_page/home.html', {})
 
 
 def ChartData(request):

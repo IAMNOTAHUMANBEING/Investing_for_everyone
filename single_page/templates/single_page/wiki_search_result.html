@@ -1,0 +1,3 @@
+{% for wiki in wiki_list %}
+<li onclick="location.href='{{ wiki.get_absolute_url }}'">{{ wiki.name }}</li>
+{% endfor %}

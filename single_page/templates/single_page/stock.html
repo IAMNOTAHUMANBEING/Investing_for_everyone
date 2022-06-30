@@ -1,15 +1,18 @@
-{% extends "single_page/base.html" %}
+{% extends "single_page/wiki_base.html" %}
+
 {% load static %}
 
-{% block extra-style %}{% endblock %}
+{% block extra-style %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/stock.css' %}">
+{% endblock %}
 
 {% block title %}{{ object }} - {% endblock %}
 
-{% block content %}
-
-<div class = "searchpage_autocomplete">
-    <input type="text" value ="{{ object.name }}" id="searchpage"> <!-- 추가해야함 ({{ object.code }})-->
-    <ul class="searchpage_list">
+{% block wiki-content %}
+<div class = "searchwiki_autocomplete">
+    <input type="text" value ="{{ object.name }}" id="searchwiki"> <!-- 추가해야함 ({{ object.code }})-->
+    <ul class="searchwiki_list">
     </ul>
 </div>
 <br>
@@ -23,13 +26,13 @@
 <div class="stock_chart_wrapper">
     <canvas id="stock_chart"></canvas>
 </div>
-<div class="stock_info page_content">
+<div class="stock_info wiki_content">
     {{ object.get_content_markdown|safe }}
 </div>
-
 {% endblock %}
 
 {% block extra-script %}
+{{ block.super }}
 <script src="{% static 'js/stock.js' %}"></script>
 <script src="{% static 'js/chart.js' %}"></script>
 {% endblock %}

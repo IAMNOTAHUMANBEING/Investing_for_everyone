@@ -1,17 +1,17 @@
-{% extends "single_page/base.html" %}
+{% extends "single_page/wiki_base.html" %}
 
 {% load static %}
 
 {% block title %}{{ object }} - {% endblock %}
 
 {% block content %}
-<div class ="searchpage_autocomplete">
-    <input type="text" value ="{{ object.name }}" id="searchpage">
-    <ul class="searchpage_list">
+<div class ="searchwiki_autocomplete">
+    <input type="text" value ="{{ object.name }}" id="searchwiki">
+    <ul class="searchwiki_list">
     </ul>
 </div>
 <br>
-<div class="page_content">{{ object.get_content_markdown | safe }}</div>
+<div class="wiki_content">{{ object.get_content_markdown | safe }}</div>
 {% endblock %}
 
 {% block extra-script %}{% endblock %}

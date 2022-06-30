@@ -5,7 +5,6 @@
 
 html,body{
 	height: 100%;
-	overflow: hidden;
 }
 
 body {
@@ -13,165 +12,17 @@ body {
 	background-color: rgb(192, 192, 192);
 }
 
-#flexbox{
-    height: 100%;
-    display: flex;
-    flex: 1 1;
-    flex-direction: column;
-}
-
-#main{
-    height: calc(100% - 50px);
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 0;
-}
-
-#left{
-    display:flex;
-    flex-direction: column;
-    width: 80vw;
-    min-width: 20vw;
-}
-
-.searchpage_autocomplete{
-    width:300px;
-    position: relative;
-    display: inline-block;
-}
-
-#searchpage{
-    width: 100%;
-    padding: 10px;
-    border: 3px solid rgb(192, 192, 192);
-    border-radius: 5px;
-}
-
-.searchpage_list{
-    width: 100%;
-    max-height: 300px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 99;
-
-    background-color: white;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    list-style: none;
-
-    overflow: auto;
-}
-
-.searchpage_list li{
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
-}
-
-.stock_menu{
-    display: flex;
-}
-
-.stock_menu_btn{
-    padding: 10px;
-    -webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	border: 1px solid rgb(192, 192, 192);
-}
-
-.stock_chart_wrapper {
-    flex:1 1 0;
-    min-height: 0;
-}
-
-#stock_chart {
-    -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	border: 2px solid rgb(192, 192, 192);
-}
-
-.stock_info{
-    display:none;
-}
-
-.page_content {
-    border: 2px solid rgb(192, 192, 192);
-    border-radius: 5px;
-    flex:1;
-    padding: 30px;
-}
-
-#resizer {
-    background-color: rgb(192, 192, 192);
-    width: 3px;
-}
-
-#resizer:hover{
-    cursor:w-resize;
-}
-
-#right{
-    display: flex;
-    flex: 1 1;
-    flex-direction: column;
-    min-width: 20vw;
-}
-
-#left, #right, #resizer{
-    height: 100%;
-    box-sizing: border-box; /* 오페라(Opera) */
-    -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
-    -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
-}
-
-#searchblock{
-
-}
-
-#searchblock_input {
-    padding: 5px;
-    border: 3px solid rgb(192, 192, 192);
-    border-radius: 5px
-}
-
-#searchblock_button{
-    padding: 5px;
-    border: 1px solid rgb(192, 192, 192);
-    border-radius: 5px;
-    cursor: pointer;
-    width: 74.71px;
-}
-
-#searchblock_button:hover{
-    background-color: rgb(192, 192, 192);
-}
-
-.searchblock_date{
-    padding-top: 15px;
-}
-
-#searchblock_date_start, #searchblock_date_end{
-    border: 2px solid rgb(192, 192, 192);
-    border-radius: 5px;
-}
-
 .underbar {
     height: 3px;
     width: 100%;
     background-color: rgb(192, 192, 192);
 }
-#block_container {
+
+#flexbox{
     height: 100%;
-    display:flex;
+    display: flex;
+    flex: 1 1;
     flex-direction: column;
-    flex:1 1;
-    overflow: auto;
 }
 
 .container {
