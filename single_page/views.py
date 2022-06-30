@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, ListView
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.db.models import Q
@@ -17,6 +17,9 @@ class HomeView(TemplateView):
 class StockDV(DetailView):
     model = Stock
     template_name = "single_page/stock.html"
+
+class StockHomeView(ListView):
+    model = Stock
 
 
 class PersonDV(DetailView):

@@ -8,7 +8,7 @@ from markdownx.models import MarkdownxField
 class Stock(models.Model):
     name = models.CharField(max_length=30, unique=True)
     code = models.CharField(max_length=10, unique=True)
-    content = MarkdownxField(blank=True, null=True)
+    content = MarkdownxField(blank=True, default="")
 
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class Stock(models.Model):
 class Person(models.Model):
     name = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
-    content = MarkdownxField(blank=True, null=True)
+    content = MarkdownxField(blank=True, default="")
 
     def __str__(self):
         return self.name
@@ -36,7 +36,7 @@ class Person(models.Model):
 class Word(models.Model):
     name = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(max_length=30, unique=True, allow_unicode=True)
-    content = MarkdownxField(blank=True, null=True)
+    content = MarkdownxField(blank=True, default="")
 
     def __str__(self):
         return self.name
@@ -50,7 +50,7 @@ class Word(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=50)
     date = models.DateField()
-    content = MarkdownxField(blank=True, null=True)
+    content = MarkdownxField(blank=True, default="")
 
     stock_tag = models.ManyToManyField(Stock, blank=True)
     word_tag = models.ManyToManyField(Word, blank=True)
@@ -85,7 +85,7 @@ class Opinion(models.Model):
     short = models.CharField(max_length=50)
     name = models.ForeignKey(Person, on_delete=models.SET_NULL, null=True)
     date = models.DateField()
-    content = MarkdownxField(blank=True, null=True)
+    content = MarkdownxField(blank=True, default="")
 
     stock_tag = models.ManyToManyField(Stock, blank=True)
     word_tag = models.ManyToManyField(Word, blank=True)
