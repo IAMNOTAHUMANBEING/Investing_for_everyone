@@ -2,9 +2,13 @@
 
 {% load static %}
 
+{% block extra-style %}
+{{ block.super }}
+{% endblock %}
+
 {% block title %}{{ object }} - {% endblock %}
 
-{% block content %}
+{% block wiki-content %}
 <div class ="searchwiki_autocomplete">
     <input type="text" value ="{{ object.name }}" id="searchwiki"> <!-- 추가해야함 ({{ object.code }})-->
     <ul class="searchwiki_list">
@@ -14,4 +18,6 @@
 <div class="wiki_content">{{ object.get_content_markdown | safe }}</div>
 {% endblock %}
 
-{% block extra-script %}{% endblock %}
+{% block extra-script %}
+{{ block.super }}
+{% endblock %}

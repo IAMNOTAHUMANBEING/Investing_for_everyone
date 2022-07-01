@@ -141,9 +141,10 @@ function enterkey () {
 document.getElementById("searchblock").addEventListener("submit", (e) => {
     e.preventDefault();
 
-    searchword = document.getElementById("searchblock_input").value;
-    searchdate_start = document.getElementById("searchblock_date_start").value;
-    searchdate_end = document.getElementById("searchblock_date_end").value;
+    let searchword = document.getElementById("searchblock_input").value;
+    let searchdate_start = document.getElementById("searchblock_date_start").value;
+    let searchdate_end = document.getElementById("searchblock_date_end").value;
+
 
     if(searchword.trim().length > 0){
         fetch('http://localhost:8000/wiki/search/block/', {
@@ -168,3 +169,26 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
         document.getElementById("side_block_container").innerHTML = "검색결과가 없습니다.";
     }
 });
+
+// block content tab
+document.getElementById("side_block_container").addEventListener("click", (e) =>
+{
+   let target = e.target;
+
+   if( target.className !== 'block_content_tab') return;
+
+    if (target.previousElementSibling.style.display === 'none'){
+        target.previousElementSibling.style.display = 'block';
+        target.innerHTML = "닫기";
+    }
+    else{
+        target.previousElementSibling.style.display = 'none';
+        target.innerHTML = "더보기";
+    }
+});
+
+
+//// search block pagination
+//document.querySelectorAll(".block_pagination_btn").forEach( (e) => {
+//    e.addEventListener("click", )
+//}
