@@ -15,4 +15,5 @@
     height: 300px;
     border-radius:5px;
     overflow: auto;
+    padding: 20px;
 }

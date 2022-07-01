@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.db.models import Q
@@ -9,32 +9,21 @@ from datetime import timedelta, datetime
 
 from single_page.models import Stock, Person, Word, Event, Opinion, Report
 
-
-class HomeView(TemplateView):
-    template_name = "single_page/home.html"
-
-
 class StockDV(DetailView):
     model = Stock
     template_name = "single_page/stock.html"
 
 class StockHomeView(ListView):
     model = Stock
-    template_name = "single_page/stock_home.html"
-
+    template_name = "stock_home.html"
 
 class PersonDV(DetailView):
     model = Person
     template_name = "single_page/person.html"
 
-
 class WordDV(DetailView):
     model = Word
     template_name = "single_page/word.html"
-
-
-class AboutView(TemplateView):
-    template_name = "single_page/about.html"
 
 def SearchPage(request):
     if request.method == 'POST':
@@ -61,7 +50,7 @@ def SearchPage(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'single_page/home.html', {})
+        return render(request, 'home.html', {})
 
 
 def SearchBlock(request):
@@ -103,7 +92,7 @@ def SearchBlock(request):
             return JsonResponse(data, safe=False)
 
     else:
-        return render(request, 'single_page/home.html', {})
+        return render(request, 'home.html', {})
 
 
 def ChartData(request):
