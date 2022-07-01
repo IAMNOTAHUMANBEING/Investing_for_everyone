@@ -1,4 +1,4 @@
-//
+// query the element
 let info_btn = document.querySelector(".stock_menu_info");
 let chart_btn = document.querySelector(".stock_menu_chart");
 let info = document.querySelector(".stock_info");
