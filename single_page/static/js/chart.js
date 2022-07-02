@@ -64,7 +64,7 @@ function CandlestickChart( canvasElementID )
     this.xGridCells = 16;
     this.yGridCells = 16;
 
-    this.mouseLightDrag = false;
+    this.mouseRightDrag = false;
     this.mouseOverlay = false;
     this.mousePosition = { x: 0 , y: 0 };
     this.hoveredDate = 0;
@@ -126,11 +126,11 @@ CandlestickChart.prototype.mouseMove = function( e )
 
 CandlestickChart.prototype.mouseOut = function( e )
 {
-    this.canvas.removeEventListener('mousemove', this.mouseLightMoveHandler);
-    this.canvas.removeEventListener('mouseup', this.mouseLightUpHandler);
+    this.canvas.removeEventListener('mousemove', this.mouseRightMoveHandler);
+    this.canvas.removeEventListener('mouseup', this.mouseRightUpHandler);
     this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
 
-    this.mouseLightDrag = false;
+    this.mouseRightDrag = false;
     this.mouseOverlay = false;
     this.draw();
 }
@@ -173,10 +173,10 @@ CandlestickChart.prototype.mouseDown = function (e)
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
-        this.mouseLightMoveHandler = this.mouseLightMove.bind(this);
-        this.canvas.addEventListener('mousemove', this.mouseLightMoveHandler);
-        this.mouseLightUpHandler = this.mouseLightUp.bind(this);
-        this.canvas.addEventListener('mouseup', this.mouseLightUpHandler);
+        this.mouseRightMoveHandler = this.mouseRightMove.bind(this);
+        this.canvas.addEventListener('mousemove', this.mouseRightMoveHandler);
+        this.mouseRightUpHandler = this.mouseRightUp.bind(this);
+        this.canvas.addEventListener('mouseup', this.mouseRightUpHandler);
     }
     else{
         // 마우스 왼쪽 클릭한 경우
@@ -237,7 +237,7 @@ CandlestickChart.prototype.mouseLeftUp = function (e)
 }
 
 
-CandlestickChart.prototype.mouseLightMove = function (e)
+CandlestickChart.prototype.mouseRightMove = function (e)
 {
     let getMousePos = ( e ) =>
     {
@@ -246,16 +246,16 @@ CandlestickChart.prototype.mouseLightMove = function (e)
     }
     this.dragMousePosition = getMousePos( e );
     this.dragMousePosition.x += this.candleWidth/2; // 보정값 필요
-    this.mouseLightDrag = true;
+    this.mouseRightDrag = true;
 
-    if ( this.dragMousePosition.x < this.marginLeft ) this.mouseLightDrag = false;
-    if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth) this.mouseLightDrag = false;
-    if ( this.dragMousePosition.y > this.height - this.marginBottom ) this.mouseLightDrag = false;
+    if ( this.dragMousePosition.x < this.marginLeft ) this.mouseRightDrag = false;
+    if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth) this.mouseRightDrag = false;
+    if ( this.dragMousePosition.y > this.height - this.marginBottom ) this.mouseRightDrag = false;
 
-    if ( this.mouseLightDrag )
+    if ( this.mouseRightDrag )
     {
-        this.lightDragDate = this.xToIndex( this.dragMousePosition.x );  // pixel -> index;
-        this.dragMousePosition.x = this.marginLeft + Math.floor(( this.lightDragDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
+        this.RightDragDate = this.xToIndex( this.dragMousePosition.x );  // pixel -> index;
+        this.dragMousePosition.x = this.marginLeft + Math.floor(( this.RightDragDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
         this.draw();
     }
     else
@@ -264,13 +264,13 @@ CandlestickChart.prototype.mouseLightMove = function (e)
     }
 }
 
-CandlestickChart.prototype.mouseLightUp = function (e)
+CandlestickChart.prototype.mouseRightUp = function (e)
 {
     let searchblock_form = document.getElementById("searchblock");
     let searchblock_input = document.getElementById("searchblock_input");
 
     let hoveredDate = this.candlesticks[this.hoveredDate].date;
-    let dragDate = this.candlesticks[this.lightDragDate].date;
+    let dragDate = this.candlesticks[this.RightDragDate].date;
 
     if(hoveredDate > dragDate)
     {
@@ -285,11 +285,11 @@ CandlestickChart.prototype.mouseLightUp = function (e)
 
     searchblock_form.searchblock_button.click(); // submit(); 하면 에러남
 
-    this.canvas.removeEventListener('mousemove', this.mouseLightMoveHandler);
-    this.canvas.removeEventListener('mouseup', this.mouseLightUpHandler);
+    this.canvas.removeEventListener('mousemove', this.mouseRightMoveHandler);
+    this.canvas.removeEventListener('mouseup', this.mouseRightUpHandler);
     this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
 
-    this.mouseLightDrag = false;
+    this.mouseRightDrag = false;
     this.draw();
 }
 
@@ -397,13 +397,13 @@ CandlestickChart.prototype.draw = function()
         this.context.fillText( "저가: "+this.candlesticks[this.hoveredDate].low , this.mousePosition.x+30 , yPos+85 );
     }
 
-    if ( this.mouseLightDrag )
+    if ( this.mouseRightDrag )
     {
         // 마우스 위치 날짜를 표시하는 박스와 선
         this.context.setLineDash( [5,5] );
         this.drawLine(this.dragMousePosition.x, 0, this.dragMousePosition.x, this.height, this.timeLineColor );
         this.context.setLineDash( [] );
-        str = this.candlesticks[this.lightDragDate].date;
+        str = this.candlesticks[this.RightDragDate].date;
         textWidth = this.context.measureText( str ).width;
         this.fillRect(this.dragMousePosition.x - textWidth / 2 - 5, this.height - 20, textWidth + 10, 20, this.timeLineColor );
         this.context.fillStyle = this.timeLineTextColor;
