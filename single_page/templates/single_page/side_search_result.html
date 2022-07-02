@@ -25,10 +25,6 @@
     <div class="block_content_tab">
         더보기
     </div>
-    <!-- 내용 어떤 식으로 노출 시킬지 고민 필요 -->
-    <!--    <div class="block_content">-->
-    <!--    {{ block.get_content_markdown | safe }}-->
-    <!--    </div>-->
     {% endif %}
 
     {% if block.checktype == "O" %}
@@ -36,7 +32,6 @@
         <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
         <div class="block_header_title">{{ block.short }}</div>
     </div>
-    <br>
 
     <div class="block_tag_container">
         {% for stock_tag in block.stock_tag.all %}
@@ -48,6 +43,14 @@
         {% for person_tag in block.person_tag.all %}
         <span class="block_tag"><a href="{{ person_tag.get_absolute_url }}">#{{person_tag}}</a></span>&nbsp;
         {% endfor %}
+    </div>
+
+    <div class="block_content">
+        {{ block.get_content_markdown | safe }}
+    </div>
+
+    <div class="block_content_tab">
+        더보기
     </div>
     {% endif %}
 
@@ -65,20 +68,14 @@
 <br>
 {% endfor %}
 
-<div id="pagination">
-    <span class="step-links">
-        {% if block_list.has_previous %}
-            <button class="block_pagination_btn" value="1">&laquo; first</button>
-            <button class="block_pagination_btn" value="{{ block_list.previous_page_number }}">previous</button>
-        {% endif %}
+<div id="block_pagination">
+    {% if block_list.has_previous %}
+    <div class="block_pagination_btn">{{ block_list.previous_page_number }}</div>
+    {% endif %}
 
-        <span class="current">
-            Page {{ block_list.number }} of {{ block_list.paginator.num_pages }}.
-        </span>
+    <div class="current block_pagination_btn">{{ block_list.number }}</div>
 
-        {% if block_list.has_next %}
-            <button class="block_pagination_btn" value="{{ block_list.next_page_number }}">next</button>
-            <button class="block_pagination_btn" value="{{ block_list.paginator.num_pages }}">last &raquo;</button>
-        {% endif %}
-    </span>
+    {% if block_list.has_next %}
+    <div class="block_pagination_btn">{{ block_list.next_page_number }}</div>
+    {% endif %}
 </div>

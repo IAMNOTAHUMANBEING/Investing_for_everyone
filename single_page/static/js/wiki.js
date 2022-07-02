@@ -169,9 +169,9 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
             document.getElementById("side_block_container").addEventListener("click", changeBlockContentTab);
 
             // pagination 필요 있는지 여부
-            if(document.getElementById("pagination") !== null)
+            if(document.getElementById("block_pagination") !== null)
             {
-                document.getElementById("pagination").addEventListener("click", changeBlockSearchResultPage);
+                document.getElementById("block_pagination").addEventListener("click", changeBlockSearchResultPage);
             }
         })
         .catch(error => {
@@ -210,8 +210,7 @@ function changeBlockSearchResultPage (e)
     let searchword = document.getElementById("searchblock_input").value;
     let searchdate_start = document.getElementById("searchblock_date_start").value;
     let searchdate_end = document.getElementById("searchblock_date_end").value;
-    let page = target.value;
-    console.log(page);
+    let page = target.innerHTML;
 
     search_block_ajax(searchword, searchdate_start, searchdate_end, page);
 }

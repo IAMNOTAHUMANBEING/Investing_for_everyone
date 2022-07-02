@@ -98,3 +98,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.block_content_tab:hover{
+    cursor:pointer;
+}

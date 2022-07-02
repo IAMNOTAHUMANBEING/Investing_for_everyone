@@ -32,3 +32,24 @@
     flex:1 1;
     overflow: auto;
 }
+
+#block_pagination{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.block_pagination_btn{
+    padding: 8px 16px;
+    border: 1px solid rgb(192, 192, 192);
+}
+
+.current{
+    background-color: rgb(192,192,192);
+    color: white;
+}
+
+.block_pagination_btn:hover{
+    cursor:pointer;
+}
