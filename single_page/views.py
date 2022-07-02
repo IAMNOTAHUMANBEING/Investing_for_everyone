@@ -79,9 +79,9 @@ def SearchBlock(request):
         search_result = list(event_list) + list(opinion_list) + list(report_list)
         search_result = sorted(search_result, key=lambda x: x.date, reverse=True)
 
-        # paginator = Paginator(search_result, 7)
-        # page_number = json.loads(request.body).get('page')
-        # page_obj = paginator.get_page(page_number)
+        paginator = Paginator(search_result, 6)
+        page_number = json.loads(request.body).get('page')
+        search_result = paginator.get_page(page_number)
 
         # 검색결과 유무에 따라 구분
         if search_result:

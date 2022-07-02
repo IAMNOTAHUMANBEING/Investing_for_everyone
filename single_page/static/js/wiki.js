@@ -144,8 +144,13 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
     let searchword = document.getElementById("searchblock_input").value;
     let searchdate_start = document.getElementById("searchblock_date_start").value;
     let searchdate_end = document.getElementById("searchblock_date_end").value;
+    let page = 1;
 
+    search_block_ajax(searchword, searchdate_start, searchdate_end, 1);
+});
 
+function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
+{
     if(searchword.trim().length > 0){
         fetch('http://localhost:8000/wiki/search/block/', {
           method: 'POST',
@@ -155,40 +160,58 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
           body: JSON.stringify({ "searchword": searchword,
                                  "searchdate_start": searchdate_start,
                                  "searchdate_end": searchdate_end,
+                                 "page": page,
            }),
         })
         .then(response => response.json())
         .then(data => {
             document.getElementById("side_block_container").innerHTML = data;
+            document.getElementById("side_block_container").addEventListener("click", changeBlockContentTab);
+
+            // pagination 필요 있는지 여부
+            if(document.getElementById("pagination") !== null)
+            {
+                document.getElementById("pagination").addEventListener("click", changeBlockSearchResultPage);
+            }
         })
         .catch(error => {
             console.log(error);
         });
     }
+    // 빈 칸으로 검색 하면
     else{
         document.getElementById("side_block_container").innerHTML = "검색결과가 없습니다.";
     }
-});
-
+}
 // block content tab
-document.getElementById("side_block_container").addEventListener("click", (e) =>
+function changeBlockContentTab (e)
 {
    let target = e.target;
 
    if( target.className !== 'block_content_tab') return;
 
-    if (target.previousElementSibling.style.display === 'none'){
-        target.previousElementSibling.style.display = 'block';
-        target.innerHTML = "닫기";
-    }
-    else{
-        target.previousElementSibling.style.display = 'none';
-        target.innerHTML = "더보기";
-    }
-});
+   if (target.previousElementSibling.style.display === 'none'){
+       target.previousElementSibling.style.display = 'block';
+       target.innerHTML = "닫기";
+   }
+   else{
+       target.previousElementSibling.style.display = 'none';
+       target.innerHTML = "더보기";
+   }
+}
 
+// block pagination btn
+function changeBlockSearchResultPage (e)
+{
+    let target = e.target;
 
-//// search block pagination
-//document.querySelectorAll(".block_pagination_btn").forEach( (e) => {
-//    e.addEventListener("click", )
-//}
+    if( target.className !== 'block_pagination_btn') return;
+
+    let searchword = document.getElementById("searchblock_input").value;
+    let searchdate_start = document.getElementById("searchblock_date_start").value;
+    let searchdate_end = document.getElementById("searchblock_date_end").value;
+    let page = target.value;
+    console.log(page);
+
+    search_block_ajax(searchword, searchdate_start, searchdate_end, page);
+}

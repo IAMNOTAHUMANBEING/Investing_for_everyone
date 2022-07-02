@@ -65,20 +65,20 @@
 <br>
 {% endfor %}
 
-<!--<div class="pagination">-->
-<!--    <span class="step-links">-->
-<!--        {% if block_list.has_previous %}-->
-<!--            <button class="block_pagination_btn" value="1">&laquo; first</button>-->
-<!--            <button class="block_pagination_btn" value="{{ block_list.previous_page_number }}">previous</button>-->
-<!--        {% endif %}-->
+<div id="pagination">
+    <span class="step-links">
+        {% if block_list.has_previous %}
+            <button class="block_pagination_btn" value="1">&laquo; first</button>
+            <button class="block_pagination_btn" value="{{ block_list.previous_page_number }}">previous</button>
+        {% endif %}
 
-<!--        <span class="current">-->
-<!--            Page {{ block_list.number }} of {{ block_list.paginator.num_pages }}.-->
-<!--        </span>-->
+        <span class="current">
+            Page {{ block_list.number }} of {{ block_list.paginator.num_pages }}.
+        </span>
 
-<!--        {% if block_list.has_next %}-->
-<!--            <button class="block_pagination_btn" value="{{ block_list.next_page_number }}">next</button>-->
-<!--            <button class="block_pagination_btn" value="{{ block_list.paginator.num_pages }}">last &raquo;</button>-->
-<!--        {% endif %}-->
-<!--    </span>-->
-<!--</div>-->
+        {% if block_list.has_next %}
+            <button class="block_pagination_btn" value="{{ block_list.next_page_number }}">next</button>
+            <button class="block_pagination_btn" value="{{ block_list.paginator.num_pages }}">last &raquo;</button>
+        {% endif %}
+    </span>
+</div>
