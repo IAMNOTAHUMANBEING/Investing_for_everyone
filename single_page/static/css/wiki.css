@@ -16,6 +16,40 @@ html,body{
     min-width: 20vw;
 }
 
+.wiki_content {
+    border: 2px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    flex:1;
+    padding: 30px;
+    overflow: auto;
+}
+
+#resizer {
+    background-color: rgb(192, 192, 192);
+    width: 3px;
+}
+
+#resizer:hover{
+    cursor:w-resize;
+}
+
+#side{
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+    min-width: 20vw;
+}
+
+#left, #side, #resizer{
+    height: 100%;
+    box-sizing: border-box; /* 오페라(Opera) */
+    -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
+    -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
+}
+
+
+
+/* search wiki */
 .searchwiki_autocomplete{
     width:300px;
     position: relative;
@@ -54,32 +88,75 @@ html,body{
     border-bottom: 1px solid #d4d4d4;
 }
 
-.wiki_content {
-    border: 2px solid rgb(192, 192, 192);
-    border-radius: 5px;
+
+
+/* block */
+.block{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px solid rgb(192, 192, 192);
+
+}
+
+.block_header{
+    display: flex;
     flex:1;
-    padding: 30px;
+    flex-direction: row;
+    padding: 10px;
+
 }
 
-#resizer {
-    background-color: rgb(192, 192, 192);
-    width: 3px;
+.block_header div{
+    padding: 0 5px;
 }
 
-#resizer:hover{
-    cursor:w-resize;
+.block_header_date {
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 5px;
+    background-color: #e6e6e6;
 }
 
-#side{
+.block_tag_container{
+    padding: 10px;
     display: flex;
     flex: 1 1;
-    flex-direction: column;
-    min-width: 20vw;
+    flex-wrap: wrap;
+    padding: 0 10px 10px 10px;
 }
 
-#left, #side, #resizer{
-    height: 100%;
-    box-sizing: border-box; /* 오페라(Opera) */
-    -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
-    -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
+.block_tag{
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid rgb(192, 192, 192);
+	padding: 3px;
+}
+
+.block_tag a{
+    text-decoration: none;
+    color: black;
+}
+
+.block_content{
+    display: none;
+    height: 520px;
+    overflow: auto;
+    padding: 10px;
+    border-top: 2px solid rgb(192, 192, 192);
+}
+
+.block_content_tab{
+    border-top: 2px solid rgb(192, 192, 192);
+    padding: 5px 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.block_content_tab:hover{
+    cursor:pointer;
 }

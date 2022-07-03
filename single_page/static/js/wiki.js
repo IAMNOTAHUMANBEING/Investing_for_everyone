@@ -190,7 +190,7 @@ function changeBlockContentTab (e)
 
    if( target.className !== 'block_content_tab') return;
 
-   if (target.previousElementSibling.style.display === 'none'){
+   if (window.getComputedStyle(target.previousElementSibling).display === 'none'){
        target.previousElementSibling.style.display = 'block';
        target.innerHTML = "닫기";
    }
