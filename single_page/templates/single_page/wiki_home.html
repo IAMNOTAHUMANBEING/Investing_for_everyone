@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/wiki_home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="stock_home_main container">
+    <div class="title">모두를 위한 투자</div>
+
+    <div class = "searchwiki_autocomplete">
+    <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
+    <ul class="searchwiki_list">
+    </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra-script %}
+<script src="{% static 'js/wiki_home.js' %}"></script>
+{% endblock %}
+

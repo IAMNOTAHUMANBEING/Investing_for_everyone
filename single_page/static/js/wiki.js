@@ -135,7 +135,16 @@ function enterkey () {
     }
 }
 
+// side nav btn
+document.querySelector(".side_nav_search_wrapper").addEventListener("click", (e) => {
+    document.querySelector(".side_chat").style.display = "none";
+    document.querySelector(".side_search").style.display = "block";
+})
 
+document.querySelector(".side_nav_chat_wrapper").addEventListener("click", (e) => {
+    document.querySelector(".side_chat").style.display = "block";
+    document.querySelector(".side_search").style.display = "none";
+})
 
 // search block ajax
 document.getElementById("searchblock").addEventListener("submit", (e) => {

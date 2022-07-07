@@ -14,9 +14,9 @@ class StockDV(DetailView):
     model = Stock
     template_name = "single_page/stock.html"
 
-class StockHomeView(ListView):
+class WikiHomeView(ListView):
     model = Stock
-    template_name = "single_page/stock_home.html"
+    template_name = "single_page/wiki_home.html"
 
 class PersonDV(DetailView):
     model = Person

@@ -7,21 +7,25 @@
 <link rel="stylesheet" href="{% static 'css/side.css' %}">
 {% endblock %}
 
-{% block wiki-extra-style %}
-{% endblock %}
-
 {% block content %}
 <div id="wiki_main">
     <!-- page -->
     <section id="left" class="container">
         {% block wiki-content %}{% endblock %}
     </section>
+
     <!-- The resizer -->
     <div id="resizer"></div>
+
     <!-- sidebar -->
     <aside id="side" >
-        {% include "single_page/side.html" %}
+        {% include "single_page/side_search.html" %}
+        {% include "single_page/side_chat.html" %}
     </aside>
+
+    <nav class="side_nav">
+        {% include "single_page/side_nav.html" %}
+    </nav>
 </div>
 {% endblock %}
 
@@ -29,5 +33,3 @@
 <script src="{% static 'js/wiki.js' %}"></script>
 {% endblock %}
 
-{% block wiki-extra-script %}
-{% endblock %}
