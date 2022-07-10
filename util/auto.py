@@ -47,17 +47,19 @@ print(stock_list.head(5))
 
 # 기업 목록 업데이트
 for index, stock in stock_list.iterrows():
-    record = Stock.objects.filter(Q(code=stock.Code) & ~Q(name=stock.Name))
-    print(stock.Name)
-    print(record)
-    if record:
-        record.update(name=stock.Name)
+    exist = Stock.objects.filter(code=stock.Code)
+
+    if exist:
+        change = exist.filter(~Q(name=stock.Name))
+        if change:
+            print(change)
+            change.update(name=stock.Name)
     else:
         new_record = Stock.objects.create(name=stock.Name, code=stock.Code)
-
-# 주가 데이터 업데이트
-for index, stock in stock_list.iterrows():
-    data = fdr.DataReader(stock.Code)
-    data = data.reset_index()
-    data['Date'] = data['Date'].apply(lambda x : x.strftime("%Y-%m-%d"))
-    data.to_json('../single_page/static/prices/' + stock.Code + '.json', orient = 'records')
+#
+# # 주가 데이터 업데이트
+# for index, stock in stock_list.iterrows():
+#     data = fdr.DataReader(stock.Code)
+#     data = data.reset_index()
+#     data['Date'] = data['Date'].apply(lambda x : x.strftime("%Y-%m-%d"))
+#     data.to_json('../single_page/static/prices/' + stock.Code + '.json', orient = 'records')
