@@ -1,3 +1,17 @@
+.stock_header{
+    display:flex;
+    align-items: center;
+}
+
+.stock_code{
+    margin-left: 20px;
+    border-radius: 10px;
+	border: 1px solid rgb(192, 192, 192);
+	padding: 5px;
+	background-color: rgb(192, 192, 192);
+	color: white;
+}
+
 .stock_menu{
     display: flex;
 }

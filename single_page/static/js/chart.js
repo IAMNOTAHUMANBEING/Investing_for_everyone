@@ -345,7 +345,7 @@ CandlestickChart.prototype.draw = function()
             else if ( color === this.decreaseColor ) color = this.decreaseHoverColor;
         }
 
-        if ( this.candlesticks[i].high === 0 && this.candlesticks[i].low === 0 )
+        if ( this.candlesticks[i].high === this.candlesticks[i].low)
         {
             // 거래정지일때 캔들 그리기
             this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.candlesticks[i].close), this.candleWidth, 1, color );

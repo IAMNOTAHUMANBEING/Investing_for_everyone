@@ -8,14 +8,15 @@ let chart = document.querySelector(".stock_chart_wrapper");
 
 // chart ajax
 function plot(){
-    stock_name = document.getElementById("searchwiki").value;
+    stock_code = document.querySelector(".stock_code").innerHTML;
+    console.log(stock_code);
 
     fetch('http://localhost:8000/wiki/chartdata/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
                     "X-Requested-With": "XMLHttpRequest"},
-          body: JSON.stringify({ "stock_name": stock_name }),
+          body: JSON.stringify({ "stock_code": stock_code }),
         })
         .then(response => response.json())
         .then(data => {

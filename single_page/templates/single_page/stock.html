@@ -10,10 +10,14 @@
 {% block title %}{{ object }} - {% endblock %}
 
 {% block wiki-content %}
-<div class = "searchwiki_autocomplete">
-    <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
-    <ul class="searchwiki_list">
-    </ul>
+<div class="stock_header">
+    <div class = "searchwiki_autocomplete">
+        <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
+        <ul class="searchwiki_list">
+        </ul>
+    </div>
+
+    <div class="stock_code">{{ object.code }}</div>
 </div>
 <br>
 

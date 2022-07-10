@@ -104,9 +104,9 @@ def SearchBlock(request):
 def ChartData(request):
     if request.method == 'POST':
 
-        stock_name = json.loads(request.body).get('stock_name')
+        stock_code = json.loads(request.body).get('stock_code')
 
-        with open('C:\\Users\\1004\\Google Drive\\computer_science\\github\\Invest_for_everyone\\single_page\\static\\price\\' + stock_name + '.json') as stock_price:
+        with open('C:\\Users\\1004\\Google Drive\\computer_science\\github\\Invest_for_everyone\\single_page\\static\\prices\\' + stock_code + '.json') as stock_price:
             data = json.load(stock_price)
 
             return JsonResponse(data, safe=False)
