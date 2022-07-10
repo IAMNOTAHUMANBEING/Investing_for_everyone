@@ -1,4 +1,5 @@
 .about_main{
+    height: calc(100% - 50px);
     padding: 20px 20%;
     flex:1;
 }

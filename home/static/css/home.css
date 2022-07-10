@@ -1,4 +1,5 @@
 .home_main{
+    height: calc(100% - 50px);
     flex:1;
     padding: 20px 20%;
 }

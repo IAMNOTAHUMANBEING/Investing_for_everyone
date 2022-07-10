@@ -56,20 +56,6 @@ document.getElementById("searchwiki").addEventListener("keyup", (e) => {
 
 
 
-// 창 크기 바뀔 때마다 차트 크기도 변하게
-let timer;
-
-window.addEventListener('resize', (e) => {
-	 if(timer) {
-        clearTimeout(timer);
-    }
-	timer = setTimeout( () => {
-        candlestickChart.draw();
-	}, 100);
-});
-
-
-
 ////resizer
 // 현재 마우스 위치
 let x = 0;

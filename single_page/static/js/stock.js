@@ -4,6 +4,8 @@ let chart_btn = document.querySelector(".stock_menu_chart");
 let info = document.querySelector(".stock_info");
 let chart = document.querySelector(".stock_chart_wrapper");
 
+
+
 // chart ajax
 function plot(){
     stock_name = document.getElementById("searchwiki").value;
@@ -20,7 +22,7 @@ function plot(){
             candlestickChart = new CandlestickChart( "stock_chart" );
             for ( let i = 0 ; i < data.length ; ++i )
             {
-                candlestickChart.addCandlestick( new Candlestick( data[i].Date , data[i].Open , data[i].High , data[i].Low , data[i].Close ) );
+                candlestickChart.addCandlestick( new Candlestick( data[i].Date , data[i].Open , data[i].High , data[i].Low , data[i].Close,  data[i].Volume, data[i].Change) );
             }
             candlestickChart.setCanvas();
             candlestickChart.draw();
@@ -31,6 +33,21 @@ function plot(){
 }
 
 plot();
+
+
+
+// 창 크기 바뀔 때마다 차트 크기도 변하게
+let timer;
+
+window.addEventListener('resize', (e) => {
+	 if(timer) {
+        clearTimeout(timer);
+    }
+	timer = setTimeout( () => {
+        candlestickChart.draw();
+	}, 100);
+});
+
 
 
 // info ajax

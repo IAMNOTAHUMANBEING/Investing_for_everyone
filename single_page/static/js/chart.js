@@ -45,6 +45,8 @@ function CandlestickChart( canvasElementID )
     this.decreaseColor = "#1e3bbd";
     this.increaseHoverColor = "#ff0700";
     this.decreaseHoverColor = "#0533ff";
+//    this.increaseVolumeColor = "#c9726f";
+//    this.decreaseVolumeColor = "#818ec9";
 
     this.context.lineWidth = 1;
     this.candleWidth = 5;
@@ -197,7 +199,7 @@ CandlestickChart.prototype.mouseLeftMove = function (e)
     let dx = this.x - e.clientX;
 
     if (this.candlesticksInCanvas > 365 * 3) {
-        this.dragDistance = Math.ceil(dx * 0.05);
+        this.dragDistance = Math.ceil(dx * 0.2);
         this.draw();
     }
     else if (this.candlesticksInCanvas > 30 * 5) {
@@ -297,7 +299,7 @@ CandlestickChart.prototype.mouseRightUp = function (e)
 
 CandlestickChart.prototype.draw = function()
 {
-    // canvas 크기 계산
+    // canvas 크기 재설정
     this.canvas.width = parseInt( window.getComputedStyle(document.querySelector(".stock_chart_wrapper")).width );
     this.canvas.height = parseInt( window.getComputedStyle(document.querySelector(".stock_chart_wrapper")).height ) - 10;
 
@@ -316,12 +318,15 @@ CandlestickChart.prototype.draw = function()
     // 차트에 표시할 캔들 인덱스 계산
     this.updateIndex();
 
-    //주가 범위 계산
+    // 주가 범위 계산
     this.calculateYRange();
+
+    // 최대 거래량 계산
+//    this.calculateVolume();
 
     this.drawGrid();
     
-    this.candleWidth = this.xPixelRange / this.candlesticksInCanvas;   
+    this.candleWidth = this.xPixelRange / this.candlesticksInCanvas;
 
     this.candleWidth--;
     if ( this.candleWidth%2 === 0 ) this.candleWidth--;  // 가독성을 위해 캔들 사이 틈 만듬
@@ -331,6 +336,8 @@ CandlestickChart.prototype.draw = function()
     {
 
         let color = (this.candlesticks[i].close > this.candlesticks[i].open ) ? this.increaseColor : this.decreaseColor;
+//        let volumeColor = (this.candlesticks[i].close > this.candlesticks[i].open ) ? this.increaseVolumeColor : this.decreaseVolumeColor;
+//        let volumeHeight = (this.yPixelRange / 4) * (this.candlesticks[i].volume / this.maxVolume);
 
         if ( i === this.hoveredDate )
         {
@@ -340,7 +347,7 @@ CandlestickChart.prototype.draw = function()
 
         if ( this.candlesticks[i].high === 0 && this.candlesticks[i].low === 0 )
         {
-            // 캔들 그리기
+            // 거래정지일때 캔들 그리기
             this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.candlesticks[i].close), this.candleWidth, 1, color );
         }
         else
@@ -350,6 +357,9 @@ CandlestickChart.prototype.draw = function()
 
             // 캔들 그리기
             this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.candlesticks[i].open), this.candleWidth, this.yToPixelCoords(this.candlesticks[i].close) - this.yToPixelCoords(this.candlesticks[i].open ) , color );
+
+//            // 거래량 그리기
+//            this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.yStart), this.candleWidth, -volumeHeight, color );
         }
     }
 
@@ -537,7 +547,7 @@ CandlestickChart.prototype.calculateYRange = function()
     for (let i = this.startindex; i < this.endindex + 1; ++i )
     {
         if (i === this.startindex )
-        {   
+        {
             this.yStart = this.candlesticks[i].low;
             this.yEnd = this.candlesticks[i].high;
         }
@@ -558,10 +568,29 @@ CandlestickChart.prototype.calculateYRange = function()
 
 
 
-// 전체기준 y 값 차트 기준 y로 바꾸기
+//CandlestickChart.prototype.calculateVolume = function()
+//{
+//    for (let i = this.startindex; i < this.endindex + 1; ++i )
+//    {
+//        if (i === this.startindex )
+//        {
+//            this.maxVolume = this.candlesticks[i].volume;
+//        }
+//        else
+//        {
+//            if (this.candlesticks[i].volume > this.maxVolume )
+//            {
+//                this.maxVolume = this.candlesticks[i].volume;
+//            }
+//        }
+//    }
+//}
+
+
+// 주가를 차트 기준 y로 바꾸기
 CandlestickChart.prototype.yToPixelCoords = function( y )
 {
-    return this.height - this.marginBottom - (y-this.yStart) * this.yPixelRange/this.yRange;
+    return this.height - this.marginBottom - ( y - this.yStart) * this.yPixelRange/this.yRange;
 }
 
 
