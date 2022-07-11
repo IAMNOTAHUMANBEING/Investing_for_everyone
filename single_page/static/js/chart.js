@@ -193,39 +193,63 @@ CandlestickChart.prototype.mouseDown = function (e)
 }
 
 
-// 부드러운 수정 필요
+
 CandlestickChart.prototype.mouseLeftMove = function (e)
 {
     let dx = this.x - e.clientX;
 
-    if (this.candlesticksInCanvas > 365 * 3) {
-        this.dragDistance = Math.ceil(dx * 0.2);
+    if (this.candlesticksInCanvas > 90){
+        this.dragDistance = Math.ceil(dx * this.candlesticksInCanvas * 0.0001);
         this.draw();
     }
-    else if (this.candlesticksInCanvas > 30 * 5) {
-        this.dragDistance = Math.ceil(dx * 0.03);
-        this.draw();
-    }
-    else if (this.candlesticksInCanvas > 7 * 5) {
-        if (dx > 0) {
-            this.dragDistance = 3;
-        }
-        if (dx < 0) {
-            this.dragDistance = -3;
-        }
-        this.draw();
-        this.dragDistance = 0;
-    }
-    else {
+    else{
         if (dx % 10 === 0 && dx > 0) {
-            this.dragDistance = 1;
-        }
+                this.dragDistance = Math.floor(this.candlesticksInCanvas / 10);
+            }
         if (dx % 10 === 0 && dx < 0) {
-            this.dragDistance = -1;
-        }
+                this.dragDistance = -Math.floor(this.candlesticksInCanvas/ 10);
+            }
         this.draw();
         this.dragDistance = 0;
     }
+//    if (this.candlesticksInCanvas > 365 * 3) {
+//        this.dragDistance = Math.ceil(dx * 0.2);
+//        this.draw();
+//    }
+//    else if (this.candlesticksInCanvas > 30 * 5) {
+//        this.dragDistance = Math.ceil(dx * 0.03);
+//        this.draw();
+//    }
+//    else if (this.candlesticksInCanvas > 20) {
+//        if (dx % 10 === 0 && dx > 0) {
+//            this.dragDistance = 3;
+//        }
+//        if (dx % 10 === 0 && dx < 0) {
+//            this.dragDistance = -3;
+//        }
+//        this.draw();
+//        this.dragDistance = 0;
+//    }
+//    else if (this.candlesticksInCanvas > 10) {
+//        if (dx % 10 === 0 && dx > 0) {
+//            this.dragDistance = 2;
+//        }
+//        if (dx % 10 === 0 && dx < 0) {
+//            this.dragDistance = -2;
+//        }
+//        this.draw();
+//        this.dragDistance = 0;
+//    }
+//    else {
+//        if (dx % 10 === 0 && dx > 0) {
+//            this.dragDistance = 1;
+//        }
+//        if (dx % 10 === 0 && dx < 0) {
+//            this.dragDistance = -1;
+//        }
+//        this.draw();
+//        this.dragDistance = 0;
+//    }
 }
 
 
@@ -251,12 +275,18 @@ CandlestickChart.prototype.mouseRightMove = function (e)
     this.mouseRightDrag = true;
 
     if ( this.dragMousePosition.x < this.marginLeft ) this.mouseRightDrag = false;
-    if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth) this.mouseRightDrag = false;
+    if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth + 100) this.mouseRightDrag = false;
     if ( this.dragMousePosition.y > this.height - this.marginBottom ) this.mouseRightDrag = false;
 
     if ( this.mouseRightDrag )
     {
-        this.RightDragDate = this.xToIndex( this.dragMousePosition.x );  // pixel -> index;
+        // 가장 최근 날짜까지 편하게 드래그 하기 위해
+        if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth){
+             this.RightDragDate = this.xToIndex( this.width - this.marginRight + this.candleWidth );  // pixel -> index;
+        }
+        else{
+            this.RightDragDate = this.xToIndex( this.dragMousePosition.x );  // pixel -> index;
+        }
         this.dragMousePosition.x = this.marginLeft + Math.floor(( this.RightDragDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
         this.draw();
     }
@@ -332,7 +362,7 @@ CandlestickChart.prototype.draw = function()
     if ( this.candleWidth%2 === 0 ) this.candleWidth--;  // 가독성을 위해 캔들 사이 틈 만듬
 
     // 최근 캔들부터 생성
-    for (let i = this.endindex - 1; i > this.startindex - 1; --i )
+    for (let i = this.endindex; i > this.startindex - 1; --i )
     {
 
         let color = (this.candlesticks[i].close > this.candlesticks[i].open ) ? this.increaseColor : this.decreaseColor;
@@ -394,9 +424,9 @@ CandlestickChart.prototype.draw = function()
         let color = ( this.candlesticks[this.hoveredDate].close > this.candlesticks[this.hoveredDate].open ) ? this.greenColor : this.redColor;
 
         // 디자인 수정 필요
-        this.fillRect( this.mousePosition.x+15 , yPos , 10 , 80 , color );
+        this.fillRect( this.mousePosition.x+15 , yPos , 150 , 150 , color );
         this.context.lineWidth = 2;
-        this.drawRect( this.mousePosition.x+15 , yPos , 120 , 100 , color );
+        this.drawRect( this.mousePosition.x+15 , yPos , 150 , 150 , color );
         this.context.lineWidth = 1;
 
         // 내용 수정 필요, DB와 연동해서 값 가져오게 수정
@@ -405,6 +435,8 @@ CandlestickChart.prototype.draw = function()
         this.context.fillText( "종가: "+this.candlesticks[this.hoveredDate].close , this.mousePosition.x+30 , yPos+45 );
         this.context.fillText( "고가: "+this.candlesticks[this.hoveredDate].high , this.mousePosition.x+30 , yPos+65 );
         this.context.fillText( "저가: "+this.candlesticks[this.hoveredDate].low , this.mousePosition.x+30 , yPos+85 );
+        this.context.fillText( "등락률: "+ Math.round((this.candlesticks[this.hoveredDate].change * 100 + Number.EPSILON) * 100) / 100 , this.mousePosition.x+30 , yPos+115 );
+        this.context.fillText( "거래량: "+this.candlesticks[this.hoveredDate].volume , this.mousePosition.x+30 , yPos+135 );
     }
 
     if ( this.mouseRightDrag )
@@ -419,26 +451,27 @@ CandlestickChart.prototype.draw = function()
         this.context.fillStyle = this.timeLineTextColor;
         this.context.fillText( str , this.dragMousePosition.x-textWidth/2 , this.height-5 );
     }
+
+    console.log(this.candlesticksInCanvas);
 }
 
 
-// 크기 별 x, y 축 스케일 조건 추가해야함
+// 캔버스 크기 별 x, y 축 스케일 조건 추가해야함
 CandlestickChart.prototype.drawGrid = function()
 {
     let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
         
-    // roughly divide the yRange into cells
+    // 가로선 간격
     let yGridSize = (this.yRange) / this.yGridCells;
 
-    // try to find a nice number to round to
+    // 간격 올림 처리
     let niceNumber = Math.pow( 10 , Math.ceil( Math.log10( yGridSize ) ) );
     if ( yGridSize < 0.25 * niceNumber ) niceNumber = 0.25 * niceNumber;
     else if ( yGridSize < 0.5 * niceNumber ) niceNumber = 0.5 * niceNumber;
 
-    // find next largest nice number above yStart
+    // 주가 최대 최소선
     let yStartRoundNumber = Math.ceil( this.yStart/niceNumber ) * niceNumber;
-    // find next lowest nice number below yEnd
     let yEndRoundNumber = Math.floor( this.yEnd/niceNumber ) * niceNumber;
 
     for ( let y = yStartRoundNumber ; y <= yEndRoundNumber ; y += niceNumber )
@@ -548,15 +581,33 @@ CandlestickChart.prototype.calculateYRange = function()
     {
         if (i === this.startindex )
         {
-            this.yStart = this.candlesticks[i].low;
+            // 거래정지 기간이 포함되는 경우 고려
+            if (this.candlesticks[i].low === 0)
+            {
+                this.yStart = this.candlesticks[i].close;
+            }
+            else
+            {
+                this.yStart = this.candlesticks[i].low;
+            }
+
             this.yEnd = this.candlesticks[i].high;
         }
         else
         {
             if (this.candlesticks[i].low < this.yStart )
             {
-                this.yStart = this.candlesticks[i].low;
+                // 거래정지 기간이 포함되는 경우 고려
+                if (this.candlesticks[i].low === 0)
+                {
+                    //pass
+                }
+                else
+                {
+                    this.yStart = this.candlesticks[i].low;
+                }
             }
+
             if (this.candlesticks[i].high > this.yEnd )
             {
                 this.yEnd = this.candlesticks[i].high;
@@ -564,6 +615,7 @@ CandlestickChart.prototype.calculateYRange = function()
         }
     }
     this.yRange = this.yEnd - this.yStart;
+    console.log(this.yStart);
 }
 
 

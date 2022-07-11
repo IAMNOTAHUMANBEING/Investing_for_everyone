@@ -66,7 +66,7 @@ def SearchBlock(request):
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(title__icontains=searchword) | Q(
                 stock_tag__name__icontains=searchword) |
                                                                  Q(word_tag__name__icontains=searchword) | Q(
-                        person_tag__name__icontains=searchword))).distinct()
+                        person_tag__name__icontains=searchword)  )).distinct()
         opinion_list = Opinion.objects.filter(
             Q(date__range=[searchdate_start, searchdate_end]) & (Q(short__icontains=searchword) | Q(
                 stock_tag__name__icontains=searchword) |
