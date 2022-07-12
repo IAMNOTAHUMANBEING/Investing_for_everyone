@@ -1,0 +1,19 @@
+.home_main{
+    flex:1;
+    padding: 20px 20%;
+}
+
+.heading{
+    font-weight: bold;
+    border-left: 10px solid #707070;
+    padding: 0.5em;
+    border-bottom: 2px solid #707070;
+}
+
+.content{
+    border: 2px solid rgb(192,192,192);
+    height: 300px;
+    border-radius:5px;
+    overflow: auto;
+    padding: 20px;
+}
