@@ -178,6 +178,11 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
         document.getElementById("side_block_container").innerHTML = "검색결과가 없습니다.";
     }
 }
+
+// block click
+
+
+
 // block content tab
 function changeBlockContentTab (e)
 {

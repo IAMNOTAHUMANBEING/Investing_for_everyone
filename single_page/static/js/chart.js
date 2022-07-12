@@ -57,8 +57,8 @@ function CandlestickChart( canvasElementID )
     this.marginBottom = 30;
 
 
-    this.yStart = 0;
-    this.yEnd = 0;
+    this.priceRangeStart = 0;
+    this.priceRangeEnd = 0;
     this.yRange = 0;
     this.yPixelRange = this.height-this.marginTop-this.marginBottom;
     this.xPixelRange = this.width-this.marginLeft-this.marginRight;
@@ -73,7 +73,7 @@ function CandlestickChart( canvasElementID )
     this.hoveredPrice = 0;
     this.hoveredCandlestickIndex = 0;
 
-    this.candlesticksInCanvas = 0;
+    this.numOfCandlesticksInCanvas = 0;
     this.candlesticks = [];
     this.x = 0;
     this.y = 0;
@@ -91,9 +91,17 @@ CandlestickChart.prototype.addCandlestick = function( candlestick )
 // 시작 시 캔들 개수와 인덱스
 CandlestickChart.prototype.setCanvas = function ()
 {
-    this.candlesticksInCanvas = 356;
-    this.endindex = this.candlesticks.length - 1;
-    this.startindex = this.endindex - this.candlesticksInCanvas;
+    // 주가 데이터가 1년보다 작은 경우
+    if (this.candlesticks.length > 356)
+    {
+        this.numOfCandlesticksInCanvas = 356;
+    }
+    else
+    {
+        this.numOfCandlesticksInCanvas = this.candlesticks.length
+    }
+    this.indexEnd = this.candlesticks.length - 1;
+    this.indexStart = this.indexEnd - this.numOfCandlesticksInCanvas;
 }
 
 
@@ -114,11 +122,11 @@ CandlestickChart.prototype.mouseMove = function( e )
     if ( this.mouseOverlay )
     {
         // 마우스의 위치(전체 창 기준 위치값)를 날짜와 주가로 바꾸기
-        this.hoveredPrice = this.yToPrices( this.mousePosition.y );
-        this.hoveredDate = this.xToIndex( this.mousePosition.x );  // pixel -> index;
+        this.hoveredPrice = this.yPixelToPrice( this.mousePosition.y );
+        this.hoveredDate = this.xPixelToIndex( this.mousePosition.x );  // pixel -> index;
 
         // 캔들 내에서 이동 시 날짜 변화 없게
-        this.mousePosition.x = this.marginLeft + Math.floor(( this.hoveredDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
+        this.mousePosition.x = this.marginLeft + Math.floor(( this.hoveredDate - this.indexStart ) * this.xPixelRange / this.numOfCandlesticksInCanvas);
         this.draw();
     }
     else this.draw();
@@ -141,24 +149,24 @@ CandlestickChart.prototype.mouseOut = function( e )
 // 조건문 말고 스케일에 비례하게 코드 수정
 CandlestickChart.prototype.mouseWheel = function (e) 
 {
-    if (this.candlesticksInCanvas > 365 * 5) {
-        this.candlesticksInCanvas = Math.floor(this.candlesticksInCanvas + (1.2 * e.deltaY));
+    if (this.numOfCandlesticksInCanvas > 365 * 5) {
+        this.numOfCandlesticksInCanvas = Math.floor(this.numOfCandlesticksInCanvas + (1.2 * e.deltaY));
     }
-    else if (this.candlesticksInCanvas > 365 * 3) {
-        this.candlesticksInCanvas = Math.floor(this.candlesticksInCanvas + (0.7 * e.deltaY));
+    else if (this.numOfCandlesticksInCanvas > 365 * 3) {
+        this.numOfCandlesticksInCanvas = Math.floor(this.numOfCandlesticksInCanvas + (0.7 * e.deltaY));
     }
-    else if (this.candlesticksInCanvas > 30 * 5) {
-        this.candlesticksInCanvas = Math.floor(this.candlesticksInCanvas + (0.5 * e.deltaY));
+    else if (this.numOfCandlesticksInCanvas > 30 * 5) {
+        this.numOfCandlesticksInCanvas = Math.floor(this.numOfCandlesticksInCanvas + (0.5 * e.deltaY));
     }
-    else if (this.candlesticksInCanvas > 7 * 5) {
-        this.candlesticksInCanvas = Math.floor(this.candlesticksInCanvas + (0.3 * e.deltaY));
+    else if (this.numOfCandlesticksInCanvas > 7 * 5) {
+        this.numOfCandlesticksInCanvas = Math.floor(this.numOfCandlesticksInCanvas + (0.3 * e.deltaY));
     }
     else {
-        this.candlesticksInCanvas = Math.floor(this.candlesticksInCanvas + (0.1 * e.deltaY));
+        this.numOfCandlesticksInCanvas = Math.floor(this.numOfCandlesticksInCanvas + (0.1 * e.deltaY));
     }
 
-    if (this.candlesticksInCanvas > this.candlesticks.length) this.candlesticksInCanvas = this.candlesticks.length;
-    if (this.candlesticksInCanvas < 10) this.candlesticksInCanvas = 10;
+    if (this.numOfCandlesticksInCanvas > this.candlesticks.length) this.numOfCandlesticksInCanvas = this.candlesticks.length;
+    if (this.numOfCandlesticksInCanvas < 10) this.numOfCandlesticksInCanvas = 10;
 
     this.draw()
 }
@@ -198,58 +206,20 @@ CandlestickChart.prototype.mouseLeftMove = function (e)
 {
     let dx = this.x - e.clientX;
 
-    if (this.candlesticksInCanvas > 90){
-        this.dragDistance = Math.ceil(dx * this.candlesticksInCanvas * 0.0001);
+    if (this.numOfCandlesticksInCanvas > 90){
+        this.dragDistance = Math.ceil(dx * this.numOfCandlesticksInCanvas * 0.0001);
         this.draw();
     }
     else{
         if (dx % 10 === 0 && dx > 0) {
-                this.dragDistance = Math.floor(this.candlesticksInCanvas / 10);
+                this.dragDistance = Math.floor(this.numOfCandlesticksInCanvas / 10);
             }
         if (dx % 10 === 0 && dx < 0) {
-                this.dragDistance = -Math.floor(this.candlesticksInCanvas/ 10);
+                this.dragDistance = -Math.floor(this.numOfCandlesticksInCanvas/ 10);
             }
         this.draw();
         this.dragDistance = 0;
     }
-//    if (this.candlesticksInCanvas > 365 * 3) {
-//        this.dragDistance = Math.ceil(dx * 0.2);
-//        this.draw();
-//    }
-//    else if (this.candlesticksInCanvas > 30 * 5) {
-//        this.dragDistance = Math.ceil(dx * 0.03);
-//        this.draw();
-//    }
-//    else if (this.candlesticksInCanvas > 20) {
-//        if (dx % 10 === 0 && dx > 0) {
-//            this.dragDistance = 3;
-//        }
-//        if (dx % 10 === 0 && dx < 0) {
-//            this.dragDistance = -3;
-//        }
-//        this.draw();
-//        this.dragDistance = 0;
-//    }
-//    else if (this.candlesticksInCanvas > 10) {
-//        if (dx % 10 === 0 && dx > 0) {
-//            this.dragDistance = 2;
-//        }
-//        if (dx % 10 === 0 && dx < 0) {
-//            this.dragDistance = -2;
-//        }
-//        this.draw();
-//        this.dragDistance = 0;
-//    }
-//    else {
-//        if (dx % 10 === 0 && dx > 0) {
-//            this.dragDistance = 1;
-//        }
-//        if (dx % 10 === 0 && dx < 0) {
-//            this.dragDistance = -1;
-//        }
-//        this.draw();
-//        this.dragDistance = 0;
-//    }
 }
 
 
@@ -282,12 +252,12 @@ CandlestickChart.prototype.mouseRightMove = function (e)
     {
         // 가장 최근 날짜까지 편하게 드래그 하기 위해
         if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth){
-             this.RightDragDate = this.xToIndex( this.width - this.marginRight + this.candleWidth );  // pixel -> index;
+             this.RightDragDate = this.xPixelToIndex( this.width - this.marginRight + this.candleWidth );  // pixel -> index;
         }
         else{
-            this.RightDragDate = this.xToIndex( this.dragMousePosition.x );  // pixel -> index;
+            this.RightDragDate = this.xPixelToIndex( this.dragMousePosition.x );  // pixel -> index;
         }
-        this.dragMousePosition.x = this.marginLeft + Math.floor(( this.RightDragDate - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas);
+        this.dragMousePosition.x = this.marginLeft + Math.floor(( this.RightDragDate - this.indexStart ) * this.xPixelRange / this.numOfCandlesticksInCanvas);
         this.draw();
     }
     else
@@ -329,7 +299,7 @@ CandlestickChart.prototype.mouseRightUp = function (e)
 
 CandlestickChart.prototype.draw = function()
 {
-    // canvas 크기 재설정
+    // canvas 크기 변경된 창에 맞게 재설정
     this.canvas.width = parseInt( window.getComputedStyle(document.querySelector(".stock_chart_wrapper")).width );
     this.canvas.height = parseInt( window.getComputedStyle(document.querySelector(".stock_chart_wrapper")).height ) - 10;
 
@@ -349,20 +319,20 @@ CandlestickChart.prototype.draw = function()
     this.updateIndex();
 
     // 주가 범위 계산
-    this.calculateYRange();
+    this.calculateYPriceRange();
 
     // 최대 거래량 계산
-//    this.calculateVolume();
+    // this.calculateVolume();
 
     this.drawGrid();
     
-    this.candleWidth = this.xPixelRange / this.candlesticksInCanvas;
+    this.candleWidth = this.xPixelRange / this.numOfCandlesticksInCanvas;
 
     this.candleWidth--;
     if ( this.candleWidth%2 === 0 ) this.candleWidth--;  // 가독성을 위해 캔들 사이 틈 만듬
 
     // 최근 캔들부터 생성
-    for (let i = this.endindex; i > this.startindex - 1; --i )
+    for (let i = this.indexEnd; i > this.indexStart - 1; --i )
     {
 
         let color = (this.candlesticks[i].close > this.candlesticks[i].open ) ? this.increaseColor : this.decreaseColor;
@@ -378,18 +348,23 @@ CandlestickChart.prototype.draw = function()
         if ( this.candlesticks[i].high === this.candlesticks[i].low)
         {
             // 거래정지일때 캔들 그리기
-            this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.candlesticks[i].close), this.candleWidth, 1, color );
+            this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.candlesticks[i].close), this.candleWidth, 1, color );
         }
         else
         {
             // 캔들 꼬치 그리기
-            this.drawLine(this.xToPixelCoords(i), this.yToPixelCoords(this.candlesticks[i].low), this.xToPixelCoords(i), this.yToPixelCoords(this.candlesticks[i].high ) , color );
+            this.drawLine(this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].low), this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].high ) , color );
 
             // 캔들 그리기
-            this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.candlesticks[i].open), this.candleWidth, this.yToPixelCoords(this.candlesticks[i].close) - this.yToPixelCoords(this.candlesticks[i].open ) , color );
+            this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.candlesticks[i].open), this.candleWidth, this.priceToYPixel(this.candlesticks[i].close) - this.priceToYPixel(this.candlesticks[i].open ) , color );
 
-//            // 거래량 그리기
-//            this.fillRect(this.xToPixelCoords(i) - Math.floor(this.candleWidth / 2), this.yToPixelCoords(this.yStart), this.candleWidth, -volumeHeight, color );
+            // 박스 그리기
+//            if( i%100 === 1){
+//                document.querySelector(".stock_chart_wrapper").innerHTML += "<div style='position:relative; top:100;left:100; z-index:100;'>테스트</div>";
+//            }
+
+            // 거래량 그리기
+            // this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.priceRangeStart), this.candleWidth, -volumeHeight, color );
         }
     }
 
@@ -429,7 +404,7 @@ CandlestickChart.prototype.draw = function()
         this.drawRect( this.mousePosition.x+15 , yPos , 150 , 150 , color );
         this.context.lineWidth = 1;
 
-        // 내용 수정 필요, DB와 연동해서 값 가져오게 수정
+        // 당일 주가 정보
         this.context.fillStyle = this.mouseHoverTextColor;
         this.context.fillText( "시가: "+this.candlesticks[this.hoveredDate].open , this.mousePosition.x+30 , yPos+25 );
         this.context.fillText( "종가: "+this.candlesticks[this.hoveredDate].close , this.mousePosition.x+30 , yPos+45 );
@@ -451,8 +426,6 @@ CandlestickChart.prototype.draw = function()
         this.context.fillStyle = this.timeLineTextColor;
         this.context.fillText( str , this.dragMousePosition.x-textWidth/2 , this.height-5 );
     }
-
-    console.log(this.candlesticksInCanvas);
 }
 
 
@@ -471,102 +444,102 @@ CandlestickChart.prototype.drawGrid = function()
     else if ( yGridSize < 0.5 * niceNumber ) niceNumber = 0.5 * niceNumber;
 
     // 주가 최대 최소선
-    let yStartRoundNumber = Math.ceil( this.yStart/niceNumber ) * niceNumber;
-    let yEndRoundNumber = Math.floor( this.yEnd/niceNumber ) * niceNumber;
+    let priceRangeStartRoundNumber = Math.ceil( this.priceRangeStart/niceNumber ) * niceNumber;
+    let priceRangeEndRoundNumber = Math.floor( this.priceRangeEnd/niceNumber ) * niceNumber;
 
-    for ( let y = yStartRoundNumber ; y <= yEndRoundNumber ; y += niceNumber )
+    for ( let y = priceRangeStartRoundNumber ; y <= priceRangeEndRoundNumber ; y += niceNumber )
     {
-        this.drawLine( 0 , this.yToPixelCoords( y ) , this.width , this.yToPixelCoords( y ) , this.gridColor );
+        this.drawLine( 0 , this.priceToYPixel( y ) , this.width , this.priceToYPixel( y ) , this.gridColor );
         let textWidth = this.context.measureText( this.roundPriceValue( y ) ).width;
         this.context.fillStyle = this.gridTextColor;
-        this.context.fillText( this.roundPriceValue( y ) , this.width-textWidth-5 , this.yToPixelCoords( y )-5 );
+        this.context.fillText( this.roundPriceValue( y ) , this.width-textWidth-5 , this.priceToYPixel( y )-5 );
     }
 
     // 1일 달의 시작이 아님 휴일이 있을 수 있음
-    if (this.candlesticksInCanvas > 365 * 3 || this.canvas.width < 1000)
+    if (this.numOfCandlesticksInCanvas > 365 * 3 || this.canvas.width < 1000)
     {   
-        for (let x = this.startindex; x <= this.endindex; x += 1)
+        for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
-             if (x === this.startindex)
+             if (x === this.indexStart)
              {
                 //pass
              }
              else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(0, 4);
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
         }
     }
-    else if (this.candlesticksInCanvas > 30 * 5)
+    else if (this.numOfCandlesticksInCanvas > 30 * 5)
     {
-        for (let x = this.startindex; x <= this.endindex; x += 1)
+        for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
-            if (x === this.startindex)
+            if (x === this.indexStart)
              {
                 //pass
              }
              else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(0, 4);
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
             else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
         }
     }
-    else if (this.candlesticksInCanvas > 7 * 5){
-        for (let x = this.startindex; x <= this.endindex; x += 1)
+    else if (this.numOfCandlesticksInCanvas > 7 * 5){
+        for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
-            if (x === this.startindex)
+            if (x === this.indexStart)
              {
                 //pass
              }
              else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
             else if ([6, 12, 18, 24].includes(Number(this.candlesticks[x].date.substr(8, 2))))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(8, 2);
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
         }
     }
     else{
-        for (let x = this.startindex; x <= this.endindex; x += 1)
+        for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
-            if (x === this.startindex)
+            if (x === this.indexStart)
              {
                 //pass
              }
              else if (this.candlesticks[x - 1].date.substr(5, 2) !== this.candlesticks[x].date.substr(5, 2))
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = monthNames[Number(this.candlesticks[x].date.substr(5, 2)) - 1];
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
             else if(Number(this.candlesticks[x].date.substr(8, 2)) % 2 === 0)
             {
-                this.drawLine(this.xToPixelCoords(x), 0, this.xToPixelCoords(x), this.height, this.gridColor);
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(8, 2);
                 this.context.fillStyle = this.gridTextColor;
-                this.context.fillText(dateStr, this.xToPixelCoords(x) + 5, this.height - 5);
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
             }
             
         }
@@ -575,27 +548,27 @@ CandlestickChart.prototype.drawGrid = function()
 
 
 // 주가 최대 최소 값 이용해서 y축 주가길이 구하기
-CandlestickChart.prototype.calculateYRange = function()
+CandlestickChart.prototype.calculateYPriceRange = function()
 {
-    for (let i = this.startindex; i < this.endindex + 1; ++i )
+    for (let i = this.indexStart; i < this.indexEnd + 1; ++i )
     {
-        if (i === this.startindex )
+        if (i === this.indexStart )
         {
             // 거래정지 기간이 포함되는 경우 고려
             if (this.candlesticks[i].low === 0)
             {
-                this.yStart = this.candlesticks[i].close;
+                this.priceRangeStart = this.candlesticks[i].close;
             }
             else
             {
-                this.yStart = this.candlesticks[i].low;
+                this.priceRangeStart = this.candlesticks[i].low;
             }
 
-            this.yEnd = this.candlesticks[i].high;
+            this.priceRangeEnd = this.candlesticks[i].high;
         }
         else
         {
-            if (this.candlesticks[i].low < this.yStart )
+            if (this.candlesticks[i].low < this.priceRangeStart )
             {
                 // 거래정지 기간이 포함되는 경우 고려
                 if (this.candlesticks[i].low === 0)
@@ -604,27 +577,26 @@ CandlestickChart.prototype.calculateYRange = function()
                 }
                 else
                 {
-                    this.yStart = this.candlesticks[i].low;
+                    this.priceRangeStart = this.candlesticks[i].low;
                 }
             }
 
-            if (this.candlesticks[i].high > this.yEnd )
+            if (this.candlesticks[i].high > this.priceRangeEnd )
             {
-                this.yEnd = this.candlesticks[i].high;
+                this.priceRangeEnd = this.candlesticks[i].high;
             }
         }
     }
-    this.yRange = this.yEnd - this.yStart;
-    console.log(this.yStart);
+    this.yRange = this.priceRangeEnd - this.priceRangeStart;
 }
 
 
 
 //CandlestickChart.prototype.calculateVolume = function()
 //{
-//    for (let i = this.startindex; i < this.endindex + 1; ++i )
+//    for (let i = this.indexStart; i < this.indexEnd + 1; ++i )
 //    {
-//        if (i === this.startindex )
+//        if (i === this.indexStart )
 //        {
 //            this.maxVolume = this.candlesticks[i].volume;
 //        }
@@ -640,31 +612,31 @@ CandlestickChart.prototype.calculateYRange = function()
 
 
 // 주가를 차트 기준 y로 바꾸기
-CandlestickChart.prototype.yToPixelCoords = function( y )
+CandlestickChart.prototype.priceToYPixel = function( y )
 {
-    return this.height - this.marginBottom - ( y - this.yStart) * this.yPixelRange/this.yRange;
+    return this.height - this.marginBottom - ( y - this.priceRangeStart) * this.yPixelRange/this.yRange;
 }
 
 
 // index -> pixel in canvas
-CandlestickChart.prototype.xToPixelCoords = function( x )
+CandlestickChart.prototype.indexToXPixel = function( x )
 {
-    return this.marginLeft + ( x - this.startindex ) * this.xPixelRange / this.candlesticksInCanvas;
+    return this.marginLeft + ( x - this.indexStart ) * this.xPixelRange / this.numOfCandlesticksInCanvas;
 }
 
 
 // y 픽셀 값을 주가로 바꾸기
-CandlestickChart.prototype.yToPrices = function( y )
+CandlestickChart.prototype.yPixelToPrice = function( y )
 {
-    return this.yStart + ( this.height - this.marginBottom - y ) * this.yRange/this.yPixelRange;
+    return this.priceRangeStart + ( this.height - this.marginBottom - y ) * this.yRange/this.yPixelRange;
 }
 
 
 // x 픽셀 값을 날짜로 바꾸기
-CandlestickChart.prototype.xToIndex = function( x )
+CandlestickChart.prototype.xPixelToIndex = function( x )
 {
     // x 위치 값을 index로 바꿔서 candlestick의 date 출력
-    return this.startindex + Math.floor(( x - this.marginLeft ) * this.candlesticksInCanvas / this.xPixelRange)
+    return this.indexStart + Math.floor(( x - this.marginLeft ) * this.numOfCandlesticksInCanvas / this.xPixelRange)
 }
 
 
@@ -672,8 +644,8 @@ CandlestickChart.prototype.xToIndex = function( x )
 CandlestickChart.prototype.drawLine = function( xStart , yStart , xEnd , yEnd , color )
 {
 	this.context.beginPath();
-	this.context.moveTo( xStart+0.5 , yStart+0.5 );
-	this.context.lineTo( xEnd+0.5 , yEnd+0.5 );
+	this.context.moveTo( xStart+0.5 , yStart + 0.5 );
+	this.context.lineTo( xEnd+0.5 , yEnd + 0.5 );
 	this.context.strokeStyle = color;
 	this.context.stroke();
 }
@@ -714,17 +686,17 @@ CandlestickChart.prototype.roundPriceValue = function( value )
 CandlestickChart.prototype.updateIndex = function()
 {
     
-    this.endindex = this.endindex + this.dragDistance;
-    this.startindex = this.endindex - this.candlesticksInCanvas;
+    this.indexEnd = this.indexEnd + this.dragDistance;
+    this.indexStart = this.indexEnd - this.numOfCandlesticksInCanvas;
 
-    if (this.startindex < 0 || this.endindex < 0)
+    if (this.indexStart < 0 || this.indexEnd < 0)
     {
-        this.startindex = 0;
-        this.endindex = this.candlesticksInCanvas -1;
+        this.indexStart = 0;
+        this.indexEnd = this.numOfCandlesticksInCanvas -1;
     }
-    if (this.endindex > this.candlesticks.length - 1 || this.startindex > this.candlesticks.length - 1)
+    if (this.indexEnd > this.candlesticks.length - 1 || this.indexStart > this.candlesticks.length - 1)
     {
-        this.startindex = this.candlesticks.length - this.candlesticksInCanvas;
-        this.endindex = this.candlesticks.length - 1;
+        this.indexStart = this.candlesticks.length - this.numOfCandlesticksInCanvas;
+        this.indexEnd = this.candlesticks.length - 1;
     }
 }
