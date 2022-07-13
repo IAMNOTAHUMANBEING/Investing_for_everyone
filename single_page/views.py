@@ -106,7 +106,7 @@ def ChartData(request):
 
         stock_code = json.loads(request.body).get('stock_code')
 
-        with open('C:\\Users\\1004\\Google Drive\\computer_science\\github\\Invest_for_everyone\\single_page\\static\\prices\\' + stock_code + '.json') as stock_price:
+        with open('../_static/prices/' + stock_code + '.json') as stock_price:
             data = json.load(stock_price)
 
             return JsonResponse(data, safe=False)

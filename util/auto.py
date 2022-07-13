@@ -9,6 +9,7 @@ import requests
 from io import BytesIO
 
 sys.path.append('../../Invest_for_everyone')
+print(os.environ)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Invest_for_everyone.settings')
 django.setup()
 
