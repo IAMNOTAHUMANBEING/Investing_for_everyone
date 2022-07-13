@@ -3,7 +3,7 @@ document.getElementById("searchwiki").addEventListener("keyup", (e) => {
     searchword = e.target.value;
 
     if(searchword.trim().length > 0){
-        fetch('http://localhost:8000/wiki/search/', {
+        fetch('./search/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,

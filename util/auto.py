@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 from io import BytesIO
 
-sys.path.append('C:/Users/1004/Google Drive/computer_science/github/Invest_for_everyone')
+sys.path.append('../../Invest_for_everyone')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Invest_for_everyone.settings')
 django.setup()
 
@@ -65,6 +65,6 @@ for index, stock in stock_list.iterrows():
     data = fdr.DataReader(stock.Code)
     data = data.reset_index()
     data['Date'] = data['Date'].apply(lambda x : x.strftime("%Y-%m-%d"))
-    data.to_json('../single_page/static/prices/' + stock.Code + '.json', orient = 'records')
+    data.to_json('../_static/prices/' + stock.Code + '.json', orient='records')
 
 print("주가 업데이트 완료")

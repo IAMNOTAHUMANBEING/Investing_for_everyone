@@ -1,6 +1,6 @@
 function Candlestick(date, open, high, low, close, volume, change)
 {
-    this.date = date; // "YYYY-mm-dd str으로 변경"
+    this.date = date; // "YYYY-mm-dd str
     this.open = parseFloat(open);
     this.close = parseFloat(close);
     this.high = parseFloat(high);

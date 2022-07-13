@@ -11,7 +11,7 @@ function plot(){
     stock_code = document.querySelector(".stock_code").innerHTML;
     console.log(stock_code);
 
-    fetch('http://localhost:8000/wiki/chartdata/', {
+    fetch('../../chartdata/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
