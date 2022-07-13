@@ -132,3 +132,6 @@ dmypy.json
 
 # Pycharm
 .idea/
+
+# auto
+util/auto.py
