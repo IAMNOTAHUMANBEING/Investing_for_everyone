@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PATH /home/ubuntu/github/Invest_for_everyone:$PATH
 
 COPY . /usr/src/app/
 
