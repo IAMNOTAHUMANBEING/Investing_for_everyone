@@ -147,7 +147,7 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
 function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
 {
     if(searchword.trim().length > 0){
-        fetch('http://localhost:8000/wiki/search/block/', {
+        fetch('../../search/block/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
