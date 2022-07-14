@@ -86,6 +86,11 @@ html,body{
     border-bottom: 1px solid #d4d4d4;
 }
 
+.searchwiki_list li:focus, .searchwiki_list li:hover{
+    background-color: #e6e6e6;
+}
+
+
 
 
 /* block */
@@ -116,6 +121,13 @@ html,body{
     border: 1px solid rgb(192, 192, 192);
     border-radius: 5px;
     background-color: #e6e6e6;
+}
+
+.block_name {
+    text-align: right;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 0 5px;
 }
 
 .block_tag_container{

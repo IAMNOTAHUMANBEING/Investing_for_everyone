@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV PATH /usr/src/app:$PATH
 
 COPY . /usr/src/app/
 

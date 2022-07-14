@@ -33,7 +33,7 @@ document.getElementById("searchwiki").addEventListener("keyup", (e) => {
     searchword = e.target.value;
 
     if(searchword.trim().length > 0){
-        fetch('http://localhost:8000/wiki/search/', {
+        fetch('../../search/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,
@@ -49,7 +49,7 @@ document.getElementById("searchwiki").addEventListener("keyup", (e) => {
         });
     }
     // 입력값 없을 때 검색목록 사라지게
-    else{
+    if (searchword.trim().length === 0) {
         document.querySelector(".searchwiki_list").innerHTML = "";
     }
 });

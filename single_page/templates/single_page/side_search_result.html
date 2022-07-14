@@ -30,7 +30,11 @@
     {% if block.checktype == "O" %}
     <div class="block_header">
         <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
-        <div class="block_header_title">{{ block.short }}</div>
+        <div class="block_header_title">"{{ block.short }}"</div>
+    </div>
+
+    <div class="block_name">
+        발언자: <span class="block_tag"><a href="{{ block.name.get_absolute_url }}">#{{ block.name }}</a></span>&nbsp;
     </div>
 
     <div class="block_tag_container">

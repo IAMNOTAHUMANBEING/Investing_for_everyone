@@ -9,7 +9,6 @@ let chart = document.querySelector(".stock_chart_wrapper");
 // chart ajax
 function plot(){
     stock_code = document.querySelector(".stock_code").innerHTML;
-    console.log(stock_code);
 
     fetch('../../chartdata/', {
           method: 'POST',

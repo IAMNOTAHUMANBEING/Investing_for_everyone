@@ -59,10 +59,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "http://144.24.92.23",
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'Invest_for_everyone.urls'
 

@@ -19,7 +19,7 @@ document.getElementById("searchwiki").addEventListener("keyup", (e) => {
         });
     }
     // 입력값 없을 때 검색목록 사라지게
-    else{
+    if (searchword.trim().length === 0) {
         document.querySelector(".searchwiki_list").innerHTML = "";
     }
 });

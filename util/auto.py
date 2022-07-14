@@ -9,7 +9,6 @@ import requests
 from io import BytesIO
 
 sys.path.append('../../Invest_for_everyone')
-print(os.environ)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Invest_for_everyone.settings')
 django.setup()
 
@@ -50,14 +49,13 @@ print(stock_list.head(5))
 for index, stock in stock_list.iterrows():
     exist = Stock.objects.filter(code=stock.Code)
     if exist:
-
         change = exist.filter(~Q(name=stock.Name))
         if change:
-            print("변경")
             change.update(name=stock.Name)
+            print("변경")
     else:
-        print("추가")
         new_record = Stock.objects.create(name=stock.Name, code=stock.Code)
+        print("추가")
 
 print("목록 업데이트 완료")
 

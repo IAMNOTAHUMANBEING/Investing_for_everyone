@@ -50,3 +50,6 @@
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
 }
+
+.searchwiki_list li:focus, .searchwiki_list li:hover {
+    background-color: #e6e6e6;

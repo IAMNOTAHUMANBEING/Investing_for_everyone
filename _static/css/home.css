@@ -1,6 +1,6 @@
 .home_main{
     flex:1;
-    padding: 20px 20%;
+    padding: 40px 15%;
 }
 
 .heading{
@@ -15,5 +15,5 @@
     height: 300px;
     border-radius:5px;
     overflow: auto;
-    padding: 20px;
+    padding: 3%;
 }

@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 from markdownx.utils import markdown
 from markdownx.models import MarkdownxField
 
 class Stock(models.Model):
     name = models.CharField(max_length=30, unique=True)
+    #slug = models.SlugField(null=True, unique=True, allow_unicode=True)
     code = models.CharField(max_length=10, unique=True)
     content = MarkdownxField(blank=True, default="")
 
@@ -18,6 +20,11 @@ class Stock(models.Model):
 
     def get_content_markdown(self):
         return markdown(self.content)
+
+    # def save(self, *args, **kwargs):  # new
+    #     if not self.slug:
+    #         self.slug = slugify(self.name)
+    #     return super().save(*args, **kwargs)
 
 class Person(models.Model):
     name = models.CharField(max_length=30, unique=True)
