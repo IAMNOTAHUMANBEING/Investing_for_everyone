@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 
-import json
+import json, os
 from datetime import timedelta, datetime
 
 from single_page.models import Stock, Person, Word, Event, Opinion, Report
@@ -106,7 +106,11 @@ def ChartData(request):
 
         stock_code = json.loads(request.body).get('stock_code')
 
-        with open('../_static/prices/' + stock_code + '.json') as stock_price:
+        # 상대경로 직접 넣으면 에러남
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        path = os.path.join(my_path, '../_static/prices/' + stock_code + '.json')
+        
+        with open(path) as stock_price:
             data = json.load(stock_price)
 
             return JsonResponse(data, safe=False)
