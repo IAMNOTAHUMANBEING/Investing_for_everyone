@@ -11,9 +11,10 @@
     <div class="title">모두를 위한 투자</div>
 
     <div class = "searchwiki_autocomplete">
-    <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
-    <ul class="searchwiki_list">
-    </ul>
+        {% csrf_token %}
+        <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
+        <ul class="searchwiki_list">
+        </ul>
     </div>
 </div>
 {% endblock %}

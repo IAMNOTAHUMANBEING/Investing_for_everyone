@@ -10,6 +10,7 @@
 
 {% block wiki-content %}
 <div class ="searchwiki_autocomplete">
+    {% csrf_token %}
     <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색"> <!-- 추가해야함 ({{ object.code }})-->
     <ul class="searchwiki_list">
     </ul>
