@@ -135,3 +135,7 @@ dmypy.json
 
 # auto
 util/auto.py
+
+# prices
+single_page/static/prices
+_static/prices
