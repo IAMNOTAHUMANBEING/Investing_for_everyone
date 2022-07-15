@@ -25,9 +25,9 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Opinion)
 class OpinionAdmin(admin.ModelAdmin):
-    list_display = ('short', 'date', 'name')
+    list_display = ('title', 'date', 'person_tag')
     list_filter = ('modified_at',)
-    search_fields = ('short', 'name', 'content')
+    search_fields = ('title', 'person_tag', 'content')
     filter_horizontal = ('stock_tag', 'word_tag')
 
 @admin.register(Report)

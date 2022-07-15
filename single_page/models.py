@@ -89,11 +89,11 @@ class Event(models.Model):
         ordering = ('-date',)
 
 class Opinion(models.Model):
-    short = models.CharField(max_length=50)
-    name = models.ForeignKey(Person, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=50)
     date = models.DateField()
     content = MarkdownxField(blank=True, default="")
 
+    person_tag = models.ForeignKey(Person, on_delete=models.SET_NULL, null=True)
     stock_tag = models.ManyToManyField(Stock, blank=True)
     word_tag = models.ManyToManyField(Word, blank=True)
 
@@ -102,7 +102,7 @@ class Opinion(models.Model):
     modified_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.short
+        return self.title
 
     def checktype(self):
         return "O"
