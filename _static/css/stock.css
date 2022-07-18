@@ -12,8 +12,21 @@
 	color: black;
 }
 
+.stock_content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock_tag{
+    display:flex;
+    align-items: center;
+}
+
 .stock_menu{
     display: flex;
+    justify-content: flex-end;
 }
 
 .stock_menu_btn{

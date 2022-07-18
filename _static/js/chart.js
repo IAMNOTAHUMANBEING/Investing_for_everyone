@@ -41,6 +41,7 @@ function CandlestickChart( canvasElementID )
     this.timeLineTextColor = "#ffffff";
     this.mouseHoverBackgroundColor = "#ffffff";
     this.mouseHoverTextColor = "#000000";
+    this.mouseHoverBoxLineColor = "#000000";
     this.increaseColor = "#c4302b";
     this.decreaseColor = "#1e3bbd";
     this.increaseHoverColor = "#ff0700";
@@ -392,26 +393,27 @@ CandlestickChart.prototype.draw = function()
         this.context.fillText( str , this.mousePosition.x-textWidth/2 , this.height-5 );
 
         // 마우스 위치에 따라 정보 박스 생성 위치 다르게
-        let yPos = this.mousePosition.y-95;
-        if ( yPos < 0 ) yPos = this.mousePosition.y+15;
+        let yPos = this.mousePosition.y - 95;
+        if ( yPos < 0 ) yPos = this.mousePosition.y + 15;
 
-        this.fillRect( this.mousePosition.x+15 , yPos , 120 , 100 , this.mouseHoverBackgroundColor );
-        let color = ( this.candlesticks[this.hoveredDate].close > this.candlesticks[this.hoveredDate].open ) ? this.greenColor : this.redColor;
+        let xPos = this.mousePosition.x;
+        console.log(xPos);
+        if ( xPos + 240 > this.canvas.width ) xPos = this.mousePosition.x - 180;
 
-        // 디자인 수정 필요
-        this.fillRect( this.mousePosition.x+15 , yPos , 150 , 150 , color );
+        // 호버 박스 배경, 테두리 그리기
+        this.fillRect( xPos+15 , yPos , 150 , 150 , this.mouseHoverBackgroundColor );
         this.context.lineWidth = 2;
-        this.drawRect( this.mousePosition.x+15 , yPos , 150 , 150 , color );
+        this.drawRect( xPos+15 , yPos , 150 , 150 , this.mouseHoverBoxLineColor);
         this.context.lineWidth = 1;
 
         // 당일 주가 정보
         this.context.fillStyle = this.mouseHoverTextColor;
-        this.context.fillText( "시가: "+this.candlesticks[this.hoveredDate].open , this.mousePosition.x+30 , yPos+25 );
-        this.context.fillText( "종가: "+this.candlesticks[this.hoveredDate].close , this.mousePosition.x+30 , yPos+45 );
-        this.context.fillText( "고가: "+this.candlesticks[this.hoveredDate].high , this.mousePosition.x+30 , yPos+65 );
-        this.context.fillText( "저가: "+this.candlesticks[this.hoveredDate].low , this.mousePosition.x+30 , yPos+85 );
-        this.context.fillText( "등락률: "+ Math.round((this.candlesticks[this.hoveredDate].change * 100 + Number.EPSILON) * 100) / 100 , this.mousePosition.x+30 , yPos+115 );
-        this.context.fillText( "거래량: "+this.candlesticks[this.hoveredDate].volume , this.mousePosition.x+30 , yPos+135 );
+        this.context.fillText( "시가: "+this.candlesticks[this.hoveredDate].open , xPos+30 , yPos+25 );
+        this.context.fillText( "종가: "+this.candlesticks[this.hoveredDate].close , xPos+30 , yPos+45 );
+        this.context.fillText( "고가: "+this.candlesticks[this.hoveredDate].high , xPos+30 , yPos+65 );
+        this.context.fillText( "저가: "+this.candlesticks[this.hoveredDate].low , xPos+30 , yPos+85 );
+        this.context.fillText( "등락률: "+ Math.round((this.candlesticks[this.hoveredDate].change * 100 + Number.EPSILON) * 100) / 100 , xPos+30 , yPos+115 );
+        this.context.fillText( "거래량: "+this.candlesticks[this.hoveredDate].volume , xPos+30 , yPos+135 );
     }
 
     if ( this.mouseRightDrag )
@@ -454,17 +456,16 @@ CandlestickChart.prototype.drawGrid = function()
         this.context.fillStyle = this.gridTextColor;
         this.context.fillText( this.roundPriceValue( y ) , this.width-textWidth-5 , this.priceToYPixel( y )-5 );
     }
-
-    // 1일 달의 시작이 아님 휴일이 있을 수 있음
-    if (this.numOfCandlesticksInCanvas > 365 * 3 || this.canvas.width < 1000)
-    {   
+    console.log(this.numOfCandlesticksInCanvas/ this.canvas.width);
+    if (this.numOfCandlesticksInCanvas/ this.canvas.width > 5) // 5년 마다
+    {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
              if (x === this.indexStart)
              {
                 //pass
              }
-             else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4))
+             else if ((this.candlesticks[x - 1].date.substr(3, 1) == 9 && this.candlesticks[x].date.substr(3, 1) == 0) || (this.candlesticks[x - 1].date.substr(3, 1) == 4 && this.candlesticks[x].date.substr(3, 1) == 5))
             {
                 this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
                 let dateStr = this.candlesticks[x].date.substr(0, 4);
@@ -473,7 +474,24 @@ CandlestickChart.prototype.drawGrid = function()
             }
         }
     }
-    else if (this.numOfCandlesticksInCanvas > 30 * 5)
+    else if (this.numOfCandlesticksInCanvas/ this.canvas.width > 0.45) // 1년 마다
+    {
+        for (let x = this.indexStart; x <= this.indexEnd; x += 1)
+        {
+             if (x === this.indexStart)
+             {
+                //pass
+             }
+             else if (this.candlesticks[x - 1].date.substr(0, 4) !== this.candlesticks[x].date.substr(0, 4)) // 1일 달의 시작이 아님 휴일이 있을 수 있음
+            {
+                this.drawLine(this.indexToXPixel(x), 0, this.indexToXPixel(x), this.height, this.gridColor);
+                let dateStr = this.candlesticks[x].date.substr(0, 4);
+                this.context.fillStyle = this.gridTextColor;
+                this.context.fillText(dateStr, this.indexToXPixel(x) + 5, this.height - 5);
+            }
+        }
+    }
+    else if (this.numOfCandlesticksInCanvas/ this.canvas.width > 0.075) // 월 마다
     {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
@@ -497,7 +515,8 @@ CandlestickChart.prototype.drawGrid = function()
             }
         }
     }
-    else if (this.numOfCandlesticksInCanvas > 7 * 5){
+    else if (this.numOfCandlesticksInCanvas/ this.canvas.width > 0.01) // 주 마다
+    {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
             if (x === this.indexStart)
@@ -520,7 +539,8 @@ CandlestickChart.prototype.drawGrid = function()
             }
         }
     }
-    else{
+    else // 짝수일
+    {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)
         {
             if (x === this.indexStart)

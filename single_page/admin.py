@@ -5,6 +5,7 @@ from single_page.models import Wiki, Block
 class StockAdmin(admin.ModelAdmin):
     list_display = ('name', 'code')
     search_fields = ('name', 'code')
+    filter_horizontal = ('tag',)
 
 @admin.register(Block)
 class EventAdmin(admin.ModelAdmin):

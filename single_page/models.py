@@ -10,6 +10,7 @@ class Wiki(models.Model):
     name = models.CharField(max_length=30, unique=True)
     code = models.CharField(max_length=10, blank=True, default="")
     content = MarkdownxField(blank=True, default="")
+    tag = models.ManyToManyField('self', blank=True, default="", symmetrical=False)
 
     def __str__(self):
         return self.name

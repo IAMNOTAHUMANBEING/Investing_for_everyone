@@ -22,11 +22,18 @@
     <div class="stock_code">{{ object.code }}</div>
 </div>
 <br>
-
-<div class="stock_menu">
-    <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
-    <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+<div class="stock_content">
+    <div class="stock_tag">
+        {% for tag in object.tag.all %}
+            <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;
+        {% endfor %}
+    </div>
+    <div class="stock_menu">
+        <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
+        <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+    </div>
 </div>
+
 <br>
 
 <div class="stock_chart_wrapper">
@@ -44,6 +51,12 @@
     </ul>
 </div>
 <br>
+<div class="stock_tag">
+    {% for tag in object.tag.all %}
+    <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;
+    {% endfor %}
+</div>
+
 <div class="wiki_content">{{ object.get_content_markdown | safe }}</div>
 {% endif %}
 
