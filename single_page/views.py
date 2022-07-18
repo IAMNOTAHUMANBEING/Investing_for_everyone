@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 import json, os
 from datetime import timedelta, datetime
 
-from single_page.models import Stock, Person, Word, Event, Opinion, Report
+from single_page.models import Stock, Person, Word, Event, Opinion # Report
 
 class StockDV(DetailView):
     model = Stock

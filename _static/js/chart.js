@@ -1,6 +1,6 @@
 function Candlestick(date, open, high, low, close, volume, change)
 {
-    this.date = date; // "YYYY-mm-dd str
+    this.date = date; // "YYYY-mm-dd str으로 변경"
     this.open = parseFloat(open);
     this.close = parseFloat(close);
     this.high = parseFloat(high);
@@ -347,7 +347,7 @@ CandlestickChart.prototype.draw = function()
 
         if ( this.candlesticks[i].high === this.candlesticks[i].low)
         {
-            // 거래정지일때 캔들 그리기
+            // 거래정지거나 가격 변동이 없는 날 캔들 그리기
             this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.candlesticks[i].close), this.candleWidth, 1, color );
         }
         else

@@ -28,13 +28,10 @@ ul {
 
 .main-nav li {
     margin: 5px auto;
-}
-
-li {
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo a,

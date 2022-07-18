@@ -15,5 +15,9 @@
     height: 300px;
     border-radius:5px;
     overflow: auto;
-    padding: 3%;
+    padding: 2%;
+}
+
+.content p{
+    margin: 0px;
 }
