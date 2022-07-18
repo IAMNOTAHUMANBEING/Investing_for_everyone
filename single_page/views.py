@@ -109,6 +109,10 @@ def ChartData(request):
 
         # 상대경로 직접 넣으면 에러남
         my_path = os.path.abspath(os.path.dirname(__file__))
+
+        if '/' in stock_code:
+            stock_code = stock_code.replace("/", "-")
+
         path = os.path.join(my_path, '../_static/prices/' + stock_code + '.json')
         
         with open(path) as stock_price:
