@@ -10,7 +10,7 @@ let chart = document.querySelector(".stock_chart_wrapper");
 function plot(){
     stock_code = document.querySelector(".stock_code").innerHTML;
 
-    fetch('../../chartdata/', {
+    fetch('../chartdata/', {
           method: 'POST',
           credentials: "same-origin",
           headers: {"X-CSRFToken": csrftoken,

@@ -1,20 +1,14 @@
 {% for block in block_list %}
 <div class="block">
-    {% if block.checktype == "E" %}
+    {% if block.category == "EV" %}
     <div class="block_header">
         <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
         <div class="block_header_title">{{ block.title }}</div>
     </div>
 
     <div class="block_tag_container">
-        {% for stock_tag in block.stock_tag.all %}
-        <span class="block_tag"><a href="{{ stock_tag.get_absolute_url }}">#{{ stock_tag }}</a></span>&nbsp;
-        {% endfor %}
-        {% for word_tag in block.word_tag.all %}
-        <span class="block_tag"><a href="{{ word_tag.get_absolute_url }}">#{{word_tag}}</a></span>&nbsp;
-        {% endfor %}
-        {% for person_tag in block.person_tag.all %}
-        <span class="block_tag"><a href="{{ person_tag.get_absolute_url }}">#{{person_tag}}</a></span>&nbsp;
+        {% for tag in block.tag.all %}
+        <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;
         {% endfor %}
     </div>
 
@@ -27,22 +21,19 @@
     </div>
     {% endif %}
 
-    {% if block.checktype == "O" %}
+    {% if block.category == "OP" %}
     <div class="block_header">
         <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
         <div class="block_header_title">"{{ block.title }}"</div>
     </div>
 
     <div class="block_name">
-        발언자: <span class="block_tag"><a href="{{ block.person_tag.get_absolute_url }}">#{{ block.person_tag }}</a></span>&nbsp;
+        발언자: <span class="block_tag"><a href="{{ block.speaker.get_absolute_url }}">#{{ block.speaker }}</a></span>&nbsp;
     </div>
 
     <div class="block_tag_container">
-        {% for stock_tag in block.stock_tag.all %}
-        <span class="block_tag"><a href="{{ stock_tag.get_absolute_url }}">#{{ stock_tag }}</a></span>&nbsp;
-        {% endfor %}
-        {% for word_tag in block.word_tag.all %}
-        <span class="block_tag"><a href="{{ word_tag.get_absolute_url }}">#{{word_tag}}</a></span>&nbsp;
+        {% for tag in block.tag.all %}
+        <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;
         {% endfor %}
     </div>
 
@@ -52,17 +43,6 @@
 
     <div class="block_content_tab">
         더보기
-    </div>
-    {% endif %}
-
-    {% if block.checktype == "R" %}
-    <div class="block_header">
-        <div class="block_header_date">{{ block.date | date:"Y-m-d" }}</div>&nbsp;
-        <div class="block_header_title">{{ block.title }}</div>
-        <!-- author -->
-        <!-- institution -->
-        <!-- target prices -->
-        <!-- consensus -->
     </div>
     {% endif %}
 </div>

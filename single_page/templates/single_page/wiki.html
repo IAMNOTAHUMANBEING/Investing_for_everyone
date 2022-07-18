@@ -10,6 +10,7 @@
 {% block title %}{{ object }} - {% endblock %}
 
 {% block wiki-content %}
+{% if object.code %}
 <div class="stock_header">
     <div class = "searchwiki_autocomplete">
         {% csrf_token %}
@@ -34,7 +35,21 @@
 <div class="stock_info wiki_content">
     {{ object.get_content_markdown|safe }}
 </div>
+
+{% else %}
+<div class ="searchwiki_autocomplete">
+    {% csrf_token %}
+    <input type="text" value ="{{ object.name }}" id="searchwiki" placeholder="기업, 인물, 단어 검색">
+    <ul class="searchwiki_list">
+    </ul>
+</div>
+<br>
+<div class="wiki_content">{{ object.get_content_markdown | safe }}</div>
+{% endif %}
+
 {% endblock %}
+
+
 
 {% block extra-script %}
 {{ block.super }}
