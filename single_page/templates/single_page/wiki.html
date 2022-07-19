@@ -22,7 +22,7 @@
     <div class="stock_code">{{ object.code }}</div>
 </div>
 <br>
-<div class="stock_content">
+<div class="stock_tab_menu_wrapper">
     <div class="stock_tag">
         {% for tag in object.tag.all %}
             <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;

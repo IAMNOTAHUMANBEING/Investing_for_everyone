@@ -81,7 +81,12 @@ const mouseMoveHandler = function (e) {
 
     const newLeftWidth = ((leftWidth + dx) * 100) / resizer.parentNode.getBoundingClientRect().width;
     leftSide.style.width = `${newLeftWidth}%`;
-    candlestickChart.draw();
+
+    code = document.querySelector(".stock_code");
+    if (code != null)
+    {
+        candlestickChart.draw();
+    }
 
     resizer.style.cursor = 'col-resize';
     document.body.style.cursor = 'col-resize';

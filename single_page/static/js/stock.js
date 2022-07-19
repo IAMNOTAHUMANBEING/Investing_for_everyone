@@ -3,7 +3,7 @@ let info_btn = document.querySelector(".stock_menu_info");
 let chart_btn = document.querySelector(".stock_menu_chart");
 let info = document.querySelector(".stock_info");
 let chart = document.querySelector(".stock_chart_wrapper");
-
+let code = document.querySelector(".stock_code");
 
 
 // chart ajax
@@ -32,8 +32,10 @@ function plot(){
     });
 }
 
-plot();
-
+if (code != null)
+{
+    plot();
+}
 
 
 // 창 크기 바뀔 때마다 차트 크기도 변하게
@@ -44,20 +46,26 @@ window.addEventListener('resize', (e) => {
         clearTimeout(timer);
     }
 	timer = setTimeout( () => {
-        candlestickChart.draw();
+        if (code != null)
+        {
+            candlestickChart.draw();
+        }
 	}, 100);
 });
 
 
 
 // info ajax
-info_btn.addEventListener("click", (e) => {
-    chart.style.display = "none"
-    info.style.display = "block"
-})
+if (code != null)
+{
+    info_btn.addEventListener("click", (e) => {
+        chart.style.display = "none"
+        info.style.display = "block"
+    })
 
-chart_btn.addEventListener("click", (e) => {
-    info.style.display = "none"
-    chart.style.display ="block"
-    candlestickChart.draw();
-})
+    chart_btn.addEventListener("click", (e) => {
+        info.style.display = "none"
+        chart.style.display ="block"
+        candlestickChart.draw();
+    })
+}

@@ -11,11 +11,12 @@
 <div class="home_main container">
     {% for object in object_list %}
     <div class="heading">{{ object.name }}</div>
-    <br><br>
+    <br>
     <div class="content">
         {{ object.get_textfield_markdown | safe }}
     </div>
-    <br><br>
+    <br>
+    <br>
     {% endfor %}
 </div>
 

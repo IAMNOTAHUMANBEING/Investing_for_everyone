@@ -12,7 +12,7 @@
 	color: black;
 }
 
-.stock_content{
+.stock_tab_menu_wrapper{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

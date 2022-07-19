@@ -42,6 +42,8 @@
     list-style: none;
 
     overflow: auto;
+    margin: 0;
+    padding: 0;
 }
 
 .searchwiki_list li{
