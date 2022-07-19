@@ -397,7 +397,6 @@ CandlestickChart.prototype.draw = function()
         if ( yPos < 0 ) yPos = this.mousePosition.y + 15;
 
         let xPos = this.mousePosition.x;
-        console.log(xPos);
         if ( xPos + 240 > this.canvas.width ) xPos = this.mousePosition.x - 180;
 
         // 호버 박스 배경, 테두리 그리기
@@ -456,7 +455,7 @@ CandlestickChart.prototype.drawGrid = function()
         this.context.fillStyle = this.gridTextColor;
         this.context.fillText( this.roundPriceValue( y ) , this.width-textWidth-5 , this.priceToYPixel( y )-5 );
     }
-    console.log(this.numOfCandlesticksInCanvas/ this.canvas.width);
+
     if (this.numOfCandlesticksInCanvas/ this.canvas.width > 5) // 5년 마다
     {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)

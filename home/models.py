@@ -10,4 +10,7 @@ class Home(models.Model):
     def get_textfield_markdown(self):
         return markdown(self.textfield)
 
+    class Meta:
+        ordering = ('pk',)
+
 
