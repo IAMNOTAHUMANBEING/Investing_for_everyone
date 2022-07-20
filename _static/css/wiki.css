@@ -20,8 +20,9 @@ html,body{
     border: 2px solid rgb(192, 192, 192);
     border-radius: 5px;
     flex:1;
-    padding: 30px;
+    padding: 0px 20px 5px 20px;
     overflow: auto;
+    line-height: 1.6;
 }
 
 #resizer {
@@ -75,7 +76,8 @@ html,body{
     border-bottom: none;
     border-top: none;
     list-style: none;
-
+    margin: 0;
+    padding: 0;
     overflow: auto;
 }
 
@@ -95,7 +97,7 @@ html,body{
 
 /* block */
 .block{
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     flex-direction: column;
     -webkit-border-radius: 5px;
@@ -144,6 +146,7 @@ html,body{
 	border-radius: 5px;
 	border: 1px solid rgb(192, 192, 192);
 	padding: 3px;
+	margin-bottom: 5px;
 }
 
 .block_tag a{
@@ -152,11 +155,17 @@ html,body{
 }
 
 .block_content{
+    line-height: 1.8;
     display: none;
-    height: 520px;
+    height: auto;
+    max-height: 520px;
     overflow: auto;
-    padding: 10px;
     border-top: 2px solid rgb(192, 192, 192);
+    padding: 0 10px 0 5px;
+}
+
+.block_content ul, .block_content ol{
+    padding: 0 5px 0 30px;
 }
 
 .block_content_tab{
