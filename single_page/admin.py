@@ -3,8 +3,8 @@ from single_page.models import Wiki, Block
 
 @admin.register(Wiki)
 class StockAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code')
-    search_fields = ('name', 'code')
+    list_display = ('name', 'code', 'category')
+    search_fields = ('name', 'code', 'category')
     filter_horizontal = ('tag',)
 
 @admin.register(Block)
