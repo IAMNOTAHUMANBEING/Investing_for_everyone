@@ -179,3 +179,9 @@ html,body{
 .block_content_tab:hover{
     cursor:pointer;
 }
+
+.blockLoadingGif{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

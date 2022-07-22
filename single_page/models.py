@@ -21,6 +21,8 @@ class Wiki(models.Model):
     def get_content_markdown(self):
         return markdown(self.content)
 
+
+
 class Block(models.Model):
     title = models.CharField(max_length=50)
     date = models.DateField()

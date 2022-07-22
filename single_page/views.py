@@ -10,20 +10,18 @@ from datetime import timedelta, datetime
 
 from single_page.models import Wiki, Block # Report
 
+
+
 class WikiDV(DetailView):
     model = Wiki
     template_name = "single_page/wiki.html"
 
+
+
 class WikiHomeView(TemplateView):
     template_name = "single_page/wiki_home.html"
 
-# class PersonDV(DetailView):
-#     model = Person
-#     template_name = "single_page/person.html"
-#
-# class WordDV(DetailView):
-#     model = Word
-#     template_name = "single_page/word.html"
+
 
 def SearchPage(request):
     if request.method == 'POST':
@@ -31,11 +29,6 @@ def SearchPage(request):
         searchword = json.loads(request.body).get('searchword')
 
         wiki_list = Wiki.objects.filter(name__istartswith=searchword)
-        # word_list = Word.objects.filter(name__istartswith=searchword)
-        # person_list = Person.objects.filter(name__istartswith=searchword)
-
-        # search_result = list(stock_list) + list(word_list) + list(person_list)
-        # search_result = sorted(search_result, key=lambda x: x.name)
 
         if wiki_list:
             context = {
@@ -53,6 +46,7 @@ def SearchPage(request):
         return render(request, 'home/home.html', {})
 
 
+
 def SearchBlock(request):
     if request.method == 'POST':
 
@@ -67,9 +61,6 @@ def SearchBlock(request):
             condition = condition & (Q(title__icontains=word) | Q(tag__name__icontains=word) | Q(speaker__name__icontains=word))
 
         block_list = Block.objects.filter(condition).distinct()
-
-        # search_result = list(event_list) + list(opinion_list) # + list(report_list)
-        # search_result = sorted(search_result, key=lambda x: x.date, reverse=True)
 
         paginator = Paginator(block_list, 6)
         page_number = json.loads(request.body).get('page')
@@ -86,11 +77,12 @@ def SearchBlock(request):
             return JsonResponse(data, safe=False)
 
         else:
-            data = "검색결과가 없습니다."
+            data = "<div class='blockLoadingGif'></div> 검색결과가 없습니다."
             return JsonResponse(data, safe=False)
 
     else:
         return render(request, 'home/home.html', {})
+
 
 
 def ChartData(request):

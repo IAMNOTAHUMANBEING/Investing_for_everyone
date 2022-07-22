@@ -102,7 +102,7 @@ CandlestickChart.prototype.setCanvas = function ()
         this.numOfCandlesticksInCanvas = this.candlesticks.length
     }
     this.indexEnd = this.candlesticks.length - 1;
-    this.indexStart = this.indexEnd - this.numOfCandlesticksInCanvas;
+    this.indexStart = this.indexEnd - this.numOfCandlesticksInCanvas + 1;
 }
 
 
@@ -167,8 +167,18 @@ CandlestickChart.prototype.mouseWheel = function (e)
     }
 
     if (this.numOfCandlesticksInCanvas > this.candlesticks.length) this.numOfCandlesticksInCanvas = this.candlesticks.length;
-    if (this.numOfCandlesticksInCanvas < 10) this.numOfCandlesticksInCanvas = 10;
-
+    if (this.numOfCandlesticksInCanvas < 10)
+    {
+        if (this.candlesticks.length < 10)
+        {
+            this.numOfCandlesticksInCanvas = this.candlesticks.length;
+        }
+        else
+        {
+            this.numOfCandlesticksInCanvas = 10;
+        }
+    }
+    console.log(this.numOfCandlesticksInCanvas);
     this.draw()
 }
 
@@ -346,16 +356,13 @@ CandlestickChart.prototype.draw = function()
             else if ( color === this.decreaseColor ) color = this.decreaseHoverColor;
         }
 
-        if ( this.candlesticks[i].high === this.candlesticks[i].low)
+        // 거래정지거나 가격 변동이 없는 날 캔들 그리기
+        if ( this.candlesticks[i].high === this.candlesticks[i].low || this.candlesticks[i].open === this.candlesticks[i].close)
         {
-            // 거래정지거나 가격 변동이 없는 날 캔들 그리기
             this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.candlesticks[i].close), this.candleWidth, 1, color );
         }
         else
         {
-            // 캔들 꼬치 그리기
-            this.drawLine(this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].low), this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].high ) , color );
-
             // 캔들 그리기
             this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.candlesticks[i].open), this.candleWidth, this.priceToYPixel(this.candlesticks[i].close) - this.priceToYPixel(this.candlesticks[i].open ) , color );
 
@@ -367,9 +374,13 @@ CandlestickChart.prototype.draw = function()
             // 거래량 그리기
             // this.fillRect(this.indexToXPixel(i) - Math.floor(this.candleWidth / 2), this.priceToYPixel(this.priceRangeStart), this.candleWidth, -volumeHeight, color );
         }
+
+        // 캔들 꼬치 그리기
+        this.drawLine(this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].low), this.indexToXPixel(i), this.priceToYPixel(this.candlesticks[i].high ) , color );
     }
 
     // 호버 되었을 때 해당 날짜 정보
+    if (this.candlesticks[this.hoveredDate] == undefined) this.mouseOverlay = false; // 캔들 개수 10개보다 적을 때 예외처리
     if ( this.mouseOverlay )
     {
         // 마우스 위치 가격을 표시하는 박스와 선
@@ -397,12 +408,12 @@ CandlestickChart.prototype.draw = function()
         if ( yPos < 0 ) yPos = this.mousePosition.y + 15;
 
         let xPos = this.mousePosition.x;
-        if ( xPos + 240 > this.canvas.width ) xPos = this.mousePosition.x - 180;
+        if ( xPos + 250 > this.canvas.width ) xPos = this.mousePosition.x - 180;
 
         // 호버 박스 배경, 테두리 그리기
-        this.fillRect( xPos+15 , yPos , 150 , 150 , this.mouseHoverBackgroundColor );
+        this.fillRect( xPos+15 , yPos , 170 , 150 , this.mouseHoverBackgroundColor );
         this.context.lineWidth = 2;
-        this.drawRect( xPos+15 , yPos , 150 , 150 , this.mouseHoverBoxLineColor);
+        this.drawRect( xPos+15 , yPos , 170 , 150 , this.mouseHoverBoxLineColor);
         this.context.lineWidth = 1;
 
         // 당일 주가 정보
@@ -448,6 +459,7 @@ CandlestickChart.prototype.drawGrid = function()
     let priceRangeStartRoundNumber = Math.ceil( this.priceRangeStart/niceNumber ) * niceNumber;
     let priceRangeEndRoundNumber = Math.floor( this.priceRangeEnd/niceNumber ) * niceNumber;
 
+    // y축 조건별 날짜 표시
     for ( let y = priceRangeStartRoundNumber ; y <= priceRangeEndRoundNumber ; y += niceNumber )
     {
         this.drawLine( 0 , this.priceToYPixel( y ) , this.width , this.priceToYPixel( y ) , this.gridColor );
@@ -456,6 +468,7 @@ CandlestickChart.prototype.drawGrid = function()
         this.context.fillText( this.roundPriceValue( y ) , this.width-textWidth-5 , this.priceToYPixel( y )-5 );
     }
 
+    // x축 조건별 날짜 표시
     if (this.numOfCandlesticksInCanvas/ this.canvas.width > 5) // 5년 마다
     {
         for (let x = this.indexStart; x <= this.indexEnd; x += 1)
@@ -637,7 +650,7 @@ CandlestickChart.prototype.priceToYPixel = function( y )
 }
 
 
-// index -> pixel in canvas
+// index -> x pixel in canvas
 CandlestickChart.prototype.indexToXPixel = function( x )
 {
     return this.marginLeft + ( x - this.indexStart ) * this.xPixelRange / this.numOfCandlesticksInCanvas;
@@ -651,10 +664,9 @@ CandlestickChart.prototype.yPixelToPrice = function( y )
 }
 
 
-// x 픽셀 값을 날짜로 바꾸기
+// x pixel -> index
 CandlestickChart.prototype.xPixelToIndex = function( x )
 {
-    // x 위치 값을 index로 바꿔서 candlestick의 date 출력
     return this.indexStart + Math.floor(( x - this.marginLeft ) * this.numOfCandlesticksInCanvas / this.xPixelRange)
 }
 

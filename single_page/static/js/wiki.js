@@ -152,6 +152,8 @@ document.getElementById("searchblock").addEventListener("submit", (e) => {
 function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
 {
     if(searchword.trim().length > 0){
+        displayBlockLoading("https://github.com/IAMNOTAHUMANBEING/img_repo/blob/main/searchloading.gif?raw=true");
+
         fetch('../search/block/', {
           method: 'POST',
           credentials: "same-origin",
@@ -165,6 +167,7 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
         })
         .then(response => response.json())
         .then(data => {
+            hideBlockLoading();
             document.getElementById("side_block_container").innerHTML = data;
             document.getElementById("side_block_container").addEventListener("click", changeBlockContentTab);
 
@@ -180,11 +183,19 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
     }
     // 빈 칸으로 검색 하면
     else{
-        document.getElementById("side_block_container").innerHTML = "검색결과가 없습니다.";
+        document.getElementById("side_block_container").innerHTML = "<div class='blockLoadingGif'></div> 검색결과가 없습니다.";
     }
 }
 
-// block click
+// side block ajax loading
+function  displayBlockLoading(gif){
+    document.querySelector(".blockLoadingGif").innerHTML = " <img src='"+ gif + "' style='display:block; position:relative; top:90%;'/>";
+    console.log(document.querySelector(".blockLoadingGif"));
+}
+
+function  hideBlockLoading(){
+    document.querySelector(".blockLoadingGif").innerHTML = "";
+}
 
 
 

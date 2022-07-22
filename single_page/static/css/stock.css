@@ -60,3 +60,9 @@
     display:none;
     padding-bottom: 10px;
 }
+
+.chartLoadingGif{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,3 +1,5 @@
+<div class="blockLoadingGif"></div>
+
 {% for block in block_list %}
 <div class="block">
     {% if block.category == "EV" %}
@@ -51,12 +53,18 @@
 
 <div id="block_pagination">
     {% if block_list.has_previous %}
-    <div class="block_pagination_btn">{{ block_list.previous_page_number }}</div>
+        {% if block_list.number > 2 %}
+            <div class="block_pagination_btn">1</div>
+        {% endif %}
+        <div class="block_pagination_btn">{{ block_list.previous_page_number }}</div>
     {% endif %}
 
     <div class="current block_pagination_btn">{{ block_list.number }}</div>
 
     {% if block_list.has_next %}
-    <div class="block_pagination_btn">{{ block_list.next_page_number }}</div>
+        <div class="block_pagination_btn">{{ block_list.next_page_number }}</div>
+        {% if block_list.paginator.num_pages > 2 and block_list.number < block_list.paginator.num_pages|add:-1 %}
+            <div class="block_pagination_btn">{{ block_list.paginator.num_pages }}</div>
+        {% endif %}
     {% endif %}
 </div>

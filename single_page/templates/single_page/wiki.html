@@ -10,6 +10,7 @@
 {% block title %}{{ object }} - {% endblock %}
 
 {% block wiki-content %}
+
 {% if object.code %}
 <div class="stock_header">
     <div class = "searchwiki_autocomplete">
@@ -36,6 +37,7 @@
 
 <br>
 
+<div class="chartLoadingGif"></div>
 <div class="stock_chart_wrapper">
     <canvas id="stock_chart"></canvas>
 </div>

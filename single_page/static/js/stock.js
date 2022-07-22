@@ -8,6 +8,8 @@ let code = document.querySelector(".stock_code");
 
 // chart ajax
 function plot(){
+    displayChartLoading("https://github.com/IAMNOTAHUMANBEING/img_repo/blob/main/searchloading.gif?raw=true");
+
     stock_code = document.querySelector(".stock_code").innerHTML;
 
     fetch('../chartdata/', {
@@ -19,6 +21,7 @@ function plot(){
         })
         .then(response => response.json())
         .then(data => {
+            hideChartLoading();
             candlestickChart = new CandlestickChart( "stock_chart" );
             for ( let i = 0 ; i < data.length ; ++i )
             {
@@ -36,6 +39,16 @@ if (code != null)
 {
     plot();
 }
+
+// chart ajax loading
+function  displayChartLoading(gif){
+    document.querySelector(".chartLoadingGif").innerHTML = " <img src='"+ gif + "' style='display: block; position:relative; top:130%;'/>";
+}
+
+function  hideChartLoading(){
+    document.querySelector(".chartLoadingGif").innerHTML = "";
+}
+
 
 
 // 창 크기 바뀔 때마다 차트 크기도 변하게
@@ -55,7 +68,7 @@ window.addEventListener('resize', (e) => {
 
 
 
-// info ajax
+// info btn
 if (code != null)
 {
     info_btn.addEventListener("click", (e) => {
