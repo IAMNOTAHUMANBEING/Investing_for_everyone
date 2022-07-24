@@ -178,7 +178,7 @@ CandlestickChart.prototype.mouseWheel = function (e)
             this.numOfCandlesticksInCanvas = 10;
         }
     }
-    console.log(this.numOfCandlesticksInCanvas);
+
     this.draw()
 }
 
@@ -262,10 +262,12 @@ CandlestickChart.prototype.mouseRightMove = function (e)
     if ( this.mouseRightDrag )
     {
         // 가장 최근 날짜까지 편하게 드래그 하기 위해
-        if ( this.dragMousePosition.x > this.width - this.marginRight + this.candleWidth){
-             this.RightDragDate = this.xPixelToIndex( this.width - this.marginRight + this.candleWidth );  // pixel -> index;
+        if ( this.dragMousePosition.x > this.indexToXPixel(this.indexEnd))
+        {
+             this.RightDragDate = this.indexEnd;  // pixel -> index;
         }
-        else{
+        else
+        {
             this.RightDragDate = this.xPixelToIndex( this.dragMousePosition.x );  // pixel -> index;
         }
         this.dragMousePosition.x = this.marginLeft + Math.floor(( this.RightDragDate - this.indexStart ) * this.xPixelRange / this.numOfCandlesticksInCanvas);

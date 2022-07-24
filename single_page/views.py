@@ -16,6 +16,12 @@ class WikiDV(DetailView):
     model = Wiki
     template_name = "single_page/wiki.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_num = Wiki.objects.get(name__exact=self.object.name)
+        context['sub_tag'] = Wiki.objects.filter(tag__exact=tag_num)
+        return context
+
 
 
 class WikiHomeView(TemplateView):

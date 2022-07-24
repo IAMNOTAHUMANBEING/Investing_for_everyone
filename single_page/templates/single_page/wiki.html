@@ -23,24 +23,37 @@
     <div class="stock_code">{{ object.code }}</div>
 </div>
 <br>
-<div class="stock_tab_menu_wrapper">
-    <div class="stock_tag">
-        {% for tag in object.tag.all %}
-            <span class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></span>&nbsp;&nbsp;
-        {% endfor %}
-    </div>
-    <div class="stock_menu">
-        <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
-        <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
-    </div>
-</div>
 
+<div class="stock_menu">
+        <button class="stock_menu_btn stock_menu_chart">차트</button>&nbsp;
+        <button class="stock_menu_btn stock_menu_tag">분류</button>&nbsp;
+        <button class="stock_menu_btn stock_menu_info">정보</button>&nbsp;
+</div>
 <br>
 
+<!-- 차트 -->
 <div class="chartLoadingGif"></div>
 <div class="stock_chart_wrapper">
     <canvas id="stock_chart"></canvas>
 </div>
+
+<!-- 분류 -->
+<div class="wiki_tag">
+    <div class="wiki_super_tag">
+        상위분류:&nbsp;
+        {% for tag in object.tag.all %}
+        <div class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></div>
+        {% endfor %}
+    </div>
+    <div class="wiki_sub_tag">
+        하위분류:&nbsp;
+        {% for tag in sub_tag %}
+        <div class="block_tag"><a href="{{ tag.get_absolute_url }}">#{{ tag }}</a></div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 정보 -->
 <div class="stock_info wiki_content">
     {{ object.get_content_markdown|safe }}
 </div>

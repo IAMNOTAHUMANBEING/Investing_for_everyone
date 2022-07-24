@@ -187,13 +187,16 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
     }
 }
 
+
+
 // side block ajax loading
-function  displayBlockLoading(gif){
+function  displayBlockLoading(gif)
+{
     document.querySelector(".blockLoadingGif").innerHTML = " <img src='"+ gif + "' style='display:block; position:relative; top:90%;'/>";
-    console.log(document.querySelector(".blockLoadingGif"));
 }
 
-function  hideBlockLoading(){
+function  hideBlockLoading()
+{
     document.querySelector(".blockLoadingGif").innerHTML = "";
 }
 

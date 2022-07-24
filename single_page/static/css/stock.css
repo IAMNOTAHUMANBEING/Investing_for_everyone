@@ -12,23 +12,31 @@
 	color: black;
 }
 
-.stock_tab_menu_wrapper{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.stock_tag{
-    display:flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
 .stock_menu{
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.wiki_tag{
+    display:none;
+    font-size: 14px;
+    flex-direction: column;
+    flex:1;
+    min-height: 0;
+}
+
+.wiki_super_tag{
+    margin-bottom: 30px;
+}
+
+.wiki_super_tag, .wiki_sub_tag{
+    border-radius: 5px;
+	border: 2px solid rgb(192, 192, 192);
+	padding: 10px;
+	overflow: auto;
 }
 
 .stock_menu_btn{

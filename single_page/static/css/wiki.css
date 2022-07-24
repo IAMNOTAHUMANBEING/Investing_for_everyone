@@ -147,6 +147,7 @@ html,body{
 	border: 1px solid rgb(192, 192, 192);
 	padding: 3px;
 	margin-bottom: 5px;
+	display:inline-block;
 }
 
 .block_tag a{
