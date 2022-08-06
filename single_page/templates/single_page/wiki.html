@@ -95,7 +95,9 @@
 </div>
 
 <!-- 정보 -->
-<div class="wiki_content">{{ object.get_content_markdown | safe }}</div>
+<div class="stock_info wiki_content">
+    {{ object.get_content_markdown | safe }}
+</div>
 {% endif %}
 
 {% endblock %}

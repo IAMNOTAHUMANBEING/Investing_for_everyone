@@ -78,21 +78,35 @@ window.addEventListener('resize', (e) => {
 if (code != null)
 {
     chart_btn.addEventListener("click", (e) => {
-        tag.style.display = "none"
-        info.style.display = "none"
-        chart.style.display ="block"
+        tag.style.display = "none";
+        info.style.display = "none";
+        chart.style.display ="block";
         candlestickChart.draw();
     })
+
+    info_btn.addEventListener("click", (e) => {
+        tag.style.display = "none";
+        chart.style.display = "none";
+        info.style.display = "block";
+    })
+
+    tag_btn.addEventListener("click", (e) => {
+        info.style.display = "none";
+        chart.style.display = "none";
+        tag.style.display = "flex";
+    })
 }
+else
+{
+    info.style.display = "block";
 
-info_btn.addEventListener("click", (e) => {
-        tag.style.display = "none"
-        chart.style.display = "none"
-        info.style.display = "block"
+    info_btn.addEventListener("click", (e) => {
+            tag.style.display = "none";
+            info.style.display = "block";
     })
 
-tag_btn.addEventListener("click", (e) => {
-        info.style.display = "none"
-        chart.style.display = "none"
-        tag.style.display = "flex"
+    tag_btn.addEventListener("click", (e) => {
+            info.style.display = "none";
+            tag.style.display = "flex";
     })
+}
