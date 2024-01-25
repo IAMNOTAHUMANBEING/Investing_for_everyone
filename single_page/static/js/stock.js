@@ -37,14 +37,8 @@ function plot(){
     });
 }
 
-if (code != null)
-{
-    plot();
-}
 
-
-
-// chart ajax loading
+// chart ajax loading image
 function  displayChartLoading(gif)
 {
     document.querySelector(".chartLoadingGif").innerHTML = " <img src='"+ gif + "' style='display: block; position:relative; top:130%;'/>";
@@ -54,7 +48,6 @@ function  hideChartLoading()
 {
     document.querySelector(".chartLoadingGif").innerHTML = "";
 }
-
 
 
 // 창 크기 바뀔 때마다 차트 크기도 변하게
@@ -74,9 +67,11 @@ window.addEventListener('resize', (e) => {
 
 
 
-// info btn
+// 차트 있는 경우와 없는 경우 페이지 설정 <- 이걸 js에서 처리하는게 맞을까? 애초에 wiki.js랑 stock.js 왜 나눔?
 if (code != null)
 {
+    plot();
+
     chart_btn.addEventListener("click", (e) => {
         tag.style.display = "none";
         info.style.display = "none";

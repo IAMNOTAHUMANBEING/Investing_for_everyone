@@ -63,6 +63,7 @@ let y = 0;
 
 let leftWidth = 0;
 
+//마우스 눌렀을 떄
 const mouseDownHandler = function (e) {
     // 현재 마우스 위치 가져오기
     x = e.clientX;
@@ -74,6 +75,7 @@ const mouseDownHandler = function (e) {
     document.addEventListener('mouseup', mouseUpHandler);
 };
 
+// 마우스 누르고 움직일 때
 const mouseMoveHandler = function (e) {
     // 마우스 이동거리
     const dx = e.clientX - x;
@@ -82,10 +84,11 @@ const mouseMoveHandler = function (e) {
     const newLeftWidth = ((leftWidth + dx) * 100) / resizer.parentNode.getBoundingClientRect().width;
     leftSide.style.width = `${newLeftWidth}%`;
 
+    // 차트 있는 경우
     code = document.querySelector(".stock_code");
     if (code != null)
     {
-        candlestickChart.draw();
+        candlestickChart.draw(); // stock.js 에 있는 창 크기 변경시 차트 크기 바뀌는 것과 통합하는게 좋아보이는데
     }
 
     resizer.style.cursor = 'col-resize';
@@ -108,7 +111,7 @@ const mouseUpHandler = function () {
     rightSide.style.removeProperty('user-select');
     rightSide.style.removeProperty('pointer-events');
 
-    // 움직일 때와 땔 때 이벤트 추가 제거
+    // 움직일 때와 땔 때 이벤트 제거
     document.removeEventListener('mousemove', mouseMoveHandler);
     document.removeEventListener('mouseup', mouseUpHandler);
 };
@@ -189,7 +192,7 @@ function search_block_ajax(searchword, searchdate_start, searchdate_end, page)
 
 
 
-// side block ajax loading
+// side block ajax loading image
 function  displayBlockLoading(gif)
 {
     document.querySelector(".blockLoadingGif").innerHTML = " <img src='"+ gif + "' style='display:block; position:relative; top:90%;'/>";

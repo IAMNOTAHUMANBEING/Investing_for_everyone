@@ -62,7 +62,9 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "http://144.24.92.23",
+    "http://www.investingforeveryone.kro.kr",
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'Invest_for_everyone.urls'
