@@ -1,7 +1,7 @@
 # Invest_for_everyone
 
+- 설명:  누구나 기업 정보를 추가할 수 있는 위키형 투자정보 사이트입니다. 인터랙티브한 차트 기능을 통해 원하는 정보를 쉽게 검색할 수 있습니다.
 - 주소:  http://www.investingforeveryone.kro.kr/
-
 <br/><br/><br/>
 
 # 아키텍처 
