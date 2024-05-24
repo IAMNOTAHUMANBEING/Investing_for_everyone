@@ -5,7 +5,7 @@
 <br/><br/><br/>
 
 # 아키텍처 
-
+![제목 없는 다이어그램 drawio (3)](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/c40a6b2e-824d-4b6c-9b85-410478e01e9e)
 
 <br/><br/><br/>
 
