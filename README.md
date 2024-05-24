@@ -10,7 +10,8 @@
 <br/><br/><br/>
 
 # ERD
-![my_project_visualized](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/73fd8eed-c66c-4a74-9681-8d7182f6d9ad)
+![my2_project_visualized](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/b7abc53e-7464-461a-b726-52f798a16614)
+
 
 <br/><br/><br/>
 # 초기화면
