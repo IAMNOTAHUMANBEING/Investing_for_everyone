@@ -4,6 +4,15 @@
 
 <br/><br/><br/>
 
+# 아키텍처 
+
+
+<br/><br/><br/>
+
+# ERD
+![my_project_visualized](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/73fd8eed-c66c-4a74-9681-8d7182f6d9ad)
+
+<br/><br/><br/>
 # 초기화면
 ![image](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/9dde6647-ba57-4e4a-bc74-c800f0749d9b)
 
