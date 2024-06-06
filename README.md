@@ -1,9 +1,19 @@
 # Invest_for_everyone
 
+- 설명:  누구나 기업 정보를 추가할 수 있는 위키형 투자정보 사이트입니다. 인터랙티브한 차트 기능을 통해 원하는 정보를 쉽게 검색할 수 있습니다.
 - 주소:  http://www.investingforeveryone.kro.kr/
+<br/><br/><br/>
+
+# 아키텍처 
+![제목 없는 다이어그램 drawio (3)](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/c40a6b2e-824d-4b6c-9b85-410478e01e9e)
 
 <br/><br/><br/>
 
+# ERD
+![my2_project_visualized](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/b7abc53e-7464-461a-b726-52f798a16614)
+
+
+<br/><br/><br/>
 # 초기화면
 ![image](https://github.com/IAMNOTAHUMANBEING/Investing_for_everyone/assets/60809568/9dde6647-ba57-4e4a-bc74-c800f0749d9b)
 
