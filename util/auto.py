@@ -7,6 +7,7 @@ import pandas as pd
 
 import requests
 from io import BytesIO
+from datetime import datetime
 
 sys.path.append(os.path.join(os.path.abspath('../'), 'app'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Invest_for_everyone.settings')
@@ -14,6 +15,8 @@ django.setup()
 
 from single_page.models import Wiki
 from django.db.models.query_utils import Q
+
+print(datetime.today().strftime("%Y/%m/%d %H:%M:%S"))
 
 gen_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
 gen_parms = {
